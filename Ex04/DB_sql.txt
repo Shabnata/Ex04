@@ -1,0 +1,60 @@
+create table students(
+	id integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+	st_id varchar(9) primary key,
+	f_name varchar(255) not null,
+	l_name varchar(255) not null,
+	email varchar(255) not null,
+	fine integer check (fine >=0) not null
+);
+create table books(
+	id integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+	isbn varchar(13) primary key, 
+	title varchar(255) not null,
+	author varchar(255) not null,
+	p_year date not null,
+	cover varchar(255) not null,
+	copy_cnt integer check (copy_cnt >=0) not null
+);
+create table conditions(
+	id integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+	con_key integer check (con_key >=0 ) primary key,
+	con_desc varchar(255) not null
+);
+create table book_copies(
+	id integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+	isbn varchar(13) references books(isbn) not null,
+	copy_code varchar(255) primary key,
+	copy_cond integer references conditions(con_key) not null
+);
+create table categories(
+	id integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+	cat_id integer primary key check (cat_id >=0),
+	cat_name varchar(255) unique not null 
+);
+create table book_categories(
+	id integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+	isbn varchar(13) references books(isbn) not null,
+	cat_id integer references categories(cat_id) not null,
+	primary key(isbn,cat_id)
+);
+create table loans(
+	id integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+	st_id varchar(9) references students(st_id) not null,
+	loan_id integer primary key check(loan_id>=0),
+	start_d date not null,
+	ret_d date not null,
+	constraint chk_d check (ret_d >= start_d)
+);
+create table loaned_books(
+	id integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+	loan_id integer references loans(loan_id) not null,
+	copy_code varchar(255) references book_copies(copy_code) not null,
+	returned boolean default false,
+	days_over integer default 0,
+	constraint chk_days check((returned = true AND days_over >= 0) OR (returned = false AND days_over = 0))
+);
+
+
+insert into students (st_id, f_name, l_name, email) values('123456789','Abc', 'Efg' , 'abc@efg')
+delete from students 
+select * from students

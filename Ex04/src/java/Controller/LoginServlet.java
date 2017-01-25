@@ -5,39 +5,55 @@
  */
 package Controller;
 
+import DB.*;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Kotya
- */
 @WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
-public class LoginServlet extends HttpServlet {
+public class LoginServlet extends HttpServlet{
 
-	/**
-	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-	 * methods.
-	 *
-	 * @param request servlet request
-	 * @param response servlet response
-	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException if an I/O error occurs
-	 */
-	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	ServletContext sc;
+
+	@Override
+	public void init(){
+		this.sc = this.getServletContext();
+
+		try {
+			Class.forName("org.apache.derby.jdbc.ClientDriver");
+		} catch(ClassNotFoundException e){
+			// TODO
+			// Write an error
+		}
+	}
+
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		response.setContentType("text/html;charset=UTF-8");
-		try (PrintWriter out = response.getWriter()) {
+//--Connection to DB ----//
+		Connection cn = null;
+		try {
+			cn = DriverManager.getConnection(sc.getInitParameter("cnurl"), sc.getInitParameter("DBUsername"), sc.getInitParameter("DBPassword"));
+		} catch(SQLException e){
+			// TODO
+			// Write an error
+		}
+		StudentDB sDB = new StudentDB(cn);
+//---END---//
+
+		try(PrintWriter out = response.getWriter()) {
 			/* TODO output your page here. You may use following sample code. */
 			out.println("<!DOCTYPE html>");
 			out.println("<html>");
 			out.println("<head>");
-			out.println("<title>Servlet LoginServlet</title>");			
+			out.println("<title>Servlet LoginServlet</title>");
 			out.println("</head>");
 			out.println("<body>");
 			out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
@@ -50,28 +66,30 @@ public class LoginServlet extends HttpServlet {
 	/**
 	 * Handles the HTTP <code>GET</code> method.
 	 *
-	 * @param request servlet request
+	 * @param request  servlet request
 	 * @param response servlet response
+	 *
 	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException if an I/O error occurs
+	 * @throws IOException      if an I/O error occurs
 	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+		throws ServletException, IOException{
 		processRequest(request, response);
 	}
 
 	/**
 	 * Handles the HTTP <code>POST</code> method.
 	 *
-	 * @param request servlet request
+	 * @param request  servlet request
 	 * @param response servlet response
+	 *
 	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException if an I/O error occurs
+	 * @throws IOException      if an I/O error occurs
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+		throws ServletException, IOException{
 		processRequest(request, response);
 	}
 
@@ -81,7 +99,7 @@ public class LoginServlet extends HttpServlet {
 	 * @return a String containing servlet description
 	 */
 	@Override
-	public String getServletInfo() {
+	public String getServletInfo(){
 		return "Short description";
 	}// </editor-fold>
 

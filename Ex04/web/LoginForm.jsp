@@ -1,7 +1,7 @@
 <h3>
 	Login:
 </h3>
-<form class="formStyle" action="LoginServlet" method="POST">
+<form class="formStyle" action="LoginServlet" method="post">
 	<span class="formTxt">Username:</span></br>
 	<input type="text" name="Username" required/></br>
 	<span class="formTxt">Password:</span></br>

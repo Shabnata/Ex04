@@ -1,6 +1,6 @@
 
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,15 +11,16 @@
 
 	</head>
     <body>
+		
 		<div id="outerContainer">
 			<div id="header">
-				"Welcome to N&D Library\n"
-				<img src="imagesh4.png" alt="books" height="98"/>
+				"Welcome to N&D Library"
+				<img src="images/h4.png" alt="books" height="98"/>
 				<br/><br/><br/>
 				<div id="headerLeft">
 					Menu:
 				</div>
 				<div id="headerRight"></div>
 			</div>
+			<div id="centerBox">
 
-</html>

@@ -1,17 +1,50 @@
-<%-- 
-    Document   : MenuAdmin
-    Created on : Jan 25, 2017, 5:03:58 PM
-    Author     : Denis
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-    </body>
-</html>
+<div id="leftMenu">
+	<h4>
+		Common options:
+	</h4>
+	<a href=\"ReturnBookPageServlet\">
+		Return books
+	</a>
+	<br/>
+	<h4>
+		Search options:
+	</h4>
+	<a href=\"SearchBookPageServlet\">
+		Find book
+	</a>
+	<br/>
+	<a href=\"SearchStudentPageServlet\">
+		Find student
+	</a>
+	<br/>
+	<h4>
+		Add Options:
+	</h4>
+	<a href=\"AddBookPageServlet\">
+		Add new book
+	</a>
+	<br/>
+	<a href=\"AddCategoryPageServlet\">
+		Add new category
+	</a>
+	<br/>
+	<a href=\"AddLoanPageServlet\">
+		Add new loan
+	</a>
+	<br/>
+	<a href=\"AddStudentPageServlet\">
+		Add new student
+	</a>
+	<br/>
+	<h4>
+		Delete options:
+	</h4>
+	<a href=\"DeleteBookPageServlet\">
+		Delete book
+	</a>
+	<br/>
+	<br/>
+	<br/>
+	<jsp:include page="LogoutForm.jsp" />
+</div> <!--id=leftMenu-->
+<div id="contentArea">

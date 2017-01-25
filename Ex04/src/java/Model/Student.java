@@ -1,15 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Model;
 
-/**
- *
- * @author Kotya
- */
-public class Student {
+public class Student{
 
 	private String studentID;
 	private String firstName;
@@ -17,46 +9,46 @@ public class Student {
 	private String emailAddress;
 	private double currentFines;
 
-	public Student() {
+	public Student(){
 	}
 
-	public String getFirstName() {
+	public String getFirstName(){
 		return firstName;
 	}
 
-	public void setFirstName(String firstName) {
+	public void setFirstName(String firstName){
 		this.firstName = firstName;
 	}
 
-	public String getLastName() {
+	public String getLastName(){
 		return lastName;
 	}
 
-	public void setLastName(String lastName) {
+	public void setLastName(String lastName){
 		this.lastName = lastName;
 	}
 
-	public String getStudentID() {
+	public String getStudentID(){
 		return studentID;
 	}
 
-	public void setStudentID(String studentID) {
+	public void setStudentID(String studentID){
 		this.studentID = studentID;
 	}
 
-	public String getEmailAddress() {
+	public String getEmailAddress(){
 		return emailAddress;
 	}
 
-	public void setEmailAddress(String emailAddress) {
+	public void setEmailAddress(String emailAddress){
 		this.emailAddress = emailAddress;
 	}
 
-	public double getCurrentFines() {
+	public double getCurrentFines(){
 		return currentFines;
 	}
 
-	public void setCurrentFines(double currentFines) {
+	public void setCurrentFines(double currentFines){
 		this.currentFines = currentFines;
 	}
 

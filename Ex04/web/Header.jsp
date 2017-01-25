@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-		<%-- TODO Make title dynamic --%>
+		<%-- TODO Make title dynamic. --%>
 		<title>Library</title>
 		<link href="Library.css" rel="stylesheet" type="text/css"/>
 

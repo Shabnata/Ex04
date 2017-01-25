@@ -4,10 +4,21 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
+    
+    <title>Library</title>
+    <link href="Library.css" rel="stylesheet" type="text/css"/>
+    
+   
+</head>
     <body>
-        <h1>Hello World!</h1>
-    </body>
+      <div id="header">
+				"Welcome to N&D Library\n"
+				<img src="imagesh4.png" alt="books" height="98"/>
+				<br/><br/><br/>
+				<div id="headerLeft">
+				Menu:
+				</div>
+				<div id="headerRight"></div>
+				</div>
+
 </html>

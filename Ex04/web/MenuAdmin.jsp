@@ -2,49 +2,49 @@
 	<h4>
 		Common options:
 	</h4>
-	<a href=\"ReturnBookPageServlet\">
+	<a href="ReturnBookPageServlet">
 		Return books
 	</a>
 	<br/>
 	<h4>
 		Search options:
 	</h4>
-	<a href=\"SearchBookPageServlet\">
+	<a href="SearchBookPageServlet">
 		Find book
 	</a>
 	<br/>
-	<a href=\"SearchStudentPageServlet\">
+	<a href="SearchStudentPageServlet">
 		Find student
 	</a>
 	<br/>
 	<h4>
 		Add Options:
 	</h4>
-	<a href=\"AddBookPageServlet\">
+	<a href="AddBookPageServlet">
 		Add new book
 	</a>
 	<br/>
-	<a href=\"AddCategoryPageServlet\">
+	<a href="AddCategoryPageServlet">
 		Add new category
 	</a>
 	<br/>
-	<a href=\"AddLoanPageServlet\">
+	<a href="AddLoanPageServlet">
 		Add new loan
 	</a>
 	<br/>
-	<a href=\"AddStudentPageServlet\">
+	<a href="AddStudentPageServlet">
 		Add new student
 	</a>
 	<br/>
 	<h4>
 		Delete options:
 	</h4>
-	<a href=\"DeleteBookPageServlet\">
+	<a href="DeleteBookPageServlet">
 		Delete book
 	</a>
 	<br/>
 	<br/>
 	<br/>
 	<jsp:include page="LogoutForm.jsp" />
-</div> <!--id=leftMenu-->
+</div> <%-- id=leftMenu --%>
 <div id="contentArea">

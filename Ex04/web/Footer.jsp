@@ -1,8 +1,8 @@
-</div> <%-- id = contentArea --%>
-</div> <%-- id = centerBox --%>
+</div> <%-- id=contentArea --%>
+</div> <%-- id=centerBox --%>
 <div id="footer">
 	N&D Library
 </div>
-</div> <%-- id = outerContainer --%>
+</div> <%-- id=outerContainer --%>
 </body>
 </html>

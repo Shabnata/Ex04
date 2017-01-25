@@ -1,17 +1,28 @@
-<%-- 
-    Document   : MenuUser
-    Created on : Jan 25, 2017, 6:06:26 PM
-    Author     : Denis
---%>
+<div id="leftMenu">
+	<h4>
+		Common options:
+	</h4>
+	<a href=\"ReturnBookPageServlet\">
+		Return books
+	</a>
+	<br/>
+	<h4>
+		Search options:
+	</h4>
+	<a href=\"SearchBookPageServlet\">
+		Find book
+	</a>
+	<br/>
+	<h4>
+		Add Options:
+	</h4>
+	<a href=\"AddLoanPageServlet\">
+		Add new loan
+	</a>
+	<br/>
+	<br/>
+	<br/>
+	<jsp:include page="LogoutForm.jsp" />
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-    </body>
-</html>
+</div> <!-- id=leftMenu -->
+<div id="contentArea">

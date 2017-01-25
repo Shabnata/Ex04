@@ -53,8 +53,22 @@ create table loaned_books(
 	days_over integer default 0,
 	constraint chk_days check((returned = true AND days_over >= 0) OR (returned = false AND days_over = 0))
 );
+create table accounts(
+	id integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+	acc_id varchar(9) primary key,
+	acc_pass varchar(255) not null,
+	acc_type varchar(255) check(acc_type ='admin' OR acc_type='user' ) not null
+);
+insert into students (st_id, f_name, l_name, email, fine) values('123456789','Noah', 'Smith' , 'Noah@gmail.com@efg',50);
+insert into students (st_id, f_name, l_name, email, fine) values('234567891','Emma', 'Williams' , 'Emma@gmail.com', 0);
+insert into students (st_id, f_name, l_name, email, fine) values('345678912','Liam', 'Johnson' , 'Liam@gmail.com', 0);
+insert into students (st_id, f_name, l_name, email, fine) values('456789123','Daniel', 'Brown' , 'Daniel@gmail.com', 0);
+insert into students (st_id, f_name, l_name, email, fine) values('567891234','Oliver', 'Davis' , 'Oliver@gmail.com', 0);
+insert into students (st_id, f_name, l_name, email, fine) values('678912345','Zoey', 'Moore' , 'Zoey@gmail.com', 0);
+insert into students (st_id, f_name, l_name, email, fine) values('789123456','Ellie', 'Wilson' , 'Ellie@gmail.com', 0);
+insert into students (st_id, f_name, l_name, email, fine) values('891234567','Caleb', 'Taylor' , 'Caleb@gmail.com', 0);
+insert into students (st_id, f_name, l_name, email, fine) values('912345678','Aria', 'Thomas' , 'Aria@gmail.com', 0);
+insert into students (st_id, f_name, l_name, email, fine) values('000045678','Piper', 'Clark' , 'Piper@gmail.com', 0);
 
-
-insert into students (st_id, f_name, l_name, email) values('123456789','Abc', 'Efg' , 'abc@efg')
 delete from students 
 select * from students

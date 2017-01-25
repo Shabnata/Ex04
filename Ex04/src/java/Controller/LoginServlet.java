@@ -6,6 +6,7 @@
 package Controller;
 
 import DB.*;
+import Model.Student;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -47,6 +48,7 @@ public class LoginServlet extends HttpServlet{
 			// Write an error
 		}
 		StudentDB sDB = new StudentDB(cn);
+	
 //---END---//
 
 		try(PrintWriter out = response.getWriter()) {
@@ -57,7 +59,13 @@ public class LoginServlet extends HttpServlet{
 			out.println("<title>Servlet LoginServlet</title>");
 			out.println("</head>");
 			out.println("<body>");
+			
 			out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
+			
+			
+		
+			
+			
 			out.println("</body>");
 			out.println("</html>");
 		}

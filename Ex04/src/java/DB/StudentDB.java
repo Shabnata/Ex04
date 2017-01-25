@@ -29,7 +29,7 @@ public class StudentDB{
 			st.setEmailAddress(rs.getString("email"));
 			st.setCurrentFines(Double.parseDouble(rs.getString("fine")));
 		}
-
+		ps.close();
 		return st;
 	}
 

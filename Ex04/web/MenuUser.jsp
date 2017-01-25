@@ -1,4 +1,5 @@
 <div id="leftMenu">
+	//asdas
 	<h4>
 		Common options:
 	</h4>
@@ -23,6 +24,6 @@
 	<br/>
 	<br/>
 	<jsp:include page="LogoutForm.jsp" />
-	
+
 </div> <!-- id=leftMenu -->
 <div id="contentArea">

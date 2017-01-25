@@ -30,7 +30,7 @@ public class LoginServlet extends HttpServlet{
 		try {
 			Class.forName("org.apache.derby.jdbc.ClientDriver");
 		} catch(ClassNotFoundException e){
-			// abc
+			
 			// TODO
 			// Write an error
 		}

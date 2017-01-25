@@ -4,21 +4,22 @@
 <!DOCTYPE html>
 <html>
     <head>
-    
-    <title>Library</title>
-    <link href="Library.css" rel="stylesheet" type="text/css"/>
-    
-   
-</head>
+
+		<title>Library</title>
+		<link href="Library.css" rel="stylesheet" type="text/css"/>
+
+
+	</head>
     <body>
-      <div id="header">
+		<div id="outerContainer">
+			<div id="header">
 				"Welcome to N&D Library\n"
 				<img src="imagesh4.png" alt="books" height="98"/>
 				<br/><br/><br/>
 				<div id="headerLeft">
-				Menu:
+					Menu:
 				</div>
 				<div id="headerRight"></div>
-				</div>
+			</div>
 
 </html>

@@ -3,8 +3,8 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <%@attribute name="menu" type="java.lang.String" required="true" %>
-<%@attribute name="content" fragment="true" required="true" %>
-<%@attribute name="pageTitle" required="true"%>
+<%@attribute name="content" fragment="true" %>
+<%@attribute name="pageTitle" required="true" %>
 
 <!DOCTYPE html>
 <html>
@@ -15,22 +15,23 @@
 	</head>
 	<body>
 		<div id="outerContainer">
-			<t:Header/>
+			<jsp:include page="/WEB-INF/jspf/HeaderFragment.jspf" />
 			<div id="centerBox">
 				<div id="leftMenu">
 					<% if(menu.equals("admin")){ %>
-					<t:MenuAdmin/>
+					<jsp:include page="/WEB-INF/jspf/MenuAdminFragment.jspf" />
 					<% } else if(menu.equals("user")){ %>
-					<t:MenuUser/>
+					<jsp:include page="/WEB-INF/jspf/MenuUserFragment.jspf" />
 					<% } else { %>
-					<t:MenuGuest/>
+					<jsp:include page="/WEB-INF/jspf/MenuGuestFragment.jspf" />
 					<% }%>
+					<br/><br/><br/>
 				</div> <%-- id=leftMenu --%>
 				<div id="contentArea">
-					<jsp:invoke fragment="content"/>
+					<jsp:doBody/>
 				</div> <%-- id=contentArea --%>
 			</div> <%-- id=centerBox --%>
-			<t:Footer/>
+			<jsp:include page="/WEB-INF/jspf/FooterFragment.jspf" />
 		</div> <%-- id=outerContainer --%>
 	</body>
 </html>

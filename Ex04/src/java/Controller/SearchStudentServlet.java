@@ -1,11 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Controller;
 
 import DB.StudentDB;
+import Model.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
@@ -16,10 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Kotya
- */
 @WebServlet(name = "SearchStudentServlet", urlPatterns = {"/SearchStudentServlet"})
 public class SearchStudentServlet extends HttpServlet{
 
@@ -45,12 +38,12 @@ public class SearchStudentServlet extends HttpServlet{
 	}
 
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException, ClassNotFoundException, SQLException {
+		throws ServletException, IOException, ClassNotFoundException, SQLException{
 
 		StudentDB sDB = new StudentDB();
 		RequestDispatcher dispatcher;
-		Student st =sDB.getStudent(request.getParameter("stID"));
-		if (st == null) {
+		Student st = sDB.getStudent(request.getParameter("stID"));
+		if(st == null){
 			dispatcher = request.getRequestDispatcher("SearchStudentPageNotFound.jsp");
 			dispatcher.forward(request, response);
 

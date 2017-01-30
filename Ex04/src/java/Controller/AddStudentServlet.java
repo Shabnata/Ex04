@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Controller;
 
 import DB.StudentDB;
 import Model.Student;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -18,22 +13,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Kotya
- */
 @WebServlet(name = "AddStudentServlet", urlPatterns = {"/AddStudentServlet"})
-public class AddStudentServlet extends HttpServlet {
+public class AddStudentServlet extends HttpServlet{
 
 	ServletContext sc;
 
 	@Override
-	public void init() {
+	public void init(){
 		this.sc = this.getServletContext();
 
 		try {
 			Class.forName("org.apache.derby.jdbc.ClientDriver");
-		} catch (ClassNotFoundException e) {
+		} catch(ClassNotFoundException e){
 
 			// TODO
 			// Write an error
@@ -45,47 +36,48 @@ public class AddStudentServlet extends HttpServlet {
 			//}
 		}
 	}
+
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException, ClassNotFoundException, SQLException {
-		
+		throws ServletException, IOException, ClassNotFoundException, SQLException{
+
 		StudentDB sDB = new StudentDB();
 		RequestDispatcher dispatcher;
 		String stId = request.getParameter("id");
 		String fName = request.getParameter("fname");
 		String lName = request.getParameter("lname");
 		String email = request.getParameter("email");
-		Boolean added =sDB.addStudent(stId, fName, lName, email, 0);
-		if (!added) {
+		Boolean added = sDB.addStudent(stId, fName, lName, email, 0);
+		if(!added){
 			dispatcher = request.getRequestDispatcher("AddStudentPageNotAdded.jsp");
 			dispatcher.forward(request, response);
-			
+
 		} else {
-			Student st =sDB.getStudent(request.getParameter("stID"));
+			Student st = sDB.getStudent(request.getParameter("stID"));
 			request.setAttribute("student", st);
 			dispatcher = request.getRequestDispatcher("AddStudentPageResult.jsp");
 			dispatcher.forward(request, response);
 		}
-		
+
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 	/**
 	 * Handles the HTTP <code>GET</code> method.
 	 *
-	 * @param request servlet request
+	 * @param request  servlet request
 	 * @param response servlet response
+	 *
 	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException if an I/O error occurs
+	 * @throws IOException      if an I/O error occurs
 	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+		throws ServletException, IOException{
 		try {
 			processRequest(request, response);
-		} catch (ClassNotFoundException ex) {
+		} catch(ClassNotFoundException ex){
 			//todo
-		}
-		catch (SQLException ex) {
+		} catch(SQLException ex){
 			//todo
 		}
 	}
@@ -93,20 +85,20 @@ public class AddStudentServlet extends HttpServlet {
 	/**
 	 * Handles the HTTP <code>POST</code> method.
 	 *
-	 * @param request servlet request
+	 * @param request  servlet request
 	 * @param response servlet response
+	 *
 	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException if an I/O error occurs
+	 * @throws IOException      if an I/O error occurs
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+		throws ServletException, IOException{
 		try {
 			processRequest(request, response);
-		} catch (ClassNotFoundException ex) {
+		} catch(ClassNotFoundException ex){
 			//todo
-		}
-		catch (SQLException ex) {
+		} catch(SQLException ex){
 			//todo
 		}
 	}
@@ -117,7 +109,7 @@ public class AddStudentServlet extends HttpServlet {
 	 * @return a String containing servlet description
 	 */
 	@Override
-	public String getServletInfo() {
+	public String getServletInfo(){
 		return "Short description";
 	}// </editor-fold>
 

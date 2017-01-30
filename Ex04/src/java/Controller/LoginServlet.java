@@ -1,12 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Controller;
 
 import DB.*;
-import Model.Student;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -31,9 +26,15 @@ public class LoginServlet extends HttpServlet{
 		try {
 			Class.forName("org.apache.derby.jdbc.ClientDriver");
 		} catch(ClassNotFoundException e){
-			
+
 			// TODO
 			// Write an error
+			//public void init() {
+			//try {
+			//Class.forName("org.apache.derby.jdbc.ClientDriver");
+			//} catch (ClassNotFoundException ex) {
+			//Logger.getLogger(dbServlet.class.getName()).log(Level.SEVERE, null, ex);
+			//}
 		}
 	}
 
@@ -48,9 +49,8 @@ public class LoginServlet extends HttpServlet{
 			// Write an error
 		}
 		StudentDB sDB = new StudentDB(cn);
-	
-//---END---//
 
+//---END---//
 		try(PrintWriter out = response.getWriter()) {
 			/* TODO output your page here. You may use following sample code. */
 			out.println("<!DOCTYPE html>");
@@ -59,13 +59,9 @@ public class LoginServlet extends HttpServlet{
 			out.println("<title>Servlet LoginServlet</title>");
 			out.println("</head>");
 			out.println("<body>");
-			
+
 			out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
-			
-			
-		
-			
-			
+
 			out.println("</body>");
 			out.println("</html>");
 		}

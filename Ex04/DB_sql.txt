@@ -27,14 +27,13 @@ create table book_copies(
 	copy_cond integer references conditions(con_key) not null
 );
 create table categories(
-	id integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-	cat_id integer primary key check (cat_id >=0),
-	cat_name varchar(255) unique not null 
+	id integer primary key GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+	cat_name varchar(255) unique not null
 );
 create table book_categories(
 	id integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
 	isbn varchar(13) references books(isbn) not null,
-	cat_id integer references categories(cat_id) not null,
+	cat_id integer references categories(id) not null,
 	primary key(isbn,cat_id)
 );
 create table loans(
@@ -59,6 +58,7 @@ create table accounts(
 	acc_pass varchar(255) not null,
 	acc_type varchar(255) check(acc_type ='admin' OR acc_type='user' ) not null
 );
+
 insert into students (st_id, f_name, l_name, email, fine) values('123456789','Noah', 'Smith' , 'Noah@gmail.com@efg',50);
 insert into students (st_id, f_name, l_name, email, fine) values('234567891','Emma', 'Williams' , 'Emma@gmail.com', 0);
 insert into students (st_id, f_name, l_name, email, fine) values('345678912','Liam', 'Johnson' , 'Liam@gmail.com', 0);
@@ -70,16 +70,13 @@ insert into students (st_id, f_name, l_name, email, fine) values('891234567','Ca
 insert into students (st_id, f_name, l_name, email, fine) values('912345678','Aria', 'Thomas' , 'Aria@gmail.com', 0);
 insert into students (st_id, f_name, l_name, email, fine) values('000045678','Piper', 'Clark' , 'Piper@gmail.com', 0);
 
-delete from students 
-select * from students
 
-insert into categories (cat_id, cat_name) values(1,'Cooking');
-insert into categories (cat_id, cat_name) values(2,'Comedy');
-insert into categories (cat_id, cat_name) values(3,'Drama');
-insert into categories (cat_id, cat_name) values(4,'Fiction');
-insert into categories (cat_id, cat_name) values(5,'Thriller');
+insert into categories (cat_name) values('Cooking');
+insert into categories (cat_name) values('Comedy');
+insert into categories (cat_name) values('Drama');
+insert into categories (cat_name) values('Fiction');
+insert into categories (cat_name) values('Thriller');
 
-select * from categories
 
 insert into books (isbn, title, author, p_year, cover, copy_cnt) values('0000307949486', 'The Girl with the Dragon Tattoo', 'Stieg Larsson', '2011-01-01', 'https://images-na.ssl-images-amazon.com/images/I/51d3vkCK7WL._SX277_BO1,204,203,200_.jpg', 6);
 insert into books (isbn, title, author, p_year, cover, copy_cnt) values('0000307742539','The Girl Who Kicked the Hornet''s Nest', 'Stieg Larsson' , '2012-01-01','https://images-na.ssl-images-amazon.com/images/I/51hb5Jyc1WL._SX279_BO1,204,203,200_.jpg', 5);
@@ -92,7 +89,6 @@ insert into books (isbn, title, author, p_year, cover, copy_cnt) values('0000316
 insert into books (isbn, title, author, p_year, cover, copy_cnt) values('0000753459019','The Best Book of Bugs', 'Claire Llewellyn' , '2015-01-01','https://images-na.ssl-images-amazon.com/images/I/51KvdbVDkDL._SX422_BO1,204,203,200_.jpg', 3);
 insert into books (isbn, title, author, p_year, cover, copy_cnt) values('0001623363586','Thug Kitchen', 'Thug Kitchen' , '2014-01-01','https://images-na.ssl-images-amazon.com/images/I/51v1Q88aB0L._SX404_BO1,204,203,200_.jpg', 3);
 
-select * from books
 
 insert into conditions (con_key, con_desc) values(1,'AsNew');
 insert into conditions (con_key, con_desc) values(2,'SlightlyUsed');
@@ -100,7 +96,6 @@ insert into conditions (con_key, con_desc) values(3,'VeryUsed');
 insert into conditions (con_key, con_desc) values(4,'Damaged');
 insert into conditions (con_key, con_desc) values(5,'Defective');
 
-select * from conditions
 
 insert into book_copies (isbn, copy_code, copy_cond) values('0000307949486', '0000307949486_001', 1);
 insert into book_copies (isbn, copy_code, copy_cond) values('0000307949486', '0000307949486_002', 1);
@@ -145,4 +140,10 @@ insert into book_copies (isbn, copy_code, copy_cond) values('0001623363586', '00
 insert into book_copies (isbn, copy_code, copy_cond) values('0001623363586', '0001623363586_002', 1);
 insert into book_copies (isbn, copy_code, copy_cond) values('0001623363586', '0001623363586_003', 1);
 
+delete from students 
+select * from students
+select * from categories
+select * from books
+select * from conditions
 select * from book_copies
+

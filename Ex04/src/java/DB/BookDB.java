@@ -22,7 +22,7 @@ public class BookDB{
 		Book bk = null;
 		PreparedStatement ps = null;
 		try {
-			ps = this.cn.prepareStatement("SELECT * FROM students WHERE st_id = ?");
+			ps = this.cn.prepareStatement("SELECT * FROM books WHERE isbn=?");
 			ps.setString(1, isbn);
 
 			ResultSet rs = ps.executeQuery();
@@ -34,6 +34,7 @@ public class BookDB{
 				bk.setBookYear(Year.parse(rs.getString("p_year"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 				bk.setCoverPath(rs.getString("cover"));
 				bk.setCopyCounter(Integer.parseInt(rs.getString("copy_cnt")));
+				bk.setCopyCounter(rs.getInt("copy_cnt"));
 
 			}
 			ps.close();

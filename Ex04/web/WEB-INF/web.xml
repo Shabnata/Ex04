@@ -12,7 +12,7 @@
 
 	<context-param>
 		<param-name>cnurl</param-name>
-		<param-value>jdbc:derby//localhost:1527/LibraryDB</param-value>
+		<param-value>jdbc:derby://localhost:1527/LibraryDB</param-value>
 	</context-param>
 	<context-param>
 		<param-name>DBUsername</param-name>

@@ -1,7 +1,10 @@
 
 package Model;
 
-public class Student{
+import java.io.Serializable;
+
+
+public class Student implements Serializable{
 
 	private String studentID;
 	private String firstName;
@@ -52,4 +55,5 @@ public class Student{
 		this.currentFines = currentFines;
 	}
 
+	
 }

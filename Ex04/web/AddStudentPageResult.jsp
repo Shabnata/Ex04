@@ -4,7 +4,7 @@
 <html>
     <head>
 		<%-- TODO Make title dynamic. --%>
-		<title>SearchStudentPage</title>
+		<title>AddStudentPage</title>
 		<link href="Library.css" rel="stylesheet" type="text/css"/>
 	</head>
     <body>
@@ -18,7 +18,7 @@
 					<jsp:include page="LoginForm.jsp" />
 				</div> <%-- id=leftMenu --%>
 				<div id="contentArea">
-					<jsp:include page="SearchStudentForm.jsp" />
+					<jsp:include page="AddStudentForm.jsp" />
 
 					Student information:
 

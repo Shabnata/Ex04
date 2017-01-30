@@ -6,14 +6,10 @@
 package Controller;
 
 import DB.StudentDB;
-import Model.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
+import Model.Student;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
 import java.sql.SQLException;
-import javax.security.auth.message.callback.PrivateKeyCallback;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -26,8 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Kotya
  */
-@WebServlet(name = "SearchStudentServlet", urlPatterns = {"/SearchStudentServlet"})
-public class SearchStudentServlet extends HttpServlet {
+@WebServlet(name = "AddStudentServlet", urlPatterns = {"/AddStudentServlet"})
+public class AddStudentServlet extends HttpServlet {
 
 	ServletContext sc;
 
@@ -49,20 +45,24 @@ public class SearchStudentServlet extends HttpServlet {
 			//}
 		}
 	}
-
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, ClassNotFoundException, SQLException {
-
+		
 		StudentDB sDB = new StudentDB();
 		RequestDispatcher dispatcher;
-		Student st =sDB.getStudent(request.getParameter("stID"));
-		if (st == null) {
-			dispatcher = request.getRequestDispatcher("SearchStudentPageNotFound.jsp");
+		String stId = request.getParameter("id");
+		String fName = request.getParameter("fname");
+		String lName = request.getParameter("lname");
+		String email = request.getParameter("email");
+		Boolean added =sDB.addStudent(stId, fName, lName, email, 0);
+		if (!added) {
+			dispatcher = request.getRequestDispatcher("AddStudentPageNotAdded.jsp");
 			dispatcher.forward(request, response);
 			
 		} else {
+			Student st =sDB.getStudent(request.getParameter("stID"));
 			request.setAttribute("student", st);
-			dispatcher = request.getRequestDispatcher("SearchStudentPageResult.jsp");
+			dispatcher = request.getRequestDispatcher("AddStudentPageResult.jsp");
 			dispatcher.forward(request, response);
 		}
 		
@@ -88,7 +88,6 @@ public class SearchStudentServlet extends HttpServlet {
 		catch (SQLException ex) {
 			//todo
 		}
-
 	}
 
 	/**

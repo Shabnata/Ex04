@@ -52,7 +52,7 @@ public class AddStudentServlet extends HttpServlet{
 			dispatcher.forward(request, response);
 
 		} else {
-			Student st = sDB.getStudent(request.getParameter("stID"));
+			Student st = sDB.getStudent(request.getParameter("id"));
 			request.setAttribute("student", st);
 			dispatcher = request.getRequestDispatcher("AddStudentPageResult.jsp");
 			dispatcher.forward(request, response);

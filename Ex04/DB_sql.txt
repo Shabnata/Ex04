@@ -72,3 +72,77 @@ insert into students (st_id, f_name, l_name, email, fine) values('000045678','Pi
 
 delete from students 
 select * from students
+
+insert into categories (cat_id, cat_name) values(1,'Cooking');
+insert into categories (cat_id, cat_name) values(2,'Comedy');
+insert into categories (cat_id, cat_name) values(3,'Drama');
+insert into categories (cat_id, cat_name) values(4,'Fiction');
+insert into categories (cat_id, cat_name) values(5,'Thriller');
+
+select * from categories
+
+insert into books (isbn, title, author, p_year, cover, copy_cnt) values('0000307949486', 'The Girl with the Dragon Tattoo', 'Stieg Larsson', '2011-01-01', 'https://images-na.ssl-images-amazon.com/images/I/51d3vkCK7WL._SX277_BO1,204,203,200_.jpg', 6);
+insert into books (isbn, title, author, p_year, cover, copy_cnt) values('0000307742539','The Girl Who Kicked the Hornet''s Nest', 'Stieg Larsson' , '2012-01-01','https://images-na.ssl-images-amazon.com/images/I/51hb5Jyc1WL._SX279_BO1,204,203,200_.jpg', 5);
+insert into books (isbn, title, author, p_year, cover, copy_cnt) values('0000307949508','The Girl Who Played with Fire', 'Stieg Larsson' , '2009-01-01','https://images-na.ssl-images-amazon.com/images/I/51dXFW6IkfL._SX280_BO1,204,203,200_.jpg', 3);
+insert into books (isbn, title, author, p_year, cover, copy_cnt) values('0001477820019','Take Me With You', 'Catherine Ryan Hyde' , '2014-01-01','https://images-na.ssl-images-amazon.com/images/I/51rA55ywNmL._SX332_BO1,204,203,200_.jpg', 2);
+insert into books (isbn, title, author, p_year, cover, copy_cnt) values('0000956998593','The Best Friend', 'Shalini Boland' , '2016-01-01','https://images-na.ssl-images-amazon.com/images/I/51ZlkjKcNTL._SX331_BO1,204,203,200_.jpg', 3);
+insert into books (isbn, title, author, p_year, cover, copy_cnt) values('0001786810328','The Killing Game', 'J.S. Carol' , '2013-01-01','https://images-na.ssl-images-amazon.com/images/I/51CQGc0nubL._SX322_BO1,204,203,200_.jpg', 3);
+insert into books (isbn, title, author, p_year, cover, copy_cnt) values('0000451495969','Cravings', 'Chrissy Teigen' , '2016-01-01','https://images-na.ssl-images-amazon.com/images/I/51HGuoYiOZL._SX379_BO1,204,203,200_.jpg', 3);
+insert into books (isbn, title, author, p_year, cover, copy_cnt) values('0000316221899','The Superfun Times Vegan Holiday Cookbook', 'Isa Chandra Moskowitz' , '2016-01-01','https://images-na.ssl-images-amazon.com/images/I/61K42L7CNgL._SX400_BO1,204,203,200_.jpg', 2);
+insert into books (isbn, title, author, p_year, cover, copy_cnt) values('0000753459019','The Best Book of Bugs', 'Claire Llewellyn' , '2015-01-01','https://images-na.ssl-images-amazon.com/images/I/51KvdbVDkDL._SX422_BO1,204,203,200_.jpg', 3);
+insert into books (isbn, title, author, p_year, cover, copy_cnt) values('0001623363586','Thug Kitchen', 'Thug Kitchen' , '2014-01-01','https://images-na.ssl-images-amazon.com/images/I/51v1Q88aB0L._SX404_BO1,204,203,200_.jpg', 3);
+
+select * from books
+
+insert into conditions (con_key, con_desc) values(1,'AsNew');
+insert into conditions (con_key, con_desc) values(2,'SlightlyUsed');
+insert into conditions (con_key, con_desc) values(3,'VeryUsed');
+insert into conditions (con_key, con_desc) values(4,'Damaged');
+insert into conditions (con_key, con_desc) values(5,'Defective');
+
+select * from conditions
+
+insert into book_copies (isbn, copy_code, copy_cond) values('0000307949486', '0000307949486_001', 1);
+insert into book_copies (isbn, copy_code, copy_cond) values('0000307949486', '0000307949486_002', 1);
+insert into book_copies (isbn, copy_code, copy_cond) values('0000307949486', '0000307949486_003', 1);
+insert into book_copies (isbn, copy_code, copy_cond) values('0000307949486', '0000307949486_004', 1);
+insert into book_copies (isbn, copy_code, copy_cond) values('0000307949486', '0000307949486_005', 1);
+insert into book_copies (isbn, copy_code, copy_cond) values('0000307949486', '0000307949486_006', 1);
+
+insert into book_copies (isbn, copy_code, copy_cond) values('0000307742539', '0000307742539_001', 1);
+insert into book_copies (isbn, copy_code, copy_cond) values('0000307742539', '0000307742539_002', 1);
+insert into book_copies (isbn, copy_code, copy_cond) values('0000307742539', '0000307742539_003', 1);
+insert into book_copies (isbn, copy_code, copy_cond) values('0000307742539', '0000307742539_004', 1);
+insert into book_copies (isbn, copy_code, copy_cond) values('0000307742539', '0000307742539_005', 1);
+
+insert into book_copies (isbn, copy_code, copy_cond) values('0000307949508', '0000307949508_001', 1);
+insert into book_copies (isbn, copy_code, copy_cond) values('0000307949508', '0000307949508_002', 1);
+insert into book_copies (isbn, copy_code, copy_cond) values('0000307949508', '0000307949508_003', 1);
+
+insert into book_copies (isbn, copy_code, copy_cond) values('0001477820019', '0001477820019_001', 1);
+insert into book_copies (isbn, copy_code, copy_cond) values('0001477820019', '0001477820019_002', 1);
+
+insert into book_copies (isbn, copy_code, copy_cond) values('0000956998593', '0000956998593_001', 1);
+insert into book_copies (isbn, copy_code, copy_cond) values('0000956998593', '0000956998593_002', 1);
+insert into book_copies (isbn, copy_code, copy_cond) values('0000956998593', '0000956998593_003', 1);
+
+insert into book_copies (isbn, copy_code, copy_cond) values('0001786810328', '0001786810328_001', 1);
+insert into book_copies (isbn, copy_code, copy_cond) values('0001786810328', '0001786810328_002', 1);
+insert into book_copies (isbn, copy_code, copy_cond) values('0001786810328', '0001786810328_003', 1);
+
+insert into book_copies (isbn, copy_code, copy_cond) values('0000451495969', '0000451495969_001', 1);
+insert into book_copies (isbn, copy_code, copy_cond) values('0000451495969', '0000451495969_002', 1);
+insert into book_copies (isbn, copy_code, copy_cond) values('0000451495969', '0000451495969_003', 1);
+
+insert into book_copies (isbn, copy_code, copy_cond) values('0000316221899', '0000316221899_001', 1);
+insert into book_copies (isbn, copy_code, copy_cond) values('0000316221899', '0000316221899_002', 1);
+
+insert into book_copies (isbn, copy_code, copy_cond) values('0000753459019', '0000753459019_001', 1);
+insert into book_copies (isbn, copy_code, copy_cond) values('0000753459019', '0000753459019_002', 1);
+insert into book_copies (isbn, copy_code, copy_cond) values('0000753459019', '0000753459019_003', 1);
+
+insert into book_copies (isbn, copy_code, copy_cond) values('0001623363586', '0001623363586_001', 1);
+insert into book_copies (isbn, copy_code, copy_cond) values('0001623363586', '0001623363586_002', 1);
+insert into book_copies (isbn, copy_code, copy_cond) values('0001623363586', '0001623363586_003', 1);
+
+select * from book_copies

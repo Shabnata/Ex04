@@ -1,10 +1,10 @@
 
+<%@page import="Model.Book"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html>
     <head>
-		<%-- TODO Make title dynamic. --%>
 		<title>SearchBookPageResult</title>
 		<link href="Library.css" rel="stylesheet" type="text/css"/>
 	</head>
@@ -18,7 +18,9 @@
 					<jsp:include page="LoginForm.jsp" />
 				</div> <%-- id=leftMenu --%>
 				<div id="contentArea">
-					<jsp:include page="SearchBookForm.jsp" />
+					<jsp:include page="SearchBookForm.jsp" /><br/>
+					<hr/>
+					<jsp:useBean id="bksLst" class="java.util.ArrayList<Model.Book>" scope="request" />
 
 					<table id="bookSearchRes">
 						<tr>
@@ -31,6 +33,19 @@
 							<th>Number of copies</th>
 							<th>Loan Book</th>
 						</tr>
+
+						<% for(Book bk : bksLst){ %>
+						<tr>
+							<td><img src=${bk.getCoverPath()} alt=${bk.getTitle} style="height: 80px;" /></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<% } %>
 					</table>
 
 				</div> <%-- id=contentArea --%>

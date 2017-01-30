@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -43,22 +44,28 @@ public class SearchBookServlet extends HttpServlet{
 
 		Connection cn = null;
 		RequestDispatcher rd;
+		BookDB bDB;
+		ArrayList<Book> bksLst = null;
 		try {
 			cn = DriverManager.getConnection(this.sc.getInitParameter("cnurl"), this.sc.getInitParameter("DBUsername"), this.sc.getInitParameter("DBPassword"));
+			bDB = new BookDB(cn);
+			bksLst = bDB.getBooksByTitle(request.getParameter("title"));
+			cn.close();
 		} catch(SQLException e){
 			// TODO
 			// Write an error
+			int x;
+			x = 12;
+			x = 123;
 		}
 
-		BookDB bDB = new BookDB(cn);
-		Book bk = bDB.getBookByISBN(request.getParameter("title"));
-
-		if(bk == null){
+		if(bksLst == null){
 			rd = request.getRequestDispatcher("SearchBookPageNotFound.jsp");
 		} else {
 			rd = request.getRequestDispatcher("SearchBookPageResult.jsp");
-			request.setAttribute("book", bk);
+			request.setAttribute("book", bksLst);
 		}
+
 		rd.forward(request, response);
 
 	}

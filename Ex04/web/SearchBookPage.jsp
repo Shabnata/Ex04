@@ -4,7 +4,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-		<%-- TODO Make title dynamic. --%>
 		<title>SearchBookPage</title>
 		<link href="Library.css" rel="stylesheet" type="text/css"/>
 	</head>

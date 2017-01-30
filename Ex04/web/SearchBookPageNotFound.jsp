@@ -4,7 +4,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-		<%-- TODO Make title dynamic. --%>
 		<title>SearchBookPageNotFound</title>
 		<link href="Library.css" rel="stylesheet" type="text/css"/>
 	</head>
@@ -18,7 +17,7 @@
 					<jsp:include page="LoginForm.jsp" />
 				</div> <%-- id=leftMenu --%>
 				<div id="contentArea">
-					<jsp:include page="SearchBookForm.jsp" />
+					<jsp:include page="SearchBookForm.jsp" /><br/>
 					<h4>No books found</h4>
 				</div> <%-- id=contentArea --%>
 			</div> <%-- id=centerBox --%>

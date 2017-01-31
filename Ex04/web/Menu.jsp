@@ -5,6 +5,8 @@
 	Cookie currentUser = CookieDB.getCookieValue(request.getCookies(), "username");
 %>
 
+
+<!-- Need to change the logic-->
 <%  if (currentUser == null) {%>
 <jsp:include page="MenuGuest.jsp" />
 <%  } else if (currentUser.getValue().equals("admin")) {%>

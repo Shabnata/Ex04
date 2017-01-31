@@ -1,7 +1,7 @@
-
 package Model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class Loan implements Serializable{
@@ -10,6 +10,8 @@ public class Loan implements Serializable{
 	private Student loaningStudent;
 	private GregorianCalendar loanedDate;
 	private GregorianCalendar returnByDate;
+	private ArrayList<BookCopy> booksInLoan;
+	private ArrayList<BookCopy> booksReturned;
 
 	public Loan(){
 	}
@@ -44,6 +46,22 @@ public class Loan implements Serializable{
 
 	public void setReturnByDate(GregorianCalendar returnByDate){
 		this.returnByDate = returnByDate;
+	}
+
+	public ArrayList<BookCopy> getBooksInLoan(){
+		return booksInLoan;
+	}
+
+	public void setBooksInLoan(ArrayList<BookCopy> booksInLoan){
+		this.booksInLoan = booksInLoan;
+	}
+
+	public ArrayList<BookCopy> getBooksReturned(){
+		return booksReturned;
+	}
+
+	public void setBooksReturned(ArrayList<BookCopy> booksReturned){
+		this.booksReturned = booksReturned;
 	}
 
 }

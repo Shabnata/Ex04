@@ -20,19 +20,19 @@
 				<div id="contentArea">
 					<jsp:include page="SearchBookForm.jsp"/><br/>
 					<hr/><br/>
-					<jsp:useBean id="bksLst" type="java.util.ArrayList<Model.Book>" scope="request"></jsp:useBean>
+					<jsp:useBean id="bksLst" type="java.util.ArrayList<Model.Book>" scope="request"/>
 
-						<table id="bookSearchRes">
-							<tr>
-								<th>Cover</th>
-								<th>Isbn</th>
-								<th>Title</th>
-								<th>Author</th>
-								<th>Category</th>
-								<th>Publication year</th>
-								<th>Number of copies</th>
-								<th>Loan Book</th>
-							</tr>
+					<table id="bookSearchRes">
+						<tr>
+							<th>Cover</th>
+							<th>Isbn</th>
+							<th>Title</th>
+							<th>Author</th>
+							<th>Category</th>
+							<th>Publication year</th>
+							<th>Number of copies</th>
+							<th>Loan Book</th>
+						</tr>
 
 						<% for(Book bk : bksLst){%>
 						<tr>

@@ -1,4 +1,3 @@
-
 package DB;
 
 import Model.*;
@@ -26,7 +25,7 @@ public class BookDB{
 		PreparedStatement bkCatPS;
 		PreparedStatement copyCntPS;
 
-		try {
+		try{
 			ps = this.cn.prepareStatement("SELECT * FROM books WHERE LOWER(isbn)=?");
 			ps.setString(1, isbn.toLowerCase());
 
@@ -86,7 +85,7 @@ public class BookDB{
 		PreparedStatement bkCatPS;
 		PreparedStatement copyCntPS;
 
-		try {
+		try{
 			ps = this.cn.prepareStatement("SELECT * FROM books WHERE LOWER(title) LIKE ?");
 			ps.setString(1, "%" + title.toLowerCase() + "%");
 
@@ -135,6 +134,53 @@ public class BookDB{
 			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
 		}
 		return bksLst;
+	}
+
+	public boolean addBook(String isbn, String title, String author, Category cat, Year year, String cover, int numOfCopies){
+
+		PreparedStatement ps;
+		boolean failed = false;
+		try{
+			boolean prevState = cn.getAutoCommit();
+			cn.setAutoCommit(false);
+
+			ps = cn.prepareStatement("insert into books (isbn, title, author, book_category, p_year, cover, copy_cnt) values('?', '?', '?', '?','?', '?', ?");
+			ps.setString(1, isbn);
+			ps.setString(2, title);
+			ps.setString(3, author);
+			ps.setString(4, cat.getCatName());
+			ps.setString(5, "01-01-" + Integer.toString(year.getValue()));
+			ps.setString(6, cover);
+			ps.setInt(7, numOfCopies);
+
+			if(ps.executeUpdate() != 0){
+				PreparedStatement psc = cn.prepareStatement("insert into book_copies (isbn, copy_code, copy_cond) values('?', '?', 1);");
+				psc.setString(1, isbn);
+				for(int i = 1; i <= numOfCopies && !failed; i++){
+					psc.setString(2, isbn + "_" + Integer.toString(i));
+					if(psc.executeUpdate() == 0){
+						failed = true;
+					}
+				}
+
+			} else {
+				failed = true;
+			}
+
+			if(failed){
+				cn.rollback();
+			} else {
+				cn.commit();
+			}
+
+			cn.setAutoCommit(prevState);
+		} catch(SQLException e){
+			// TODO
+			// Write an error
+			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
+			return false;
+		}
+		return !failed;
 	}
 
 }

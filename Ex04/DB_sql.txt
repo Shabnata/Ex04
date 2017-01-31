@@ -145,3 +145,5 @@ select * from books
 select * from conditions
 select * from book_copies
 
+Queries became complicated to read, using this site to format them automatically:
+http://www.dpriver.com/pp/sqlformat.htm

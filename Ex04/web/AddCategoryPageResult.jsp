@@ -23,7 +23,7 @@
 				</div> <%-- id=leftMenu --%>
 				<div id="contentArea">
 					<jsp:include page="AddCategoryForm.jsp" />
-					
+					<h1>Category added successfully</h1>
 					Existing categories:
 					<% ArrayList<Category> cat = new ArrayList<Category>();
 						CategoryDB cDb = new CategoryDB();
@@ -33,10 +33,6 @@
 						<li><%=c.getCatName()%></li>
 							<%}%>
 					</ul>
-
-
-
-
 				</div> <%-- id=centerBox --%>
 				<jsp:include page="Footer.jsp" />
 			</div> <%-- id=outerContainer --%>

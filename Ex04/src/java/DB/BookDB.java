@@ -1,3 +1,4 @@
+
 package DB;
 
 import Model.*;
@@ -21,20 +22,51 @@ public class BookDB{
 
 		Book bk = null;
 		PreparedStatement ps;
-		try{
+		Category bk_cat;
+		PreparedStatement bkCatPS;
+		PreparedStatement copyCntPS;
+
+		try {
 			ps = this.cn.prepareStatement("SELECT * FROM books WHERE LOWER(isbn)=?");
 			ps.setString(1, isbn.toLowerCase());
 
+			bkCatPS = this.cn.prepareStatement("SELECT * FROM categories WHERE cat_name=?");
+			copyCntPS = this.cn.prepareStatement("SELECT COUNT(*) AS copy_count FROM book_copies WHERE book_copies.isbn=? AND copy_code NOT IN("
+				+ "SELECT bc.copy_code FROM "
+				+ "(SELECT copy_code FROM book_copies WHERE book_copies.isbn=?) AS bc "
+				+ "JOIN loaned_books "
+				+ "ON "
+				+ "bc.copy_code=loaned_books.copy_code WHERE loaned_books.returned=false "
+				+ ")");
+
 			ResultSet rs = ps.executeQuery();
+			ResultSet bkCatRS;
+			ResultSet copyCntRS;
 			while(rs.next()){
 				bk = new Book();
 				bk.setISBN(rs.getString("isbn"));
 				bk.setTitle(rs.getString("title"));
 				bk.setAuthorName(rs.getString("author"));
+
+				bkCatPS.setString(1, rs.getString("book_category"));
+				bkCatRS = bkCatPS.executeQuery();
+				while(bkCatRS.next()){
+					bk_cat = new Category();
+					bk_cat.setCatID(bkCatRS.getInt("id"));
+					bk_cat.setCatName(bkCatRS.getString("cat_name"));
+					bk.setCategory(bk_cat);
+				}
+
 				bk.setBookYear(Year.parse(rs.getString("p_year"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 				bk.setCoverPath(rs.getString("cover"));
 				bk.setCopyCounter(Integer.parseInt(rs.getString("copy_cnt")));
-				bk.setCopyCounter(rs.getInt("copy_cnt")); // TODO Change this to be available copies
+
+				copyCntPS.setString(1, bk.getISBN());
+				copyCntPS.setString(2, bk.getISBN());
+				copyCntRS = copyCntPS.executeQuery();
+				while(copyCntRS.next()){
+					bk.setAvailableCopies(copyCntRS.getInt("copy_count"));
+				}
 
 			}
 		} catch(SQLException e){
@@ -49,42 +81,53 @@ public class BookDB{
 
 		ArrayList<Book> bksLst = new ArrayList<>();
 		Book bk;
-		ArrayList<Category> bkCatLst;
-		Category cat;
+		Category bk_cat;
 		PreparedStatement ps;
-		PreparedStatement bkCats;
-		PreparedStatement copyCnt;
+		PreparedStatement bkCatPS;
+		PreparedStatement copyCntPS;
 
-		try{
+		try {
 			ps = this.cn.prepareStatement("SELECT * FROM books WHERE LOWER(title) LIKE ?");
 			ps.setString(1, "%" + title.toLowerCase() + "%");
 
-			bkCats = this.cn.prepareStatement("SELECT * FROM book_categories WHERE isbn=?");
-			copyCnt = this.cn.prepareStatement("SELECT COUNT(*) FROM (SELECT * FROM book_copies WHERE book_copies.isbn=?) AS a JOIN loaned_books ON a.copy_code=loaned_books.copy_code WHERE loaned_books.returned=true");
+			bkCatPS = this.cn.prepareStatement("SELECT * FROM categories WHERE cat_name=?");
+			copyCntPS = this.cn.prepareStatement("SELECT COUNT(*) AS copy_count FROM book_copies WHERE book_copies.isbn=? AND copy_code NOT IN("
+				+ "SELECT bc.copy_code FROM "
+				+ "(SELECT copy_code FROM book_copies WHERE book_copies.isbn=?) AS bc "
+				+ "JOIN loaned_books "
+				+ "ON "
+				+ "bc.copy_code=loaned_books.copy_code WHERE loaned_books.returned=false "
+				+ ")");
+
 			ResultSet rs = ps.executeQuery();
-			ResultSet bkCatsRS;
+			ResultSet bkCatRS;
+			ResultSet copyCntRS;
 			while(rs.next()){
 				bk = new Book();
 				bk.setISBN(rs.getString("isbn"));
 				bk.setTitle(rs.getString("title"));
 				bk.setAuthorName(rs.getString("author"));
+
+				bkCatPS.setString(1, rs.getString("book_category"));
+				bkCatRS = bkCatPS.executeQuery();
+				while(bkCatRS.next()){
+					bk_cat = new Category();
+					bk_cat.setCatID(bkCatRS.getInt("id"));
+					bk_cat.setCatName(bkCatRS.getString("cat_name"));
+					bk.setCategory(bk_cat);
+				}
+
 				bk.setBookYear(Year.parse(rs.getString("p_year"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 				bk.setCoverPath(rs.getString("cover"));
-				bk.setCopyCounter(rs.getInt("copy_cnt")); // TODO Change this to be available copies
 
-				bkCats.setString(1, bk.getISBN());
-				bkCatsRS = bkCats.executeQuery();
-				bkCatLst = new ArrayList<>();
-				while(bkCatsRS.next()){
-					cat = new Category();
-					cat.setCatID(bkCatsRS.getInt("id"));
-					cat.setCatName(bkCatsRS.getString("cat_name"));
-					bkCatLst.add(cat);
+				copyCntPS.setString(1, bk.getISBN());
+				copyCntPS.setString(2, bk.getISBN());
+				copyCntRS = copyCntPS.executeQuery();
+				while(copyCntRS.next()){
+					bk.setAvailableCopies(copyCntRS.getInt("copy_count"));
 				}
-				bk.setCategories(bkCatLst);
 
 				bksLst.add(bk);
-
 			}
 		} catch(SQLException e){
 			// TODO

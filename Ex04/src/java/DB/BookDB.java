@@ -141,23 +141,23 @@ public class BookDB{
 		PreparedStatement ps;
 		boolean failed = false;
 		try{
-			boolean prevState = cn.getAutoCommit();
-			cn.setAutoCommit(false);
+			//boolean prevState = cn.getAutoCommit();
+			//cn.setAutoCommit(false);
 
-			ps = cn.prepareStatement("insert into books (isbn, title, author, book_category, p_year, cover, copy_cnt) values('?', '?', '?', '?','?', '?', ?");
+			ps = cn.prepareStatement("insert into books (isbn, title, author, book_category, p_year, cover, copy_cnt) values(?, ?, ?, ?, ?, ?, ?)");
 			ps.setString(1, isbn);
 			ps.setString(2, title);
 			ps.setString(3, author);
 			ps.setString(4, cat.getCatName());
-			ps.setString(5, "01-01-" + Integer.toString(year.getValue()));
+			ps.setString(5, Integer.toString(year.getValue()) + "-01-01");
 			ps.setString(6, cover);
 			ps.setInt(7, numOfCopies);
 
 			if(ps.executeUpdate() != 0){
-				PreparedStatement psc = cn.prepareStatement("insert into book_copies (isbn, copy_code, copy_cond) values('?', '?', 1);");
+				PreparedStatement psc = cn.prepareStatement("insert into book_copies (isbn, copy_code, copy_cond) values(?, ?, 1)");
 				psc.setString(1, isbn);
 				for(int i = 1; i <= numOfCopies && !failed; i++){
-					psc.setString(2, isbn + "_" + Integer.toString(i));
+					psc.setString(2, isbn + "_" + String.format("%03d", i));
 					if(psc.executeUpdate() == 0){
 						failed = true;
 					}
@@ -167,13 +167,12 @@ public class BookDB{
 				failed = true;
 			}
 
-			if(failed){
-				cn.rollback();
-			} else {
-				cn.commit();
-			}
-
-			cn.setAutoCommit(prevState);
+			//if(failed){
+			//	cn.rollback();
+			//} else {
+			//	cn.commit();
+			//}
+			//cn.setAutoCommit(prevState);
 		} catch(SQLException e){
 			// TODO
 			// Write an error

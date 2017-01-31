@@ -15,11 +15,11 @@
 				<div id="leftMenu">
 					<jsp:include page="Menu.jsp"/>
 					<br/><br/><br/>
-					<jsp:include page="LoginForm.jsp"/>
+					<jsp:include page="LogoutForm.jsp"/>
 				</div> <%-- id=leftMenu --%>
 				<div id="contentArea">
-					<jsp:include page="SearchBookForm.jsp" /><br/>
-					<hr/>
+					<jsp:include page="SearchBookForm.jsp"/><br/>
+					<hr/><br/>
 					<jsp:useBean id="bksLst" type="java.util.ArrayList<Model.Book>" scope="request"></jsp:useBean>
 
 						<table id="bookSearchRes">
@@ -43,7 +43,18 @@
 							<td><%= bk.getCategory().getCatName()%></td>
 							<td><%= bk.getBookYear()%></td>
 							<td><%= bk.getAvailableCopies()%></td>
-							<%--	<td><%= %></td> --%>
+							<% if(bk.getAvailableCopies() != 0){%>
+							<td>
+								<form action="AddLoanPageServlet?isbn=<%= bk.getISBN()%>" method="post">
+									<input type="submit" value="Loan"/>
+									<input type="hidden" value="<%= bk.getISBN()%>" name="bookIsbn"/>
+								</form>
+							</td>
+							<% } else { %>
+							<td>
+								-
+							</td>
+							<% } %>
 						</tr>
 						<% }%>
 					</table>

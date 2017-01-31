@@ -1,6 +1,6 @@
 <%--
-    Document   : AddBookPage
-    Created on : Jan 31, 2017, 3:30:15 PM
+    Document   : AddBookPageNotAdded
+    Created on : Jan 31, 2017, 4:47:34 PM
     Author     : Denis Sh
 --%>
 
@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>AddBookPage</title>
+		<title>AddBookPageNotAdded</title>
 		<link href="Library.css" rel="stylesheet" type="text/css"/>
 	</head>
     <body>
@@ -23,12 +23,10 @@
 				</div> <%-- id=leftMenu --%>
 				<div id="contentArea">
 					<jsp:include page="AddBookForm.jsp"/>
+					<h1>Could not add book</h1>
 				</div> <%-- id=contentArea --%>
 			</div> <%-- id=centerBox --%>
 			<jsp:include page="Footer.jsp" />
 		</div> <%-- id=outerContainer --%>
 	</body>
 </html>
-
-
-

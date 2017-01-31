@@ -19,12 +19,40 @@ public class CategoryDB {
 	public CategoryDB() {
 	}
 	
+	public Category getCategory(String catName) throws ClassNotFoundException, SQLException {
+		Class.forName("org.apache.derby.jdbc.ClientDriver");
+		String urlCn = "jdbc:derby://localhost:1527/LibraryDB";
+		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
+
+		Category ct = null;
+		//PreparedStatement ps = null;
+		Statement ps = null;
+		try {
+			//ps = this.cn.prepareStatement("SELECT * FROM students WHERE st_id = ?");
+			//ps.setString(1, st_id);
+			ps = cn.createStatement();
+
+			
+
+			ResultSet rs = ps.executeQuery("SELECT * FROM categoryies WHERE cat_name=\'"+catName+"\'");
+			while (rs.next()) {
+				ct = new Category();
+				ct.setCatName("catName");
+			}
+			cn.close();
+		} catch (SQLException e) {
+			// TODO
+			// Write an error
+		}
+		return ct;
+	}
+	
 	public ArrayList<Category> getCategories() throws ClassNotFoundException, SQLException {
 		Class.forName("org.apache.derby.jdbc.ClientDriver");
 		String urlCn = "jdbc:derby://localhost:1527/LibraryDB";
 		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
 
-		ArrayList<Category> cat = null;
+		ArrayList<Category> cat = new ArrayList<Category>();
 		Statement ps = null;
 		try {
 

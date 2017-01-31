@@ -3,6 +3,7 @@ package Model;
 
 import java.io.Serializable;
 import java.time.Year;
+import java.util.ArrayList;
 
 public class Book implements Serializable{
 
@@ -12,6 +13,8 @@ public class Book implements Serializable{
 	private Year bookYear;
 	private String coverPath;
 	private int copyCounter;
+	private ArrayList<Category> categories;
+	private int availableCopies;
 
 	public Book(){
 	}
@@ -62,6 +65,22 @@ public class Book implements Serializable{
 
 	public void setCopyCounter(int copyCounter){
 		this.copyCounter = copyCounter;
+	}
+
+	public ArrayList<Category> getCategories(){
+		return categories;
+	}
+
+	public void setCategories(ArrayList<Category> categories){
+		this.categories = categories;
+	}
+
+	public int getAvailableCopies(){
+		return availableCopies;
+	}
+
+	public void setAvailableCopies(int availableCopies){
+		this.availableCopies = availableCopies;
 	}
 
 }

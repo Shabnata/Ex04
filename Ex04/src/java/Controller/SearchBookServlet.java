@@ -1,4 +1,3 @@
-
 package Controller;
 
 import DB.*;
@@ -25,18 +24,12 @@ public class SearchBookServlet extends HttpServlet{
 	public void init(){
 		this.sc = this.getServletContext();
 
-		try {
+		try{
 			Class.forName("org.apache.derby.jdbc.ClientDriver");
 		} catch(ClassNotFoundException e){
-
 			// TODO
 			// Write an error
-			//public void init() {
-			//try {
-			//Class.forName("org.apache.derby.jdbc.ClientDriver");
-			//} catch (ClassNotFoundException ex) {
-			//Logger.getLogger(dbServlet.class.getName()).log(Level.SEVERE, null, ex);
-			//}
+			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
 		}
 	}
 
@@ -46,7 +39,7 @@ public class SearchBookServlet extends HttpServlet{
 		RequestDispatcher rd;
 		BookDB bDB;
 		ArrayList<Book> bksLst = null;
-		try {
+		try{
 			cn = DriverManager.getConnection(this.sc.getInitParameter("cnurl"), this.sc.getInitParameter("DBUsername"), this.sc.getInitParameter("DBPassword"));
 			bDB = new BookDB(cn);
 			bksLst = bDB.getBooksByTitle(request.getParameter("title"));
@@ -54,16 +47,14 @@ public class SearchBookServlet extends HttpServlet{
 		} catch(SQLException e){
 			// TODO
 			// Write an error
-			int x;
-			x = 12;
-			x = 123;
+			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
 		}
 
 		if(bksLst == null){
 			rd = request.getRequestDispatcher("SearchBookPageNotFound.jsp");
 		} else {
 			rd = request.getRequestDispatcher("SearchBookPageResult.jsp");
-			request.setAttribute("book", bksLst);
+			request.setAttribute("bksLst", bksLst);
 		}
 
 		rd.forward(request, response);

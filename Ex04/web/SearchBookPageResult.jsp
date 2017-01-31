@@ -20,7 +20,7 @@
 				<div id="contentArea">
 					<jsp:include page="SearchBookForm.jsp" /><br/>
 					<hr/>
-					<jsp:useBean id="bksLst" class="java.util.ArrayList<Model.Book>" scope="request" />
+					<jsp:useBean id="bksLst" type="java.util.ArrayList<Model.Book>" scope="request" />
 
 					<table id="bookSearchRes">
 						<tr>
@@ -34,18 +34,18 @@
 							<th>Loan Book</th>
 						</tr>
 
-						<% for(Book bk : bksLst){ %>
+						<% for(Book bk : bksLst){%>
 						<tr>
-							<td><img src=${bk.getCoverPath()} alt=${bk.getTitle} style="height: 80px;" /></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
+							<td><img src=<%= bk.getCoverPath()%> alt=<%= bk.getTitle()%> style="height: 80px;" /></td>
+							<td><%= bk.getISBN()%></td>
+							<td><%= bk.getTitle()%></td>
+							<td><%= bk.getAuthorName()%></td>
+							<td><%= bk.get()%></td>
+							<td><%= bk.getBookYear()%></td>
+							<td><%= bk.get()%></td>
+							<td><%= bk.getCoverPath()%></td>
 						</tr>
-						<% } %>
+						<% }%>
 					</table>
 
 				</div> <%-- id=contentArea --%>

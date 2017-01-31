@@ -6,12 +6,16 @@ create table students(
 	email varchar(255) not null,
 	fine integer check (fine >=0) not null
 );
+create table categories(
+	id integer GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+	cat_name varchar(255) primary key
+);
 create table books(
 	id integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-	isbn varchar(13) primary key, 
+	isbn varchar(13) primary key,
 	title varchar(255) not null,
 	author varchar(255) not null,
-	book_category integer references categories(id) not null,
+	book_category varchar(255) references categories(cat_name) not null,
 	p_year date not null,
 	cover varchar(255) not null,
 	copy_cnt integer check (copy_cnt >=0) not null
@@ -26,10 +30,6 @@ create table book_copies(
 	isbn varchar(13) references books(isbn) not null,
 	copy_code varchar(255) primary key,
 	copy_cond integer references conditions(con_key) not null
-);
-create table categories(
-	id integer primary key GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-	cat_name varchar(255) unique not null
 );
 create table loans(
 	id integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
@@ -73,16 +73,16 @@ insert into categories (cat_name) values('Fiction');
 insert into categories (cat_name) values('Thriller');
 
 
-insert into books (isbn, title, author, p_year, cover, copy_cnt) values('0000307949486', 'The Girl with the Dragon Tattoo', 'Stieg Larsson', '2011-01-01', 'https://images-na.ssl-images-amazon.com/images/I/51d3vkCK7WL._SX277_BO1,204,203,200_.jpg', 6);
-insert into books (isbn, title, author, p_year, cover, copy_cnt) values('0000307742539','The Girl Who Kicked the Hornet''s Nest', 'Stieg Larsson' , '2012-01-01','https://images-na.ssl-images-amazon.com/images/I/51hb5Jyc1WL._SX279_BO1,204,203,200_.jpg', 5);
-insert into books (isbn, title, author, p_year, cover, copy_cnt) values('0000307949508','The Girl Who Played with Fire', 'Stieg Larsson' , '2009-01-01','https://images-na.ssl-images-amazon.com/images/I/51dXFW6IkfL._SX280_BO1,204,203,200_.jpg', 3);
-insert into books (isbn, title, author, p_year, cover, copy_cnt) values('0001477820019','Take Me With You', 'Catherine Ryan Hyde' , '2014-01-01','https://images-na.ssl-images-amazon.com/images/I/51rA55ywNmL._SX332_BO1,204,203,200_.jpg', 2);
-insert into books (isbn, title, author, p_year, cover, copy_cnt) values('0000956998593','The Best Friend', 'Shalini Boland' , '2016-01-01','https://images-na.ssl-images-amazon.com/images/I/51ZlkjKcNTL._SX331_BO1,204,203,200_.jpg', 3);
-insert into books (isbn, title, author, p_year, cover, copy_cnt) values('0001786810328','The Killing Game', 'J.S. Carol' , '2013-01-01','https://images-na.ssl-images-amazon.com/images/I/51CQGc0nubL._SX322_BO1,204,203,200_.jpg', 3);
-insert into books (isbn, title, author, p_year, cover, copy_cnt) values('0000451495969','Cravings', 'Chrissy Teigen' , '2016-01-01','https://images-na.ssl-images-amazon.com/images/I/51HGuoYiOZL._SX379_BO1,204,203,200_.jpg', 3);
-insert into books (isbn, title, author, p_year, cover, copy_cnt) values('0000316221899','The Superfun Times Vegan Holiday Cookbook', 'Isa Chandra Moskowitz' , '2016-01-01','https://images-na.ssl-images-amazon.com/images/I/61K42L7CNgL._SX400_BO1,204,203,200_.jpg', 2);
-insert into books (isbn, title, author, p_year, cover, copy_cnt) values('0000753459019','The Best Book of Bugs', 'Claire Llewellyn' , '2015-01-01','https://images-na.ssl-images-amazon.com/images/I/51KvdbVDkDL._SX422_BO1,204,203,200_.jpg', 3);
-insert into books (isbn, title, author, p_year, cover, copy_cnt) values('0001623363586','Thug Kitchen', 'Thug Kitchen' , '2014-01-01','https://images-na.ssl-images-amazon.com/images/I/51v1Q88aB0L._SX404_BO1,204,203,200_.jpg', 3);
+insert into books (isbn, title, author, book_category, p_year, cover, copy_cnt) values('0000307949486', 'The Girl with the Dragon Tattoo', 'Stieg Larsson', 'Thriller','2011-01-01', 'https://images-na.ssl-images-amazon.com/images/I/51d3vkCK7WL._SX277_BO1,204,203,200_.jpg', 6);
+insert into books (isbn, title, author, book_category, p_year, cover, copy_cnt) values('0000307742539','The Girl Who Kicked the Hornet''s Nest', 'Stieg Larsson' , 'Thriller','2012-01-01','https://images-na.ssl-images-amazon.com/images/I/51hb5Jyc1WL._SX279_BO1,204,203,200_.jpg', 5);
+insert into books (isbn, title, author, book_category, p_year, cover, copy_cnt) values('0000307949508','The Girl Who Played with Fire', 'Stieg Larsson', 'Thriller','2009-01-01','https://images-na.ssl-images-amazon.com/images/I/51dXFW6IkfL._SX280_BO1,204,203,200_.jpg', 3);
+insert into books (isbn, title, author, book_category, p_year, cover, copy_cnt) values('0001477820019','Take Me With You', 'Catherine Ryan Hyde', 'Drama', '2014-01-01','https://images-na.ssl-images-amazon.com/images/I/51rA55ywNmL._SX332_BO1,204,203,200_.jpg', 2);
+insert into books (isbn, title, author, book_category, p_year, cover, copy_cnt) values('0000956998593','The Best Friend', 'Shalini Boland', 'Fiction', '2016-01-01','https://images-na.ssl-images-amazon.com/images/I/51ZlkjKcNTL._SX331_BO1,204,203,200_.jpg', 3);
+insert into books (isbn, title, author, book_category, p_year, cover, copy_cnt) values('0001786810328','The Killing Game', 'J.S. Carol', 'Comedy', '2013-01-01','https://images-na.ssl-images-amazon.com/images/I/51CQGc0nubL._SX322_BO1,204,203,200_.jpg', 3);
+insert into books (isbn, title, author, book_category, p_year, cover, copy_cnt) values('0000451495969','Cravings', 'Chrissy Teigen', 'Cooking', '2016-01-01','https://images-na.ssl-images-amazon.com/images/I/51HGuoYiOZL._SX379_BO1,204,203,200_.jpg', 3);
+insert into books (isbn, title, author, book_category, p_year, cover, copy_cnt) values('0000316221899','The Superfun Times Vegan Holiday Cookbook', 'Isa Chandra Moskowitz', 'Cooking', '2016-01-01','https://images-na.ssl-images-amazon.com/images/I/61K42L7CNgL._SX400_BO1,204,203,200_.jpg', 2);
+insert into books (isbn, title, author, book_category, p_year, cover, copy_cnt) values('0000753459019','The Best Book of Bugs', 'Claire Llewellyn', 'Comedy', '2015-01-01','https://images-na.ssl-images-amazon.com/images/I/51KvdbVDkDL._SX422_BO1,204,203,200_.jpg', 3);
+insert into books (isbn, title, author, book_category, p_year, cover, copy_cnt) values('0001623363586','Thug Kitchen', 'Thug Kitchen', 'Cooking', '2014-01-01','https://images-na.ssl-images-amazon.com/images/I/51v1Q88aB0L._SX404_BO1,204,203,200_.jpg', 3);
 
 
 insert into conditions (con_key, con_desc) values(1,'AsNew');

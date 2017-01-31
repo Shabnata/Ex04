@@ -13,7 +13,7 @@
 			<jsp:include page="Header.jsp" />
 			<div id="centerBox">
 				<div id="leftMenu">
-					<jsp:include page="MenuGuest.jsp" />
+					<jsp:include page="Menu.jsp" />
 					<br/><br/><br/>
 					<jsp:include page="LoginForm.jsp" />
 				</div> <%-- id=leftMenu --%>

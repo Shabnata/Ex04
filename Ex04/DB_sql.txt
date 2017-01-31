@@ -135,6 +135,9 @@ insert into book_copies (isbn, copy_code, copy_cond) values('0001623363586', '00
 insert into book_copies (isbn, copy_code, copy_cond) values('0001623363586', '0001623363586_002', 1);
 insert into book_copies (isbn, copy_code, copy_cond) values('0001623363586', '0001623363586_003', 1);
 
+insert into accounts (acc_id, acc_pass, acc_type) values('123456789','123456789','user');
+insert into accounts (acc_id, acc_pass, acc_type) values('admin','admin','admin');
+
 delete from students 
 select * from students
 select * from categories

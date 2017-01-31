@@ -15,6 +15,7 @@
 					<jsp:include page="Menu.jsp" />
 					<br/><br/><br/>
 					<jsp:include page="LoginForm.jsp" />
+					<jsp:include page="LogoutForm.jsp" />
 				</div> <%-- id=leftMenu --%>
 				<div id="contentArea">
 					<jsp:include page="SearchBookForm.jsp" />

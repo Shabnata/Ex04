@@ -20,6 +20,61 @@ public class BookDB{
 	public Book getBookByISBN(String isbn){
 
 		Book bk = null;
+		try{
+			PreparedStatement ps = this.cn.prepareStatement(""
+				+ "SELECT books.isbn, "
+				+ "       books.title, "
+				+ "       books.author, "
+				+ "       books.p_year, "
+				+ "       books.cover, "
+				+ "		  books.copy_cnt, "
+				+ "       books.book_category, "
+				+ "       categories.cat_name, "
+				+ "       Count(book_copies.copy_code) AS copy_count "
+				+ "FROM   books "
+				+ "       JOIN categories "
+				+ "         ON books.isbn = ? "
+				+ "            AND books.book_category = categories.cat_name "
+				+ "       JOIN book_copies "
+				+ "         ON books.isbn = book_copies.isbn "
+				+ "       JOIN loaned_books "
+				+ "         ON book_copies.copy_code = loaned_books.copy_code "
+				+ "            AND loaned_books.returned = false "
+				+ "GROUP  BY books.isbn, "
+				+ "          books.title, "
+				+ "          books.author, "
+				+ "          books.p_year, "
+				+ "          books.cover, "
+				+ "			 books.copy_cnt, "
+				+ "          books.book_category, "
+				+ "          categories.cat_name");
+			ps.setString(1, isbn);
+			ResultSet rs = ps.executeQuery();
+			if(rs.first()){
+				bk = new Book();
+				bk.setISBN(rs.getString("isbn"));
+				bk.setTitle(rs.getString("title"));
+				bk.setAuthorName(rs.getString("author"));
+
+				Category bk_cat = new Category();
+				bk_cat.setCatID(rs.getInt("book_category"));
+				bk_cat.setCatName(rs.getString("cat_name"));
+				bk.setCategory(bk_cat);
+
+				bk.setBookYear(Year.parse(rs.getString("p_year"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+				bk.setCoverPath(rs.getString("cover"));
+				bk.setCopyCounter(rs.getInt("copy_cnt"));
+				bk.setAvailableCopies(rs.getInt("copy_count"));
+			}
+		} catch(SQLException e){
+			// TODO
+			// Write an error
+			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
+		}
+
+		return bk;
+		/*
+		Book bk = null;
 		PreparedStatement ps;
 		Category bk_cat;
 		PreparedStatement bkCatPS;
@@ -30,13 +85,16 @@ public class BookDB{
 			ps.setString(1, isbn.toLowerCase());
 
 			bkCatPS = this.cn.prepareStatement("SELECT * FROM categories WHERE cat_name=?");
-			copyCntPS = this.cn.prepareStatement("SELECT COUNT(*) AS copy_count FROM book_copies WHERE book_copies.isbn=? AND copy_code NOT IN("
-				+ "SELECT bc.copy_code FROM "
-				+ "(SELECT copy_code FROM book_copies WHERE book_copies.isbn=?) AS bc "
-				+ "JOIN loaned_books "
-				+ "ON "
-				+ "bc.copy_code=loaned_books.copy_code WHERE loaned_books.returned=false "
-				+ ")");
+			copyCntPS = this.cn.prepareStatement(""
+				+ "SELECT Count(*) AS copy_count "
+				+ "FROM   book_copies "
+				+ "WHERE  book_copies.isbn = ? "
+				+ "       AND copy_code NOT IN(SELECT bc.copy_code "
+				+ "                            FROM   (SELECT copy_code "
+				+ "                                    FROM   book_copies "
+				+ "                                    WHERE  book_copies.isbn = ?) AS bc "
+				+ "                                   JOIN loaned_books "
+				+ "                                     ON bc.copy_code = loaned_books.copy_code ");
 
 			ResultSet rs = ps.executeQuery();
 			ResultSet bkCatRS;
@@ -74,10 +132,71 @@ public class BookDB{
 			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
 		}
 		return bk;
+		 */
 	}
 
 	public ArrayList<Book> getBooksByTitle(String title){
+		ArrayList<Book> bksLst = new ArrayList<>();
 
+		try{
+			Book bk;
+			Category bk_cat;
+			PreparedStatement ps = this.cn.prepareStatement(""
+				+ "SELECT books.isbn, "
+				+ "       books.title, "
+				+ "       books.author, "
+				+ "       books.p_year, "
+				+ "       books.cover, "
+				+ "       books.copy_cnt, "
+				+ "       books.book_category, "
+				+ "       categories.cat_name, "
+				+ "       Count(book_copies.copy_code) AS copy_count "
+				+ "FROM   books "
+				+ "       JOIN categories "
+				+ "         ON Lower(books.isbn) LIKE ? "
+				+ "            AND books.book_category = categories.cat_name "
+				+ "       JOIN book_copies "
+				+ "         ON books.isbn = book_copies.isbn "
+				+ "       JOIN loaned_books "
+				+ "         ON book_copies.copy_code = loaned_books.copy_code "
+				+ "            AND loaned_books.returned = false "
+				+ "GROUP  BY books.isbn, "
+				+ "          books.title, "
+				+ "          books.author, "
+				+ "          books.p_year, "
+				+ "          books.cover, "
+				+ "          books.copy_cnt, "
+				+ "          books.book_category, "
+				+ "          categories.cat_name");
+			ps.setString(1, "%" + title.toLowerCase() + "%");
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				bk = new Book();
+				bk.setISBN(rs.getString("isbn"));
+				bk.setTitle(rs.getString("title"));
+				bk.setAuthorName(rs.getString("author"));
+
+				bk_cat = new Category();
+				bk_cat.setCatID(rs.getInt("book_category"));
+				bk_cat.setCatName(rs.getString("cat_name"));
+				bk.setCategory(bk_cat);
+
+				bk.setBookYear(Year.parse(rs.getString("p_year"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+				bk.setCoverPath(rs.getString("cover"));
+				bk.setCopyCounter(rs.getInt("copy_cnt"));
+				bk.setAvailableCopies(rs.getInt("copy_count"));
+
+				bksLst.add(bk);
+			}
+		} catch(SQLException e){
+			// TODO
+			// Write an error
+			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
+		}
+
+		return bksLst;
+
+		/*
 		ArrayList<Book> bksLst = new ArrayList<>();
 		Book bk;
 		Category bk_cat;
@@ -134,6 +253,7 @@ public class BookDB{
 			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
 		}
 		return bksLst;
+		 */
 	}
 
 	public boolean addBook(String isbn, String title, String author, Category cat, Year year, String cover, int numOfCopies){
@@ -144,7 +264,22 @@ public class BookDB{
 			//boolean prevState = cn.getAutoCommit();
 			//cn.setAutoCommit(false);
 
-			ps = cn.prepareStatement("insert into books (isbn, title, author, book_category, p_year, cover, copy_cnt) values(?, ?, ?, ?, ?, ?, ?)");
+			ps = cn.prepareStatement(""
+				+ "INSERT INTO books "
+				+ "            (isbn, "
+				+ "             title, "
+				+ "             author, "
+				+ "             book_category, "
+				+ "             p_year, "
+				+ "             cover, "
+				+ "             copy_cnt) "
+				+ "VALUES     (?, "
+				+ "            ?, "
+				+ "            ?, "
+				+ "            ?, "
+				+ "            ?, "
+				+ "            ?, "
+				+ "            ?)");
 			ps.setString(1, isbn);
 			ps.setString(2, title);
 			ps.setString(3, author);
@@ -154,7 +289,14 @@ public class BookDB{
 			ps.setInt(7, numOfCopies);
 
 			if(ps.executeUpdate() != 0){
-				PreparedStatement psc = cn.prepareStatement("insert into book_copies (isbn, copy_code, copy_cond) values(?, ?, 1)");
+				PreparedStatement psc = cn.prepareStatement(""
+					+ "INSERT INTO book_copies "
+					+ "            (isbn, "
+					+ "             copy_code, "
+					+ "             copy_cond) "
+					+ "VALUES     (?, "
+					+ "            ?, "
+					+ "            1)");
 				psc.setString(1, isbn);
 				for(int i = 1; i <= numOfCopies && !failed; i++){
 					psc.setString(2, isbn + "_" + String.format("%03d", i));

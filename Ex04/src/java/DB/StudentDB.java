@@ -78,5 +78,33 @@ public class StudentDB {
 		}
 		return added;
 	}
+	
+	public Boolean updateStudent(Student stud) throws ClassNotFoundException, SQLException {
+		Boolean updated = false;
+		Class.forName("org.apache.derby.jdbc.ClientDriver");
+		String urlCn = "jdbc:derby://localhost:1527/LibraryDB";
+		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
+
+		Student st = stud;
+		//PreparedStatement ps = null;
+		Statement ps = null;
+		
+		try {			
+			PreparedStatement pst = cn.prepareStatement("UPDATE students SET fine=? WHERE st_id=?");
+			pst.setDouble(1, st.getCurrentFines());
+			pst.setString(2, st.getStudentID());
+			updated=pst.execute();
+			//int nor = pst.executeUpdate();
+//				if(nor!=0){
+//					added=true;
+//				}
+				
+			cn.close();
+		} catch (SQLException e) {
+			// TODO
+			// Write an error
+		}
+		return updated;
+	}
 
 }

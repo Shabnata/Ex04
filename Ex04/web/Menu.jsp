@@ -1,3 +1,4 @@
+<%@page import="DB.UserDB"%>
 <%@page import="DB.CookieDB"%>
 <%@page import="Model.*"%>
 <%
@@ -6,11 +7,23 @@
 %>
 
 
-<!-- Need to change the logic-->
 <%  if (currentUser == null) {%>
 <jsp:include page="MenuGuest.jsp" />
-<%  } else if (currentUser.getValue().equals("admin")) {%>
+<%  } else if (currentUser != null) {
+	UserDB myUserDb = new UserDB();
+	User crrUser = myUserDb.getUser(currentUser.getValue());
+	if (crrUser.getUserType().equals("admin")) {%>
 <jsp:include page="MenuAdmin.jsp" />
-<%  } else {%>
+<%} else {%>
+
 <jsp:include page="MenuUser.jsp" />
-<%}%>
+<%}
+		}%>
+
+
+
+
+
+
+
+

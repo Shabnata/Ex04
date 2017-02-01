@@ -1,12 +1,12 @@
 <h4>Common options:</h4>
-<a href="ReturnBookPage">Return books</a><br/>
+<a href="ReturnBookPage.jsp">Return books</a><br/>
 <h4>Search options:</h4>
-<a href="SearchBookPage">Find book</a><br/>
-<a href="SearchStudentPage">Find student</a><br/>
+<a href="SearchBookPage.jsp">Find book</a><br/>
+<a href="SearchStudentPage.jsp">Find student</a><br/>
 <h4>Add Options:</h4>
-<a href="AddBookPage">Add new book</a><br/>
-<a href="AddCategoryPage">Add new category</a><br/>
-<a href="AddLoanPage">Add new loan</a><br/>
-<a href="AddStudentPage">Add new student</a><br/>
+<a href="AddBookPage.jsp">Add new book</a><br/>
+<a href="AddCategoryPage.jsp">Add new category</a><br/>
+<a href="AddLoanPage.jsp">Add new loan</a><br/>
+<a href="AddStudentPage.jsp">Add new student</a><br/>
 <h4>Delete options:</h4>
-<a href="DeleteBookPage">Delete book</a>
+<a href="DeleteBookPage.jsp">Delete book</a>

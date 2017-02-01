@@ -19,6 +19,7 @@
 				<div id="leftMenu">
 					<%@include file="Menu.jsp" %>
 					<br/><br/><br/>
+					
 				</div> <%-- id=leftMenu --%>
 				<div id="contentArea">
 					<%@include file="AddBookForm.jsp" %>

@@ -14,15 +14,15 @@
 	</head>
     <body>
 		<div id="outerContainer">
-			<jsp:include page="Header.jsp"/>
+			<%@include file="Header.jsp" %>
 			<div id="centerBox">
 				<div id="leftMenu">
-					<jsp:include page="Menu.jsp"/>
+					<%@include file="Menu.jsp" %>
 					<br/><br/><br/>
 				
 				</div> <%-- id=leftMenu --%>
 				<div id="contentArea">
-					<jsp:include page="AddBookForm.jsp"/>
+					<%@include file="AddBookForm.jsp" %>
 					<hr/><br/>
 					<jsp:useBean id="book" type="Model.Book" scope="request"/>
 
@@ -49,7 +49,7 @@
 
 				</div> <%-- id=contentArea --%>
 			</div> <%-- id=centerBox --%>
-			<jsp:include page="Footer.jsp" />
+			<%@include file="Footer.jsp" %>
 		</div> <%-- id=outerContainer --%>
 	</body>
 </html>

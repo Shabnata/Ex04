@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.time.Year;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -49,37 +50,50 @@ public class AddBookServlet extends HttpServlet{
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
-		Connection cn = null;
-		RequestDispatcher rd;
-		CategoryDB cDB;
-		BookDB bDB;
-		Book bk = null;
-		boolean failed = false;
+		Connection cn;
+		RequestDispatcher rd = null;
+		Book bk;
+		ArrayList<Category> catLst;
 		try{
 			cn = DriverManager.getConnection(this.sc.getInitParameter("cnurl"), this.sc.getInitParameter("DBUsername"), this.sc.getInitParameter("DBPassword"));
 
-			cDB = new CategoryDB();
-			Category addToCategory = cDB.getCategory(request.getParameter("category"));
-			bDB = new BookDB(cn);
-			failed = !bDB.addBook(request.getParameter("isbn"), request.getParameter("title"), request.getParameter("author"), addToCategory, Year.parse(request.getParameter("year")), request.getParameter("cover"), Integer.parseInt(request.getParameter("numCopies")));//bDB.getBooksByTitle(request.getParameter("title"));
-			if(!failed){
-				bk = bDB.getBookByISBN(request.getParameter("isbn"));
+			CategoryDB cDB = new CategoryDB();
+			catLst = cDB.getCategories();
+			request.setAttribute("categories", catLst);
+
+			String catParam = request.getParameter("category");
+			if(catParam != null){
+				Category addToCategory = null;
+				for(Category c : catLst){
+					if(c.getCatName().equals(catParam)){
+						addToCategory = c;
+						break;
+					}
+				}
+
+				BookDB bDB = new BookDB(cn);
+				boolean failed = !bDB.addBook(request.getParameter("isbn"), request.getParameter("title"), request.getParameter("author"), addToCategory, Year.parse(request.getParameter("year")), request.getParameter("cover"), Integer.parseInt(request.getParameter("numCopies")));
+				if(!failed){
+					bk = bDB.getBookByISBN(request.getParameter("isbn"));
+					rd = request.getRequestDispatcher("AddBookPageResult.jsp");
+					request.setAttribute("book", bk);
+				} else {
+					rd = request.getRequestDispatcher("AddBookPageNotAdded.jsp");
+				}
+				cn.close();
+			} else {
+				rd = request.getRequestDispatcher("AddBookPage.jsp");
 			}
-			cn.close();
 		} catch(SQLException | ClassNotFoundException e){
 			// TODO
 			// Write an error
 			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
-			failed = true;
 		}
 
-		if(failed){
-			rd = request.getRequestDispatcher("AddBookPageNotAdded.jsp");
-		} else {
-			rd = request.getRequestDispatcher("AddBookPageResult.jsp");
-			request.setAttribute("book", bk);
+		if(rd != null){
+			rd.forward(request, response);
 		}
-		rd.forward(request, response);
+
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

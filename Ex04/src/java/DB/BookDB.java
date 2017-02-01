@@ -73,6 +73,9 @@ public class BookDB{
 		}
 
 		return bk;
+		
+		// TODO Delete this before submitting if the replacement code above works
+		// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 		/*
 		Book bk = null;
 		PreparedStatement ps;
@@ -133,6 +136,7 @@ public class BookDB{
 		}
 		return bk;
 		 */
+		 // </editor-fold>
 	}
 
 	public ArrayList<Book> getBooksByTitle(String title){
@@ -196,6 +200,8 @@ public class BookDB{
 
 		return bksLst;
 
+		// TODO Delete this before submitting if the replacement code above works
+		// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 		/*
 		ArrayList<Book> bksLst = new ArrayList<>();
 		Book bk;
@@ -254,6 +260,7 @@ public class BookDB{
 		}
 		return bksLst;
 		 */
+		 // </editor-fold>
 	}
 
 	public boolean addBook(String isbn, String title, String author, Category cat, Year year, String cover, int numOfCopies){

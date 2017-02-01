@@ -23,12 +23,10 @@
 	</div>
 	<div class="rightFormPart">
 		<span class="formTxt">Category:<span style="color: red;">*</span></span><br/>
-
+		<jsp:useBean id="categories" class="java.util.ArrayList<Category>" type="java.util.ArrayList<Category>" scope="request"/>
 		<%
-			CategoryDB cDB = new CategoryDB();
-			ArrayList<Category> libCategories = cDB.getCategories();
 			boolean flagFirst = true;
-			for(Category c : libCategories){
+			for(Category c : categories){
 				if(flagFirst){
 		%>
 		<input type="radio" name="category" checked="checked" value="<%= c.getCatName()%>"/> <%= c.getCatName()%> <br/>

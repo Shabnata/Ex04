@@ -14,19 +14,19 @@
 	</head>
     <body>
 		<div id="outerContainer">
-			<jsp:include page="Header.jsp"/>
+			<%@include file="Header.jsp"%>
 			<div id="centerBox">
 				<div id="leftMenu">
-					<jsp:include page="Menu.jsp"/>
+					<%@include file="Menu.jsp" %>
 					<br/><br/><br/>
-					<jsp:include page="LogoutForm.jsp"/>
+					<%@include file="LogoutForm.jsp" %>
 				</div> <%-- id=leftMenu --%>
 				<div id="contentArea">
-					<jsp:include page="AddBookForm.jsp"/>
+					<%@include file="AddBookForm.jsp" %>
 					<h1>Could not add book</h1>
 				</div> <%-- id=contentArea --%>
 			</div> <%-- id=centerBox --%>
-			<jsp:include page="Footer.jsp" />
+			<%@include file="Footer.jsp" %>
 		</div> <%-- id=outerContainer --%>
 	</body>
 </html>

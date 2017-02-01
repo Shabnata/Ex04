@@ -15,7 +15,7 @@
 				<div id="leftMenu">
 					<jsp:include page="Menu.jsp" />
 					<br/><br/><br/>
-					
+
 				</div> <%-- id=leftMenu --%>
 				<div id="contentArea">
 					<jsp:include page="SearchStudentForm.jsp" />
@@ -28,6 +28,7 @@
 							<th>First name</th>
 							<th>Last name</th>
 							<th>Email</th>
+							<th>Number of books currently loaned</th>
 							<th>Fines</th>
 							<th>Pay fines</th>
 						</tr>
@@ -36,8 +37,15 @@
 							<td><%=student.getFirstName()%></td>
 							<td><%=student.getLastName()%></td>
 							<td><%=student.getEmailAddress()%></td>
+							<td>loaned books</td>
 							<td><%=student.getCurrentFines()%></td>
-							<td>//TODO</td>
+							<td>
+								<form class="formStyle" action="PayFineServlet" method="POST">
+									<input type="number" name="payAmount" min=0 max="<%=student.getCurrentFines()%>"/>
+									<input type="hidden" name="stID" value="<%=student.getStudentID()%>"/>
+									<input type="submit" value="pay" />
+								</form>
+							</td>
 						</tr>
 
 

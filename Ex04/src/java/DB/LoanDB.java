@@ -31,7 +31,7 @@ public class LoanDB{
 			ps = this.cn.prepareStatement(""
 				+ "SELECT tblB.loan_id, "
 				+ "       tblB.st_id, "
-				+ "		  students.f_name, "
+				+ "       students.f_name, "
 				+ "       students.l_name, "
 				+ "       students.email, "
 				+ "       students.fine,"

@@ -270,9 +270,6 @@ public class BookDB{
 		PreparedStatement ps;
 		boolean failed = false;
 		try{
-			//boolean prevState = cn.getAutoCommit();
-			//cn.setAutoCommit(false);
-
 			ps = cn.prepareStatement(""
 				+ "INSERT INTO books "
 				+ "            (isbn, "
@@ -318,12 +315,6 @@ public class BookDB{
 				failed = true;
 			}
 
-			//if(failed){
-			//	cn.rollback();
-			//} else {
-			//	cn.commit();
-			//}
-			//cn.setAutoCommit(prevState);
 		} catch(SQLException e){
 			// TODO
 			// Write an error
@@ -382,7 +373,7 @@ public class BookDB{
 				Deleting this book will cascade down and delete all entries in
 				book_copies and loaned_books with the corrosponding book_isbn .
 				 */
-				return (deleteBookPS.executeUpdate() == 1);
+				return (deleteBookPS.executeUpdate() == 1); // TODO Check returned value for deleting multiple copies
 			}
 		} catch(SQLException ex){
 			// TODO

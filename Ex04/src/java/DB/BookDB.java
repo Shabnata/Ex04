@@ -13,6 +13,15 @@ import java.util.logging.Logger;
 
 public class BookDB{
 
+	/*
+		*
+		*
+		* TODO
+		* Remember to test this Class
+		*
+		*
+		*
+	 */
 	private Connection cn;
 
 	public BookDB(Connection cn){
@@ -77,7 +86,7 @@ public class BookDB{
 		return bk;
 
 		// TODO Delete this before submitting if the replacement code above works
-		// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+		// <editor-fold defaultstate="collapsed" desc="Delete me before submitting.">
 		/*
 		Book bk = null;
 		PreparedStatement ps;
@@ -203,7 +212,7 @@ public class BookDB{
 		return bksLst;
 
 		// TODO Delete this before submitting if the replacement code above works
-		// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+		// <editor-fold defaultstate="collapsed" desc="Delete me before submitting.">
 		/*
 		ArrayList<Book> bksLst = new ArrayList<>();
 		Book bk;

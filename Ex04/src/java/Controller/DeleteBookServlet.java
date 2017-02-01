@@ -35,6 +35,7 @@ public class DeleteBookServlet extends HttpServlet{
 		}
 	}
 
+	// <editor-fold defaultstate="collapsed" desc="Pancackes.">
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
 	 * methods.
@@ -44,9 +45,17 @@ public class DeleteBookServlet extends HttpServlet{
 	 *
 	 * @throws ServletException if a servlet-specific error occurs
 	 * @throws IOException      if an I/O error occurs
-	 */
+	 */// </editor-fold>
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-
+		/*
+		*
+		*
+		* TODO
+		* Remember to test this Servlet
+		*
+		*
+		*
+		 */
 		Connection cn;
 		RequestDispatcher rd = request.getRequestDispatcher("DeleteBookPage.jsp");
 		String bookIsbn = request.getParameter("bookIsbn");

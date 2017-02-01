@@ -14,6 +14,15 @@ import java.util.GregorianCalendar;
  */
 public class LoanDB{
 
+	/*
+		*
+		*
+		* TODO
+		* Remember to test this Class
+		*
+		*
+		*
+	 */
 	private Connection cn;
 
 	public LoanDB(Connection cn){

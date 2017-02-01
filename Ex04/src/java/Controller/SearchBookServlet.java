@@ -45,29 +45,36 @@ public class SearchBookServlet extends HttpServlet{
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
-		Connection cn = null;
-		RequestDispatcher rd;
-		BookDB bDB;
-		ArrayList<Book> bksLst = null;
+		Connection cn;
+		RequestDispatcher rd = null;
+		ArrayList<Book> bksLst;
 		try{
 			cn = DriverManager.getConnection(this.sc.getInitParameter("cnurl"), this.sc.getInitParameter("DBUsername"), this.sc.getInitParameter("DBPassword"));
-			bDB = new BookDB(cn);
-			bksLst = bDB.getBooksByTitle(request.getParameter("title"));
-			cn.close();
+
+			String titleParam = request.getParameter("title");
+			if(titleParam != null){
+				BookDB bDB = new BookDB(cn);
+				bksLst = bDB.getBooksByTitle(request.getParameter("title"));
+				cn.close();
+
+				if(!bksLst.isEmpty()){
+					rd = request.getRequestDispatcher("SearchBookPageResult.jsp");
+					request.setAttribute("bksLst", bksLst);
+				} else {
+					rd = request.getRequestDispatcher("SearchBookPageNotFound.jsp");
+				}
+			} else {
+				rd = request.getRequestDispatcher("SearchBookPage.jsp");
+			}
 		} catch(SQLException e){
 			// TODO
 			// Write an error
 			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
 		}
 
-		if(bksLst == null){
-			rd = request.getRequestDispatcher("SearchBookPageNotFound.jsp");
-		} else {
-			rd = request.getRequestDispatcher("SearchBookPageResult.jsp");
-			request.setAttribute("bksLst", bksLst);
+		if(rd != null){
+			rd.forward(request, response);
 		}
-
-		rd.forward(request, response);
 
 	}
 

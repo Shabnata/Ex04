@@ -18,7 +18,9 @@
 
 <jsp:include page="MenuUser.jsp" />
 <%}
-		}%>
+	}%>
+<jsp:include page="LoginForm.jsp" />
+<jsp:include page="LogoutForm.jsp" />
 
 
 

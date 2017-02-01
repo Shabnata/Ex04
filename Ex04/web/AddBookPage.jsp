@@ -19,7 +19,7 @@
 				<div id="leftMenu">
 					<%@include file="Menu.jsp" %>
 					<br/><br/><br/>
-					<%@include file="LogoutForm.jsp" %>
+
 				</div> <%-- id=leftMenu --%>
 				<div id="contentArea">
 					<%@include file="AddBookForm.jsp" %>
@@ -29,6 +29,3 @@
 		</div> <%-- id=outerContainer --%>
 	</body>
 </html>
-
-
-

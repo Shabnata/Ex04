@@ -32,9 +32,8 @@ create table book_copies(
 	copy_cond integer references conditions(con_key) not null
 );
 create table loans(
-	id integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+	loan_id integer primary key GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
 	st_id varchar(9) references students(st_id) on delete restrict not null,
-	loan_id integer primary key check(loan_id>=0),
 	start_d date not null,
 	ret_d date not null,
 	constraint chk_d check (ret_d >= start_d)

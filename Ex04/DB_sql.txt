@@ -45,7 +45,8 @@ create table loaned_books(
 	copy_code varchar(255) references book_copies(copy_code) on delete cascade not null,
 	returned boolean default false,
 	days_over integer default 0,
-	constraint chk_days check((returned = true AND days_over >= 0) OR (returned = false AND days_over = 0))
+	constraint chk_days check((returned = true AND days_over >= 0) OR (returned = false AND days_over = 0)),
+	primary key(loan_id, copy_code)
 );
 create table accounts(
 	id integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),

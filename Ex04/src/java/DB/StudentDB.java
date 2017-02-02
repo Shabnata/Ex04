@@ -133,10 +133,7 @@ public class StudentDB {
 			ResultSet rs = pst.executeQuery();
 			 if (rs.next()) {
                 cnt = rs.getInt("num");
-            }
-
-			
-			
+            }						
 			cn.close();
 		} catch (SQLException e) {
 			s = e.getMessage();

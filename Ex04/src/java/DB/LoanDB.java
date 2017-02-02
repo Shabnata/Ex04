@@ -1,3 +1,4 @@
+
 package DB;
 
 import Model.*;
@@ -35,7 +36,7 @@ public class LoanDB{
 	public Loan getLoanByID(int loan_id){
 		Loan ln = null;
 
-		try{
+		try {
 			BookCopy bc;
 			BookCondition bcCond;
 			PreparedStatement ps;
@@ -137,11 +138,48 @@ public class LoanDB{
 	}
 
 	public Loan getNewLoan(String st_id, GregorianCalendar start_d, GregorianCalendar ret_d){
+		String addNewLoanQuery = ""
+			+ "INSERT INTO loans "
+			+ "            (st_id, "
+			+ "             start_d, "
+			+ "             ret_d) "
+			+ "VALUES      (?, "
+			+ "             ?, "
+			+ "             ?)";
+		String getNewLoanIDQuery = ""
+			+ "SELECT Max(loan_id) "
+			+ "FROM   loans "
+			+ "WHERE  st_id = ?";
 		return null;
 	}
 
+	/*Function expects a valid loan_id and bc to add to said loan.
+	Does not check that the copy isn't in another loan.*/
 	public boolean addBookCopyToLoan(int loan_id, BookCopy bc){
-		return false;
+		if(bc == null || loan_id < 0){
+			return false;
+		}
+		String addCopyToLoanQuery = ""
+			+ "INSERT INTO loaned_books "
+			+ "            (loan_id, "
+			+ "             copy_code) "
+			+ "VALUES     (?, "
+			+ "            ?)";
+
+		try {
+			PreparedStatement ps = this.cn.prepareStatement(addCopyToLoanQuery);
+			ps.setInt(1, loan_id);
+			ps.setString(2, bc.getCOPY_CODE());
+			if(ps.executeUpdate() != 1){
+				return false;
+			}
+		} catch(SQLException e){
+			// TODO
+			// Write an error
+			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
+			return false;
+		}
+		return true;
 	}
 
 }

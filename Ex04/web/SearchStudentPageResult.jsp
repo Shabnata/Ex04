@@ -1,4 +1,5 @@
 
+<%@page import="DB.StudentDB"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -37,7 +38,13 @@
 							<td><%=student.getFirstName()%></td>
 							<td><%=student.getLastName()%></td>
 							<td><%=student.getEmailAddress()%></td>
-							<td>loaned books</td>
+							
+							<%
+							//get loaned bookks num
+							StudentDB stDB= new StudentDB();
+							int num = stDB.getCountLoanedBooks(student.getStudentID());
+							%>
+							<td><%=num%></td>
 							<td><%=student.getCurrentFines()%></td>
 							<td>
 								<form class="formStyle" action="PayFineServlet" method="POST">

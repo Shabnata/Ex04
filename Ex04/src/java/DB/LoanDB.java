@@ -5,7 +5,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
@@ -14,6 +17,15 @@ import java.util.GregorianCalendar;
  */
 public class LoanDB{
 
+	/*
+		*
+		*
+		* TODO
+		* Remember to test this Class
+		*
+		*
+		*
+	 */
 	private Connection cn;
 
 	public LoanDB(Connection cn){
@@ -76,8 +88,17 @@ public class LoanDB{
 				ln = new Loan();
 				ln.setLoanID(rs.getInt("loan_id"));
 
-				//ln.setLoanedDate(rs.getString("start_d"));
-				//ln.setReturnByDate(returnByDate);
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				//sdf.setLenient(true); This does what?
+				GregorianCalendar loanedDate = new GregorianCalendar();
+				GregorianCalendar returnByDate = new GregorianCalendar();
+				Date lDate = sdf.parse(rs.getString("start_d"));
+				Date rDate = sdf.parse(rs.getString("ret_d"));
+				loanedDate.setTime(lDate);
+				returnByDate.setTime(rDate);
+				ln.setLoanedDate(loanedDate);
+				ln.setReturnByDate(returnByDate);
+
 				Student st = new Student();
 				st.setStudentID(rs.getString("st_id"));
 				st.setFirstName(rs.getString("f_name"));
@@ -106,9 +127,10 @@ public class LoanDB{
 				ln.setBooksInLoan(booksInLoan);
 				ln.setBooksReturned(booksReturned);
 			}
-		} catch(SQLException e){
+		} catch(SQLException | ParseException e){
 			// TODO
 			// Write an error
+			// Make sure the parsing works correctly and then combine the catches.
 			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
 		}
 		return ln;

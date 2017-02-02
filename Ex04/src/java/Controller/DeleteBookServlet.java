@@ -1,13 +1,10 @@
 package Controller;
 
-import DB.*;
-import Model.*;
+import DB.BookDB;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.time.Year;
-import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -20,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Denis Sh
  */
-@WebServlet(name = "AddBookServlet", urlPatterns = {"/AddBookServlet"})
-public class AddBookServlet extends HttpServlet{
+@WebServlet(name = "DeleteBookServlet", urlPatterns = {"/DeleteBookServlet"})
+public class DeleteBookServlet extends HttpServlet{
 
 	ServletContext sc;
 
@@ -60,48 +57,26 @@ public class AddBookServlet extends HttpServlet{
 		*
 		 */
 		Connection cn;
-		RequestDispatcher rd = null;
-		Book bk;
-		ArrayList<Category> catLst;
-		try{
-			cn = DriverManager.getConnection(this.sc.getInitParameter("cnurl"), this.sc.getInitParameter("DBUsername"), this.sc.getInitParameter("DBPassword"));
-
-			CategoryDB cDB = new CategoryDB();
-			catLst = cDB.getCategories();
-			request.setAttribute("categories", catLst);
-
-			String catParam = request.getParameter("category");
-			if(catParam != null){
-				Category addToCategory = null;
-				for(Category c : catLst){
-					if(c.getCatName().equals(catParam)){
-						addToCategory = c;
-						break;
-					}
-				}
-
+		RequestDispatcher rd = request.getRequestDispatcher("DeleteBookPage.jsp");
+		String bookIsbn = request.getParameter("bookIsbn");
+		if(bookIsbn != null){
+			try{
+				cn = DriverManager.getConnection(this.sc.getInitParameter("cnurl"), this.sc.getInitParameter("DBUsername"), this.sc.getInitParameter("DBPassword"));
 				BookDB bDB = new BookDB(cn);
-				boolean failed = !bDB.addBook(request.getParameter("isbn"), request.getParameter("title"), request.getParameter("author"), addToCategory, Year.parse(request.getParameter("year")), request.getParameter("cover"), Integer.parseInt(request.getParameter("numCopies")));
-				if(!failed){
-					bk = bDB.getBookByISBN(request.getParameter("isbn"));
-					rd = request.getRequestDispatcher("AddBookPageResult.jsp");
-					request.setAttribute("book", bk);
+
+				if(bDB.deleteBookByISBN(bookIsbn)){
+					request.setAttribute("servletMessage", "Cannot delete Book with ISBN " + bookIsbn);
 				} else {
-					rd = request.getRequestDispatcher("AddBookPageNotAdded.jsp");
+					request.setAttribute("servletMessage", "Book with ISBN " + bookIsbn + "was deleted successfully.");
 				}
-				cn.close();
-			} else {
-				rd = request.getRequestDispatcher("AddBookPage.jsp");
+			} catch(SQLException e){
+				// TODO
+				// Write an error
+				System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
 			}
-		} catch(SQLException | ClassNotFoundException e){
-			// TODO
-			// Write an error
-			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
 		}
 
-		if(rd != null){
-			rd.forward(request, response);
-		}
+		rd.forward(request, response);
 
 	}
 

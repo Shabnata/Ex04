@@ -9,4 +9,4 @@
 <a href="AddLoanPage.jsp">Add new loan</a><br/>
 <a href="AddStudentPage.jsp">Add new student</a><br/>
 <h4>Delete options:</h4>
-<a href="DeleteBookPage.jsp">Delete book</a>
+<a href="DeleteBookServlet">Delete book</a>

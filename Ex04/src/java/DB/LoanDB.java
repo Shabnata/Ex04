@@ -186,12 +186,8 @@ public class LoanDB{
 		return null;
 	}
 
-	/*Function expects a valid loan_id and bc to add to said loan.
-	Does not check that the copy isn't in another loan.*/
-	public boolean addBookCopyToLoan(int loan_id, BookCopy bc){
-		if(bc == null || loan_id < 0){
-			return false;
-		}
+	public boolean addBookToLoan(int loan_id, String book_isbn){
+
 		String addCopyToLoanQuery = ""
 			+ "INSERT INTO loaned_books "
 			+ "            (loan_id, "
@@ -199,6 +195,11 @@ public class LoanDB{
 			+ "VALUES     (?, "
 			+ "            ?)";
 
+		ArrayList<BookCopy> bcLst = (new BookCopyDB(this.cn)).getUsableCopiesOfBook(book_isbn);
+		if(bcLst == null || bcLst.isEmpty()){
+			return false;
+		}
+		BookCopy bc = bcLst.get(0);
 		try{
 			PreparedStatement ps = this.cn.prepareStatement(addCopyToLoanQuery);
 			ps.setInt(1, loan_id);

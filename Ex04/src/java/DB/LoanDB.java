@@ -136,7 +136,11 @@ public class LoanDB{
 		return ln;
 	}
 
-	public Loan getNewLoan(String st_id, GregorianCalendar start_d, GregorianCalendar ret_d){
+	public Loan getNewLoanID(String st_id, GregorianCalendar start_d, GregorianCalendar ret_d){
+		if(start_d == null || ret_d == null){
+			return null;
+		}
+
 		String addNewLoanQuery = ""
 			+ "INSERT INTO loans "
 			+ "            (st_id, "
@@ -146,9 +150,39 @@ public class LoanDB{
 			+ "             ?, "
 			+ "             ?)";
 		String getNewLoanIDQuery = ""
-			+ "SELECT Max(loan_id) "
+			+ "SELECT Max(loan_id) AS new_loan_id"
 			+ "FROM   loans "
 			+ "WHERE  st_id = ?";
+
+		try{
+			PreparedStatement addPS = this.cn.prepareStatement(addNewLoanQuery);
+			addPS.setString(1, st_id);
+			addPS.setString(2, Integer.toString(start_d.get(GregorianCalendar.YEAR)) + "-" + Integer.toString(start_d.get(GregorianCalendar.MONTH) + 1) + "-" + Integer.toString(start_d.get(GregorianCalendar.DAY_OF_MONTH)));
+			addPS.setString(3, Integer.toString(ret_d.get(GregorianCalendar.YEAR)) + "-" + Integer.toString(ret_d.get(GregorianCalendar.MONTH) + 1) + "-" + Integer.toString(ret_d.get(GregorianCalendar.DAY_OF_MONTH)));
+
+			if(addPS.executeUpdate() != 1){
+				return null;
+			}
+
+			PreparedStatement getLoanIDPS = this.cn.prepareStatement(getNewLoanIDQuery);
+			getLoanIDPS.setString(1, st_id);
+
+			ResultSet lnIDRS = getLoanIDPS.executeQuery();
+
+			if(lnIDRS.next()){
+				int lnID = lnIDRS.getInt("new_loan_id");
+				Loan newLoan = this.getLoanByID(lnID);
+				return newLoan;
+			} else {
+				// Something terrible has happened.
+				return null;
+			}
+		} catch(SQLException e){
+			// TODO
+			// Write an error
+			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
+		}
+
 		return null;
 	}
 

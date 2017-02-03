@@ -1,5 +1,7 @@
 
 <%@page import="Model.Book"%>
+<%@page import="DB.UserDB"%>
+<%@page import="DB.CookieDB"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -42,11 +44,20 @@
 							<td><%= bk.getCategory().getCatName()%></td>
 							<td><%= bk.getBookYear()%></td>
 							<td><%= bk.getAvailableCopies()%></td>
-							<% if(bk.getAvailableCopies() != 0){%>
+							<% if(bk.getAvailableCopies() != 0 && currentUser != null){%>
 							<td>
-								<form action="AddLoanPageServlet?isbn=<%= bk.getISBN()%>" method="post">
+								<form action="LoanBookFromSearchServlet" method="post">
 									<input type="submit" value="Loan"/>
 									<input type="hidden" value="<%= bk.getISBN()%>" name="bookIsbn"/>
+									<%
+										UserDB myUserDb2 = new UserDB();
+										User crrUser2 = myUserDb2.getUser(currentUser.getValue());
+										if(!crrUser2.getUserType().equals("admin")){
+									%>
+									<input type="hidden" value="<%= crrUser2.getUserID()%>" name="user"/>
+									<%
+										}
+									%>
 								</form>
 							</td>
 							<% } else { %>

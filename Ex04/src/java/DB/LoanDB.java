@@ -136,7 +136,7 @@ public class LoanDB{
 		return ln;
 	}
 
-	public Loan getNewLoanID(String st_id, GregorianCalendar start_d, GregorianCalendar ret_d){
+	public Loan getNewLoan(String st_id, GregorianCalendar start_d, GregorianCalendar ret_d){
 		if(start_d == null || ret_d == null){
 			return null;
 		}

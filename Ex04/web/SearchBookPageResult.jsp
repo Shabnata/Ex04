@@ -49,12 +49,17 @@
 								<form action="LoanBookFromSearchServlet" method="post">
 									<input type="submit" value="Loan"/>
 									<input type="hidden" value="<%= bk.getISBN()%>" name="bookIsbn"/>
+									<%--
+									Unable to use existing objects of myUserDb and crrUser,
+									because they are defined in an "if" scope in Menu.jsp
+									thus they only exist in that scope.
+									--%>
 									<%
 										UserDB myUserDb2 = new UserDB();
 										User crrUser2 = myUserDb2.getUser(currentUser.getValue());
-										if(!crrUser2.getUserType().equals("admin")){
+										if(crrUser2.getUserType().equals("user")){
 									%>
-									<input type="hidden" value="<%= crrUser2.getUserID()%>" name="user"/>
+									<input type="hidden" value="<%= crrUser2.getUserID()%>" name="userId"/>
 									<%
 										}
 									%>

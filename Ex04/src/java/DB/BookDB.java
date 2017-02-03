@@ -61,7 +61,7 @@ public class BookDB{
 			PreparedStatement ps = this.cn.prepareStatement(bookQuery);
 			ps.setString(1, isbn);
 			ResultSet rs = ps.executeQuery();
-			if(rs.first()){
+			if(rs.next()){
 				bk = new Book();
 				bk.setISBN(rs.getString("isbn"));
 				bk.setTitle(rs.getString("title"));
@@ -240,7 +240,7 @@ public class BookDB{
 			PreparedStatement checkLoanedCopiesPS = this.cn.prepareStatement(getLoanedCopiesQuery);
 			checkLoanedCopiesPS.setString(1, isbn);
 			ResultSet clcRS = checkLoanedCopiesPS.executeQuery();
-			if(!clcRS.first()){ // Result has no rows, the book doesn't exists
+			if(!clcRS.next()){ // Result has no rows, the book doesn't exists
 				return false;
 			} else {
 

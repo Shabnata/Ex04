@@ -1,4 +1,3 @@
-
 package DB;
 
 import Model.*;
@@ -36,7 +35,7 @@ public class LoanDB{
 	public Loan getLoanByID(int loan_id){
 		Loan ln = null;
 
-		try {
+		try{
 			BookCopy bc;
 			BookCondition bcCond;
 			PreparedStatement ps;
@@ -85,7 +84,7 @@ public class LoanDB{
 				+ "         ON tblB.st_id = students.st_id");
 			ps.setInt(1, loan_id);
 			ResultSet rs = ps.executeQuery();
-			if(rs.first()){
+			if(rs.next()){
 				ln = new Loan();
 				ln.setLoanID(rs.getInt("loan_id"));
 
@@ -166,7 +165,7 @@ public class LoanDB{
 			+ "VALUES     (?, "
 			+ "            ?)";
 
-		try {
+		try{
 			PreparedStatement ps = this.cn.prepareStatement(addCopyToLoanQuery);
 			ps.setInt(1, loan_id);
 			ps.setString(2, bc.getCOPY_CODE());

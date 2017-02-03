@@ -139,6 +139,14 @@ insert into book_copies (isbn, copy_code, copy_cond) values('0001623363586', '00
 insert into accounts (acc_id, acc_pass, acc_type) values('123456789','123456789','user');
 insert into accounts (acc_id, acc_pass, acc_type) values('admin','admin','admin');
 
+INSERT INTO LOANS (ST_ID, LOAN_ID, START_D, RET_D) VALUES ('123456789', 1, '2017-02-01', '2017-02-02')
+INSERT INTO LOANS (ST_ID, LOAN_ID, START_D, RET_D) VALUES ('123456789', 2, '2017-02-02', '2017-02-16')
+	
+INSERT INTO ADMINISTRATOR.LOANED_BOOKS (LOAN_ID, COPY_CODE, RETURNED, DAYS_OVER) VALUES (1, '0000307949486_001', DEFAULT, DEFAULT)
+INSERT INTO ADMINISTRATOR.LOANED_BOOKS (LOAN_ID, COPY_CODE, RETURNED, DAYS_OVER) VALUES (1, '0000307742539_001', DEFAULT, DEFAULT)
+INSERT INTO ADMINISTRATOR.LOANED_BOOKS (LOAN_ID, COPY_CODE, RETURNED, DAYS_OVER) VALUES (2, '0000307949508_002', DEFAULT, DEFAULT)
+
+
 delete from students 
 select * from students
 select * from categories

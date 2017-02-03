@@ -4,7 +4,7 @@
 <html>
     <head>
 		<%-- TODO Make title dynamic. --%>
-		<title>AddStudentPage</title>
+		<title>ReturnBookPage</title>
 		<link href="Library.css" rel="stylesheet" type="text/css"/>
 	</head>
     <body>
@@ -15,13 +15,20 @@
 				<div id="leftMenu">
 					<jsp:include page="Menu.jsp" />
 					<br/><br/><br/>
-					<jsp:include page="LoginForm.jsp" />
+
 				</div> <%-- id=leftMenu --%>
 				<div id="contentArea">
-					<jsp:include page="AddStudentForm.jsp" />
-
-					Student information:
-
+					<form class="formStyle" action="ReturnBookServlet" method="POST">
+						<div class="">
+							<span class="formTxt">Find student by ID:</span><br/> 
+							<input type="number" name="stID" min="0" max="999999999" placeholder="9 digits ID" onfocus="focusClearIDTextBox(this)" onblur="studentIDFill(this)" required/>
+							<br/>
+							<input type="submit" value="Search"/>
+						</div>
+						<br/>
+					</form>
+					
+<!--					Change table to print books that are loaned by this student-->
 					<table>
 						<tr>
 							<th>ID</th>
@@ -56,9 +63,6 @@
 
 
 					</table>
-
-
-
 				</div> <%-- id=contentArea --%>
 			</div> <%-- id=centerBox --%>
 			<jsp:include page="Footer.jsp" />

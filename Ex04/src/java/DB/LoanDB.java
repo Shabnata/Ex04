@@ -84,7 +84,7 @@ public class LoanDB{
 				+ "         ON tblB.st_id = students.st_id");
 			ps.setInt(1, loan_id);
 			ResultSet rs = ps.executeQuery();
-			if(rs.first()){
+			if(rs.next()){
 				ln = new Loan();
 				ln.setLoanID(rs.getInt("loan_id"));
 
@@ -137,11 +137,83 @@ public class LoanDB{
 	}
 
 	public Loan getNewLoan(String st_id, GregorianCalendar start_d, GregorianCalendar ret_d){
+		if(start_d == null || ret_d == null){
+			return null;
+		}
+
+		String addNewLoanQuery = ""
+			+ "INSERT INTO loans "
+			+ "            (st_id, "
+			+ "             start_d, "
+			+ "             ret_d) "
+			+ "VALUES      (?, "
+			+ "             ?, "
+			+ "             ?)";
+		String getNewLoanIDQuery = ""
+			+ "SELECT Max(loan_id) AS new_loan_id"
+			+ "FROM   loans "
+			+ "WHERE  st_id = ?";
+
+		try{
+			PreparedStatement addPS = this.cn.prepareStatement(addNewLoanQuery);
+			addPS.setString(1, st_id);
+			addPS.setString(2, Integer.toString(start_d.get(GregorianCalendar.YEAR)) + "-" + Integer.toString(start_d.get(GregorianCalendar.MONTH) + 1) + "-" + Integer.toString(start_d.get(GregorianCalendar.DAY_OF_MONTH)));
+			addPS.setString(3, Integer.toString(ret_d.get(GregorianCalendar.YEAR)) + "-" + Integer.toString(ret_d.get(GregorianCalendar.MONTH) + 1) + "-" + Integer.toString(ret_d.get(GregorianCalendar.DAY_OF_MONTH)));
+
+			if(addPS.executeUpdate() != 1){
+				return null;
+			}
+
+			PreparedStatement getLoanIDPS = this.cn.prepareStatement(getNewLoanIDQuery);
+			getLoanIDPS.setString(1, st_id);
+
+			ResultSet lnIDRS = getLoanIDPS.executeQuery();
+
+			if(lnIDRS.next()){
+				int lnID = lnIDRS.getInt("new_loan_id");
+				Loan newLoan = this.getLoanByID(lnID);
+				return newLoan;
+			} else {
+				// Something terrible has happened.
+				return null;
+			}
+		} catch(SQLException e){
+			// TODO
+			// Write an error
+			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
+		}
+
 		return null;
 	}
 
-	public boolean addBookCopyToLoan(int loan_id, BookCopy bc){
-		return false;
+	public boolean addBookToLoan(int loan_id, String book_isbn){
+
+		String addCopyToLoanQuery = ""
+			+ "INSERT INTO loaned_books "
+			+ "            (loan_id, "
+			+ "             copy_code) "
+			+ "VALUES     (?, "
+			+ "            ?)";
+
+		ArrayList<BookCopy> bcLst = (new BookCopyDB(this.cn)).getUsableCopiesOfBook(book_isbn);
+		if(bcLst == null || bcLst.isEmpty()){
+			return false;
+		}
+		BookCopy bc = bcLst.get(0);
+		try{
+			PreparedStatement ps = this.cn.prepareStatement(addCopyToLoanQuery);
+			ps.setInt(1, loan_id);
+			ps.setString(2, bc.getCOPY_CODE());
+			if(ps.executeUpdate() != 1){
+				return false;
+			}
+		} catch(SQLException e){
+			// TODO
+			// Write an error
+			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
+			return false;
+		}
+		return true;
 	}
 
 }

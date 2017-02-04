@@ -61,7 +61,7 @@ create table library_props(
 );
 
 insert into library_props (lib_name, fine_per_day, max_fines_per_student, max_books_per_student) values('Library', 1, 10, 10)
-)
+
 insert into students (st_id, f_name, l_name, email, fine) values('123456789','Noah', 'Smith' , 'Noah@gmail.com@efg',50);
 insert into students (st_id, f_name, l_name, email, fine) values('234567891','Emma', 'Williams' , 'Emma@gmail.com', 0);
 insert into students (st_id, f_name, l_name, email, fine) values('345678912','Liam', 'Johnson' , 'Liam@gmail.com', 0);

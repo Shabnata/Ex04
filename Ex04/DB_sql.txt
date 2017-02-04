@@ -53,7 +53,15 @@ create table accounts(
 	acc_pass varchar(255) not null,
 	acc_type varchar(255) check(acc_type ='admin' OR acc_type='user' ) not null
 );
+create table library_props(
+	lib_name varchar(255) primary key,
+	fine_per_day integer check(fine_per_day >= 0) not null,
+	max_fines_per_student integer check(max_fines_per_student >= 0) not null,
+	max_books_per_student integer check(max_books_per_student >= 0) not null
+);
 
+insert into library_props (lib_name, fine_per_day, max_fines_per_student, max_books_per_student) values('Library', 1, 10, 10)
+)
 insert into students (st_id, f_name, l_name, email, fine) values('123456789','Noah', 'Smith' , 'Noah@gmail.com@efg',50);
 insert into students (st_id, f_name, l_name, email, fine) values('234567891','Emma', 'Williams' , 'Emma@gmail.com', 0);
 insert into students (st_id, f_name, l_name, email, fine) values('345678912','Liam', 'Johnson' , 'Liam@gmail.com', 0);

@@ -1,12 +1,10 @@
-<%@page import="DB.ConditionDB"%>
+<%@page import="DB.*"%>
 <%@page import="java.util.GregorianCalendar"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
-<%@page import="DB.BookDB"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Model.*"%>
-<%@page import="DB.StudentDB"%>
-<%@page import="DB.LoanDB"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -21,6 +19,11 @@
 			Class.forName("org.apache.derby.jdbc.ClientDriver");
 			String urlCn = "jdbc:derby://localhost:1527/LibraryDB";
 			Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
+
+			LibraryPropsDB libDB = new LibraryPropsDB(cn);
+			int finesPerDay = libDB.getFinesPerDay();
+			StudentDB stDB = new StudentDB();
+
 		%>
 
 		<jsp:useBean id="student" class="Model.Student" scope="request" />
@@ -42,13 +45,8 @@
 						</div>
 						<br/>
 					</form>
-					<%
-						StudentDB stDB = new StudentDB();
-					%>
 
 
-
-					<!--								Real table	--------->
 					<table>
 						<tr>
 							<th>LoanID</th>
@@ -95,8 +93,10 @@
 							%>
 
 							<td><span style="color: red;"><%=dateStr%></span></td>
+
+
 							<!--change from 1 to calc-->
-							<td><%=lnDB.isOverdue(ln.getReturnByDate()) * 1 * -1%></td>
+							<td><%=lnDB.isOverdue(ln.getReturnByDate()) * finesPerDay * -1%></td>
 
 							<%} else {%>
 							<td><%=dateStr%></td>
@@ -110,7 +110,7 @@
 								New cond:
 								<select name=newCondition>
 									<%for (Condition c : cnd) {%>
-									<option value="<%=c.getConDesc()%>"><%=c.getConDesc()%></option>
+									<option value="<%=c.getConKey()%>"><%=c.getConDesc()%></option>
 									<%}%>
 								</select>
 							</td>
@@ -118,14 +118,17 @@
 							<td>
 								<input type="number" name="generalFines" min="0">
 							</td>
+
 							<!--change from 1 to calc-->
 							<%
-								int lateFine = ((lnDB.isOverdue(ln.getReturnByDate()) * 1) < 0) ? (int) (lnDB.isOverdue(ln.getReturnByDate()) * 1 * -1) : 0;
+								int lateFine = ((lnDB.isOverdue(ln.getReturnByDate()) * finesPerDay) < 0) ? (int) (lnDB.isOverdue(ln.getReturnByDate()) * finesPerDay * -1) : 0;
 							%>
 
 
 
 							<td>
+								
+								<input type=hidden name=loanID value="<%=ln.getLoanID()%>"/>
 								<input type=hidden name=studentID value="<%=student.getStudentID()%>"/>
 								<input type=hidden name=lateFines value="todo lateFine" />
 								<input type=hidden name=copyCode value="<%=bc.getCOPY_CODE()%>" />

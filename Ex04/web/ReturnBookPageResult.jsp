@@ -86,20 +86,55 @@
 							<td><%=b.getISBN()%></td> 
 							<td><%=b.getTitle()%></td>
 							<td><%=bc.getCOPY_CODE()%></td>
+
+
+
+							<%LoanDB lnDB = new LoanDB(cn);
+								if (lnDB.isOverdue(ln.getReturnByDate()) < 0) {
+
+							%>
+
+							<td><span style="color: red;"><%=dateStr%></span></td>
+							<!--change from 1 to calc-->
+							<td><%=lnDB.isOverdue(ln.getReturnByDate()) * 1 * -1%></td>
+
+							<%} else {%>
 							<td><%=dateStr%></td>
-							<td>DOTO - Fines per day* days late</td>
-							<td>prev Copy condition<br/>
+							<td>0</td>
+							<%}%>
+
+
+						<form class=formStyle action=ReturnBookActionServlet method=POST>
+							<td>Prev cond:<br/>
 								<%=bc.getCopyCondition().getConDesc()%><br/>
-								Choose new condition:
-								<ul>
-								<%for (Condition c : cnd) {%>
-							<li>	<%=c.getConDesc()%> </li>
-							<%}%>
-							</ul>
+								New cond:
+								<select name=newCondition>
+									<%for (Condition c : cnd) {%>
+									<option value="<%=c.getConDesc()%>"><%=c.getConDesc()%></option>
+									<%}%>
+								</select>
 							</td>
-							<td>Fines</td>
-							<td>Return book</td>
-							<%}%>
+
+							<td>
+								<input type="number" name="generalFines" min="0">
+							</td>
+							<!--change from 1 to calc-->
+							<%
+								int lateFine = ((lnDB.isOverdue(ln.getReturnByDate()) * 1) < 0) ? (int) (lnDB.isOverdue(ln.getReturnByDate()) * 1 * -1) : 0;
+							%>
+
+
+
+							<td>
+								<input type=hidden name=studentID value="<%=student.getStudentID()%>"/>
+								<input type=hidden name=lateFines value="todo lateFine" />
+								<input type=hidden name=copyCode value="<%=bc.getCOPY_CODE()%>" />
+								<input type=submit value="Return copy"/>
+							</td>
+						</form>
+						<!--							<td>Fines</td>
+													<td>Return book</td>-->
+						<%}%>
 
 
 						</tr>

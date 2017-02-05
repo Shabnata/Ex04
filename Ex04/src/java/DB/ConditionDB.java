@@ -67,8 +67,8 @@ public ConditionDB(Connection cn) {
 
 			while(rs.next()){
 				Condition cd = new Condition();
-				cd.setConKey(rs.getInt(1));
-				cd.setConDesc(rs.getString(2));
+				cd.setConKey(rs.getInt(2));
+				cd.setConDesc(rs.getString(3));
 				con.add(cd);
 			}
 			cn.close();

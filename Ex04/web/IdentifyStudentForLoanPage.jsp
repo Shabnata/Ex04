@@ -1,5 +1,5 @@
 <%--
-    Document   : IdentifyStudentForLoan
+    Document   : IdentifyStudentForLoanPage
     Created on : Feb 6, 2017, 11:07:18 AM
     Author     : Denis Sh
 --%>

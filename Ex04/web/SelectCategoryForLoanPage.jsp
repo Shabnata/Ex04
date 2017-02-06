@@ -6,10 +6,12 @@
 
 <%@page import="java.util.ArrayList"%>
 <%@page import="Model.Category"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
-		<title>IdentifyStudentPage</title>
+		<title>SelectCategoryForLoanPage</title>
 		<link href="Library.css" rel="stylesheet" type="text/css"/>
 	</head>
     <body>

@@ -69,7 +69,7 @@
 								for (BookCopy bc : bcs) {
 									BookDB bDB = new BookDB(cn);
 									ConditionDB cndDB = new ConditionDB();
-									ArrayList<Condition> cnd = new ArrayList<Condition>();
+									ArrayList<BookCondition> cnd = new ArrayList<BookCondition>();
 									cnd = cndDB.getConditions();
 									Book b = new Book();
 									b = bDB.getBookByBookCopy(bc);
@@ -109,28 +109,25 @@
 								<%=bc.getCopyCondition().getConDesc()%><br/>
 								New cond:
 								<select name=newCondition>
-									<%for (Condition c : cnd) {%>
+									<%for (BookCondition c : cnd) {%>
 									<option value="<%=c.getConKey()%>"><%=c.getConDesc()%></option>
 									<%}%>
 								</select>
 							</td>
 
 							<td>
-								<input type="number" name="generalFines" min="0">
+								<input type="number" name="generalFines" min="0" value="0" >
 							</td>
 
-							<!--change from 1 to calc-->
+							
 							<%
 								int lateFine = ((lnDB.isOverdue(ln.getReturnByDate()) * finesPerDay) < 0) ? (int) (lnDB.isOverdue(ln.getReturnByDate()) * finesPerDay * -1) : 0;
 							%>
 
-
-
 							<td>
-								
 								<input type=hidden name=loanID value="<%=ln.getLoanID()%>"/>
 								<input type=hidden name=studentID value="<%=student.getStudentID()%>"/>
-								<input type=hidden name=lateFines value="todo lateFine" />
+								<input type=hidden name=lateFines value=<%=lateFine%> />
 								<input type=hidden name=copyCode value="<%=bc.getCOPY_CODE()%>" />
 								<input type=submit value="Return copy"/>
 							</td>
@@ -139,17 +136,10 @@
 													<td>Return book</td>-->
 						<%}%>
 
-
 						</tr>
 						<%	}%>
 
 </table>
-
-						
-						
-						
-								
-
 				</div> <%-- id=contentArea --%>
 			</div> <%-- id=centerBox --%>
 			<jsp:include page="Footer.jsp" />

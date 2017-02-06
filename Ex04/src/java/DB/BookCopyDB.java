@@ -2,10 +2,14 @@ package DB;
 
 import Model.BookCondition;
 import Model.BookCopy;
+import Model.Category;
+import Model.Student;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
@@ -117,5 +121,76 @@ public class BookCopyDB{
 		}
 		return bcLst;
 	}
+	public Boolean updateBookCopyCondition(BookCopy bookCopy){
+	Boolean updated = false;
+	
+		BookCopy bc = bookCopy;
+		Statement ps = null;
 
+		try {
+			PreparedStatement pst = cn.prepareStatement("UPDATE book_copies SET copy_cond=? WHERE copy_code=?");
+			pst.setDouble(1, bc.getCopyCondition().getConKey());
+			pst.setString(2, bc.getCOPY_CODE());
+			updated = pst.execute();
+			//cn.close();
+		} catch (SQLException e) {
+			// TODO
+			// Write an error
+		}
+		
+	return updated;
+	}
+	public BookCopy getBookCopyByCopyCode(String copyCode) throws ClassNotFoundException{
+	BookCopy bc = null;
+		String copiesQuery = "select * from book_copies where copy_code=?";
+			
+
+		try{
+			PreparedStatement ps = this.cn.prepareStatement(copiesQuery);
+			ps.setString(1, copyCode);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()){
+				bc = new BookCopy();
+				
+				do {
+					bc.setCOPY_CODE(copyCode);
+					ConditionDB conDB = new ConditionDB();
+					BookCondition bCon = new BookCondition();
+					bCon=conDB.getCondition(rs.getInt("copy_cond"));
+					bc.setCopyCondition(bCon);
+				
+				} while(rs.next());
+			}
+		} catch(SQLException e){
+			// TODO
+			// Write an error
+			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
+		}
+		return bc;
+	}
+	
+	//TODO! still doesnt work
+	public Boolean updateBookCopyLoanState(String copyCode){
+		Boolean updated = false;
+	
+	
+		Statement ps = null;
+
+		try {
+			PreparedStatement pst = this.cn.prepareStatement("UPDATE loaned_books SET returned=? WHERE copy_code=? and returned=?");
+			pst.setString(1, "true");
+			pst.setString(2, copyCode);
+			pst.setString(1, "false");
+			updated = pst.execute();
+			cn.close();
+		} catch (SQLException e) {
+			// TODO
+			// Write an error
+		}
+		
+	return updated;
+		
+		
+		
+	}
 }

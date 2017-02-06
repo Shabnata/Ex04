@@ -26,12 +26,12 @@ public ConditionDB(Connection cn) {
 	public ConditionDB() {
 	}
 	
-	public Condition getCondition(int conKey) throws ClassNotFoundException, SQLException{
+	public BookCondition getCondition(int conKey) throws ClassNotFoundException, SQLException{
 		Class.forName("org.apache.derby.jdbc.ClientDriver");
 		String urlCn = "jdbc:derby://localhost:1527/LibraryDB";
 		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
 
-		Condition cd = null;
+		BookCondition cd = null;
 		//PreparedStatement ps = null;
 		Statement ps = null;
 		try{
@@ -39,9 +39,11 @@ public ConditionDB(Connection cn) {
 			//ps.setString(1, st_id);
 			ps = cn.createStatement();
 
-			ResultSet rs = ps.executeQuery("SELECT * FROM conditions WHERE con_key=\'" + conKey + "\'");
+			PreparedStatement pst = cn.prepareStatement("SELECT * FROM conditions WHERE con_key=?");
+			pst.setInt(1,conKey );
+			ResultSet rs = pst.executeQuery();
 			while(rs.next()){
-				cd = new Condition();
+				cd = new BookCondition();
 				cd.setConKey(rs.getInt("con_key"));
 				cd.setConDesc(rs.getString("con_desc"));
 			}
@@ -52,12 +54,12 @@ public ConditionDB(Connection cn) {
 		}
 		return cd;
 	}
-	public ArrayList<Condition> getConditions() throws ClassNotFoundException, SQLException{
+	public ArrayList<BookCondition> getConditions() throws ClassNotFoundException, SQLException{
 		Class.forName("org.apache.derby.jdbc.ClientDriver");
 		String urlCn = "jdbc:derby://localhost:1527/LibraryDB";
 		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
 
-		ArrayList<Condition> con = new ArrayList<Condition>();
+		ArrayList<BookCondition> con = new ArrayList<BookCondition>();
 		Statement ps = null;
 		try{
 
@@ -66,7 +68,7 @@ public ConditionDB(Connection cn) {
 			ResultSet rs = ps.executeQuery("select * from Conditions");
 
 			while(rs.next()){
-				Condition cd = new Condition();
+				BookCondition cd = new BookCondition();
 				cd.setConKey(rs.getInt(2));
 				cd.setConDesc(rs.getString(3));
 				con.add(cd);

@@ -82,16 +82,24 @@ public class AddLoanServlet extends HttpServlet{
 				rd = request.getRequestDispatcher("IdentifyStudentForLoanPage.jsp");
 				rd.forward(request, response);
 				return;
-			} else if(catName == null){
+			} else if(catName == null && bookISBN == null){
 				cDB = new CategoryDB(cn);
 				ArrayList<Category> catLst = cDB.getCategories();
 				rd = request.getRequestDispatcher("SelectCategoryForLoanPage.jsp");
+				request.setAttribute("stId", stID);
+				if(loanID != null){
+					request.setAttribute("loanId", loanID);
+				}
 				request.setAttribute("catLst", catLst);
 				rd.forward(request, response);
 				return;
 			} else if(bookISBN == null){
 				ArrayList<Book> bookLst = new ArrayList<>(); //TODO Add method to CategoryDB that returns all books in a category.
 				rd = request.getRequestDispatcher("SelectBookForLoanPage.jsp");
+				request.setAttribute("stId", stID);
+				if(loanID != null){
+					request.setAttribute("loanId", loanID);
+				}
 				request.setAttribute("bookLst", bookLst);
 				rd.forward(request, response);
 				return;
@@ -138,7 +146,12 @@ public class AddLoanServlet extends HttpServlet{
 
 			lnDB.addBookToLoan(ln.getLoanID(), bookISBN);
 
+			cDB = new CategoryDB(cn);
+			ArrayList<Category> catLst = cDB.getCategories();
 			rd = request.getRequestDispatcher("SelectCategoryForLoanPage.jsp");
+			request.setAttribute("stId", stID);
+			request.setAttribute("loanId", Integer.toString(ln.getLoanID()));
+			request.setAttribute("catLst", catLst);
 			rd.forward(request, response);
 
 		} catch(SQLException | ClassNotFoundException e){

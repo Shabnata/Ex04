@@ -162,6 +162,9 @@ INSERT INTO ADMINISTRATOR.LOANED_BOOKS (LOAN_ID, COPY_CODE, RETURNED, DAYS_OVER)
 --select * from books
 --select * from conditions
 --select * from book_copies
+--select * from loans
+--select * from loaned_books
+--select * from library_props
 
 --Queries became complicated to read, using this site to format them automatically:
 --http://www.dpriver.com/pp/sqlformat.htm

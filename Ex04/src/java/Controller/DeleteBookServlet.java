@@ -48,13 +48,13 @@ public class DeleteBookServlet extends HttpServlet{
 	 */// </editor-fold>
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		/*
-		*
-		*
-		* TODO
-		* Remember to test this Servlet
-		*
-		*
-		*
+		 *
+		 *
+		 * TODO
+		 * Remember to test this Servlet
+		 *
+		 *
+		 *
 		 */
 		Connection cn;
 		RequestDispatcher rd = request.getRequestDispatcher("DeleteBookPage.jsp");
@@ -65,9 +65,9 @@ public class DeleteBookServlet extends HttpServlet{
 				BookDB bDB = new BookDB(cn);
 
 				if(bDB.deleteBookByISBN(bookIsbn)){
-					request.setAttribute("servletMessage", "Cannot delete Book with ISBN " + bookIsbn);
+					request.setAttribute("servletMessage", "Book with ISBN " + bookIsbn + " was deleted successfully.");
 				} else {
-					request.setAttribute("servletMessage", "Book with ISBN " + bookIsbn + "was deleted successfully.");
+					request.setAttribute("servletMessage", "Cannot delete Book with ISBN " + bookIsbn);
 				}
 			} catch(SQLException e){
 				// TODO

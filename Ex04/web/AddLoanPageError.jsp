@@ -1,6 +1,6 @@
 <%--
-    Document   : IdentifyStudentForLoanPage
-    Created on : Feb 6, 2017, 11:07:18 AM
+    Document   : AddLoanPageError
+    Created on : Feb 6, 2017, 3:40:00 PM
     Author     : Denis Sh
 --%>
 
@@ -9,9 +9,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-		<title>IdentifyStudentForLoanPage</title>
+		<title>AddLoanPageError</title>
 		<link href="Library.css" rel="stylesheet" type="text/css"/>
-		<script src="InputJavaScriptFile.js" type="text/javascript"></script>
 	</head>
     <body>
 		<div id="outerContainer">
@@ -22,12 +21,10 @@
 					<br/><br/><br/>
 				</div> <%-- id=leftMenu --%>
 				<div id="contentArea">
-					<form class="formStyle" action="AddLoanServlet" method="post">
-						<span class="formTxt">Find student by ID:</span><br/>
-						<input type="number" name="stId" min="0" max="999999999" placeholder="9 digits ID" onfocus="focusClearIDTextBox(this)" onblur="studentIDFill(this)" required/>
-						<br/>
-						<input type="submit" value="Search"
-					</form>
+					<jsp:useBean id="errors" type="java.util.ArrayList<java.lang.String>" scope="request"/>
+					<% for(String err : errors){%>
+					<h3><%= err%></h3>
+					<%}%>
 				</div> <%-- id=contentArea --%>
 			</div> <%-- id=centerBox --%>
 			<%@include file="Footer.jsp" %>

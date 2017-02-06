@@ -23,10 +23,25 @@
 					<br/><br/><br/>
 				</div> <%-- id=leftMenu --%>
 				<div id="contentArea">
+					<%
+						String stId = (String)request.getAttribute("stId");
+						String loanId = (String)request.getAttribute("bookIsbn");
+					%>
+					<%--
 					<jsp:useBean id="stId" type="String" scope="request"/>
 					<jsp:useBean id="loanId" type="String" scope="request"/>
+					--%>
 					<jsp:useBean id="bookLst" type="ArrayList<Book>" scope="request"/>
 
+					<form action="AddLoanServlet" method="post">
+						<input type="submit" value="Return"/>
+						<%if(stId != null){%>
+						<input type="hidden" name="stId" value="${stId}"/>
+						<%}%>
+						<%if(loanId != null){%>
+						<input type="hidden" name="loanId" value="${loanId}"/>
+						<%}%>
+					</form><br/>
 					<table id="bookSearchRes">
 						<tr>
 							<th>Cover</th>

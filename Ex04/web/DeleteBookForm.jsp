@@ -4,7 +4,7 @@
     Author     : Denis Sh
 --%>
 
-<form class="formStyle" action="DeleteBookActionServlet" method="POST">
+<form class="formStyle" action="DeleteBookServlet" method="POST">
 	<div class="leftFormPart">
 		<span class="formTxt">Delete book by ISBN:</span>
 		<br/>

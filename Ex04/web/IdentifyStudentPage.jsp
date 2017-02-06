@@ -11,6 +11,7 @@
     <head>
 		<title>IdentifyStudentPage</title>
 		<link href="Library.css" rel="stylesheet" type="text/css"/>
+		<script src="InputJavaScriptFile.js" type="text/javascript"></script>
 	</head>
     <body>
 		<div id="outerContainer">

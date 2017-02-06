@@ -138,7 +138,7 @@ public class AddLoanServlet extends HttpServlet{
 
 			lnDB.addBookToLoan(ln.getLoanID(), bookISBN);
 
-			rd = request.getRequestDispatcher("SelectCategoryForLoan");
+			rd = request.getRequestDispatcher("SelectCategoryForLoanPage.jsp");
 			rd.forward(request, response);
 
 		} catch(SQLException | ClassNotFoundException e){

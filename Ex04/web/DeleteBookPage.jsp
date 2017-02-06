@@ -10,6 +10,7 @@
 	<head>
 		<title>DeleteBookPage</title>
 		<link href="Library.css" rel="stylesheet" type="text/css"/>
+		<script src="InputJavaScriptFile.js" type="text/javascript"></script>
 	</head>
     <body>
 		<div id="outerContainer">
@@ -22,8 +23,11 @@
 				<div id="contentArea">
 					<%@include file="DeleteBookForm.jsp" %>
 					<br/>
-					<jsp:useBean id="servletMessage" type="java.lang.String" scope="request" />
-					<h1><%= servletMessage%></h1>
+					<%
+						String servletMessage = (String)request.getAttribute("servletMessage");
+						if(servletMessage != null){%>
+					<h3><%= servletMessage%></h3>
+					<%}%>
 				</div> <%-- id=contentArea --%>
 			</div> <%-- id=centerBox --%>
 			<%@include file="Footer.jsp" %>

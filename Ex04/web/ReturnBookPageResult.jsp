@@ -143,11 +143,12 @@
 						</tr>
 						<%	}%>
 
+</table>
 
-
-
-
-					</table>
+						
+						
+						
+								
 
 				</div> <%-- id=contentArea --%>
 			</div> <%-- id=centerBox --%>

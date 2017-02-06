@@ -7,20 +7,22 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.Year;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class CategoryDB{
+public class CategoryDB {
 
 	private Connection cn;
 
-	public CategoryDB(Connection cn){
+	public CategoryDB(Connection cn) {
 		this.cn = cn;
 	}
 
-	public CategoryDB(){
+	public CategoryDB() {
 	}
 
-	public Category getCategory(String catName) throws ClassNotFoundException, SQLException{
+	public Category getCategory(String catName) throws ClassNotFoundException, SQLException {
 		Class.forName("org.apache.derby.jdbc.ClientDriver");
 		String urlCn = "jdbc:derby://localhost:1527/LibraryDB";
 		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
@@ -28,53 +30,53 @@ public class CategoryDB{
 		Category ct = null;
 		//PreparedStatement ps = null;
 		Statement ps = null;
-		try{
+		try {
 			//ps = this.cn.prepareStatement("SELECT * FROM students WHERE st_id = ?");
 			//ps.setString(1, st_id);
 			ps = cn.createStatement();
 
 			ResultSet rs = ps.executeQuery("SELECT * FROM categories WHERE cat_name=\'" + catName + "\'");
-			while(rs.next()){
+			while (rs.next()) {
 				ct = new Category();
 				ct.setCatID(rs.getInt("id"));
 				ct.setCatName(rs.getString("cat_name"));
 			}
 			cn.close();
-		} catch(SQLException e){
+		} catch (SQLException e) {
 			// TODO
 			// Write an error
 		}
 		return ct;
 	}
 
-	public ArrayList<Category> getCategories() throws ClassNotFoundException, SQLException{
+	public ArrayList<Category> getCategories() throws ClassNotFoundException, SQLException {
 		Class.forName("org.apache.derby.jdbc.ClientDriver");
 		String urlCn = "jdbc:derby://localhost:1527/LibraryDB";
 		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
 
 		ArrayList<Category> cat = new ArrayList<Category>();
 		Statement ps = null;
-		try{
+		try {
 
 			ps = cn.createStatement();
 
 			ResultSet rs = ps.executeQuery("select * from Categories");
 
-			while(rs.next()){
+			while (rs.next()) {
 				Category c = new Category();
 				c.setCatID(rs.getInt(1));
 				c.setCatName(rs.getString(2));
 				cat.add(c);
 			}
 			cn.close();
-		} catch(SQLException e){
+		} catch (SQLException e) {
 			// TODO
 			// Write an error
 		}
 		return cat;
 	}
 
-	public Boolean addCategory(String catName) throws ClassNotFoundException, SQLException{
+	public Boolean addCategory(String catName) throws ClassNotFoundException, SQLException {
 		Boolean added = false;
 		Class.forName("org.apache.derby.jdbc.ClientDriver");
 		String urlCn = "jdbc:derby://localhost:1527/LibraryDB";
@@ -83,21 +85,56 @@ public class CategoryDB{
 		Category cat = null;
 		//PreparedStatement ps = null;
 		Statement ps = null;
-		try{
+		try {
 			PreparedStatement pst = cn.prepareStatement("insert into categories (cat_name) values (?)");
 			pst.setString(1, catName);
 
 			int nor = pst.executeUpdate();
-			if(nor != 0){
+			if (nor != 0) {
 				added = true;
 			}
 
 			cn.close();
-		} catch(SQLException e){
+		} catch (SQLException e) {
 			// TODO
 			// Write an error
 		}
 		return added;
+	}
+
+	public ArrayList<Book> getBooksByCategoryName(String catName) throws ClassNotFoundException, SQLException {
+		Class.forName("org.apache.derby.jdbc.ClientDriver");
+		String urlCn = "jdbc:derby://localhost:1527/LibraryDB";
+		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
+
+		ArrayList<Book> books = new ArrayList<Book>();
+		Statement ps = null;
+		try {
+			ps = cn.createStatement();
+			PreparedStatement pst = cn.prepareStatement("select * from books where Lower(book_category)=?");
+			pst.setString(1, catName.toLowerCase());
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				Book b = new Book();
+				b.setISBN(rs.getString("isbn"));
+				b.setTitle(rs.getString("title"));
+				b.setAuthorName(rs.getString("author"));
+				Category cat = new Category();
+				cat = this.getCategory(catName);
+				b.setCategory(cat);
+				b.setBookYear(Year.parse(rs.getString("p_year"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+				b.setCoverPath(rs.getString("cover"));
+				b.setCopyCounter(rs.getInt("copy_cnt"));
+				books.add(b);
+			}
+			cn.close();
+		} catch (SQLException e) {
+			// TODO
+			// Write an error
+		}
+		//
+		return books;
+
 	}
 
 }

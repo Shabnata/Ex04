@@ -59,7 +59,7 @@
 										User crrUser2 = myUserDb2.getUser(currentUser.getValue());
 										if(crrUser2.getUserType().equals("user")){
 									%>
-									<input type="hidden" value="<%= crrUser2.getUserID()%>" name="userId"/>
+									<input type="hidden" value="<%= crrUser2.getUserID()%>" name="stId"/>
 									<%
 										}
 									%>

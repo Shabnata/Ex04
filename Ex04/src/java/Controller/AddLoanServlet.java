@@ -1,9 +1,11 @@
 package Controller;
 
-import DB.CookieDB;
+import DB.CategoryDB;
 import DB.LibraryPropsDB;
 import DB.LoanDB;
 import DB.StudentDB;
+import Model.Book;
+import Model.Category;
 import Model.Loan;
 import Model.Student;
 import java.io.IOException;
@@ -16,7 +18,6 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,8 +26,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Denis Sh
  */
-@WebServlet(name = "LoanBookFromSearchServlet", urlPatterns = {"/LoanBookFromSearchServlet"})
-public class LoanBookFromSearchServlet extends HttpServlet{
+@WebServlet(name = "AddLoanServlet", urlPatterns = {"/AddLoanServlet"})
+public class AddLoanServlet extends HttpServlet{
 
 	ServletContext sc;
 
@@ -55,62 +56,49 @@ public class LoanBookFromSearchServlet extends HttpServlet{
 	 * @throws IOException      if an I/O error occurs
 	 */// </editor-fold>
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		/*
-		 *
-		 *
-		 * TODO
-		 * Remember to test this Servlet
-		 *
-		 *
-		 *
-		 */
-
 		Connection cn;
 		RequestDispatcher rd;
-		Cookie currentUser = CookieDB.getCookieValue(request.getCookies(), "username");
 
-		LoanDB lnDB;
 		LibraryPropsDB lpDB;
 		StudentDB sDB;
+		LoanDB lnDB;
+		CategoryDB cDB;
 
-		Student st = null;
-
-		String bookISBN = request.getParameter("bookIsbn");
-		String stID = request.getParameter("stId");
+		Student st;
+		Loan ln;
 
 		boolean errors = false;
 		ArrayList<String> errorLst = null;
+
+		String stID = request.getParameter("stId");
+		String loanID = request.getParameter("loanId");
+		String catName = request.getParameter("catName");
+		String bookISBN = request.getParameter("bookIsbn");
+
 		try{
 			cn = DriverManager.getConnection(this.sc.getInitParameter("cnurl"), this.sc.getInitParameter("DBUsername"), this.sc.getInitParameter("DBPassword"));
 
-			if(bookISBN == null || currentUser == null){
-//				rd = request.getRequestDispatcher("SearchBookServlet");
-//				rd.forward(request, response);
-				response.sendRedirect("SearchBookServlet");
+			if(stID == null){
+				rd = request.getRequestDispatcher("IdentifyStudentForLoanPage.jsp");
+				rd.forward(request, response);
 				return;
-			}
-
-			sDB = new StudentDB(cn);
-			if(stID == null || (st = sDB.getStudent(stID)) == null){
-				rd = request.getRequestDispatcher("IdentifyStudentServletPage.jsp");
-				request.removeAttribute("stId");
+			} else if(catName == null){
+				cDB = new CategoryDB(cn);
+				ArrayList<Category> catLst = cDB.getCategories();
+				rd = request.getRequestDispatcher("SelectCategoryForLoanPage.jsp");
+				request.setAttribute("catLst", catLst);
+				rd.forward(request, response);
+				return;
+			} else if(bookISBN == null){
+				ArrayList<Book> bookLst = new ArrayList<>(); //TODO Add method to CategoryDB that returns all books in a category.
+				rd = request.getRequestDispatcher("SelectBookForLoanPage.jsp");
+				request.setAttribute("bookLst", bookLst);
 				rd.forward(request, response);
 				return;
 			}
 
-			lnDB = new LoanDB(cn);
-			GregorianCalendar today = new GregorianCalendar();
-			GregorianCalendar returnBy = new GregorianCalendar();
-			returnBy.add(GregorianCalendar.DAY_OF_MONTH, 14);
-			Loan newLoan = lnDB.getNewLoan(st.getStudentID(), today, returnBy);
-
-			if(newLoan == null){
-				errors = true;
-				if(errorLst == null){
-					errorLst = new ArrayList<>();
-				}
-				errorLst.add("Failed to recieve newLoan.");
-			}
+			sDB = new StudentDB(cn);
+			st = sDB.getStudent(stID);
 
 			lpDB = new LibraryPropsDB(cn);
 			int maxFinesPerStudent = lpDB.getMaxFinesPerStudent();
@@ -132,29 +120,27 @@ public class LoanBookFromSearchServlet extends HttpServlet{
 
 			}
 
-			if(errors == false && lnDB.addBookToLoan(newLoan.getLoanID(), bookISBN)){
-				// TODO
-				// Redirect to a page that handles loans.
-				/*
-				 * rd = request.getRequestDispatcher("");
-				 * request.setAttribute("loanID", newLoan.getLoanID());
-				 * request.setAttribute("studentID", userID);
-				 * rd.forward(request, response);
-				 */
-				return;
-			} else {
-				errors = true;
-				if(errorLst == null){
-					errorLst = new ArrayList<>();
-				}
-				errorLst.add("Failed to add book copy to loan.");
-			}
-
 			if(errors == true){
-				rd = request.getRequestDispatcher("LoanBookFromSearchPageError.jsp");
+				rd = request.getRequestDispatcher("AddLoanPageError.jsp");
 				request.setAttribute("errors", errorLst);
 				rd.forward(request, response);
 			}
+
+			lnDB = new LoanDB(cn);
+			if(loanID == null){
+				GregorianCalendar start_d = new GregorianCalendar();
+				GregorianCalendar ret_d = new GregorianCalendar();
+				ret_d.add(GregorianCalendar.DAY_OF_MONTH, 14);
+				ln = lnDB.getNewLoan(stID, start_d, ret_d);
+			} else {
+				ln = lnDB.getLoanByID(Integer.parseInt(loanID));
+			}
+
+			lnDB.addBookToLoan(ln.getLoanID(), bookISBN);
+
+			rd = request.getRequestDispatcher("SelectCategoryForLoan");
+			rd.forward(request, response);
+
 		} catch(SQLException | ClassNotFoundException e){
 			// TODO
 			// Write an error

@@ -4,14 +4,13 @@ import DB.CookieDB;
 import DB.LibraryPropsDB;
 import DB.LoanDB;
 import DB.StudentDB;
-import DB.UserDB;
 import Model.Loan;
 import Model.Student;
-import Model.User;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -70,58 +69,47 @@ public class LoanBookFromSearchServlet extends HttpServlet{
 		RequestDispatcher rd;
 		Cookie currentUser = CookieDB.getCookieValue(request.getCookies(), "username");
 
-		UserDB myUserDb;
 		LoanDB lnDB;
 		LibraryPropsDB lpDB;
 		StudentDB sDB;
 
-		User crrUser;
 		Student st = null;
 
 		String bookISBN = request.getParameter("bookIsbn");
-		String userID = request.getParameter("userId");
 		String stID = request.getParameter("stId");
 
+		boolean errors = false;
+		ArrayList<String> errorLst = null;
 		try{
 			cn = DriverManager.getConnection(this.sc.getInitParameter("cnurl"), this.sc.getInitParameter("DBUsername"), this.sc.getInitParameter("DBPassword"));
-			myUserDb = new UserDB(cn);
 
-			if(bookISBN == null || currentUser == null || (crrUser = myUserDb.getUser(currentUser.getValue())) == null){
-				rd = request.getRequestDispatcher("SearchBookServlet");
-				rd.forward(request, response);
+			if(bookISBN == null || currentUser == null){
+//				rd = request.getRequestDispatcher("SearchBookServlet");
+//				rd.forward(request, response);
+				response.sendRedirect("SearchBookServlet");
 				return;
 			}
 
 			sDB = new StudentDB(cn);
-			if(stID == null){
-				if(crrUser.getUserType().equals("user")){
-					st = sDB.getStudent(crrUser.getUserID());
-					stID = st.getStudentID();
-				} else if(crrUser.getUserID().equals("admin")){
-					rd = request.getRequestDispatcher("IdentifyUserServlet"); //TODO Write this page/servlet
-					rd.forward(request, response);
-					return;
-				}
-			}
-
-			if(st == null){
-				st = sDB.getStudent(crrUser.getUserID());
+			if(stID == null || (st = sDB.getStudent(stID)) == null){
+				rd = request.getRequestDispatcher("IdentifyStudentServlet");
+				request.removeAttribute("stId");
+				rd.forward(request, response);
+				return;
 			}
 
 			lnDB = new LoanDB(cn);
 			GregorianCalendar today = new GregorianCalendar();
 			GregorianCalendar returnBy = new GregorianCalendar();
 			returnBy.add(GregorianCalendar.DAY_OF_MONTH, 14);
-			Loan newLoan = lnDB.getNewLoan(stID, today, returnBy);
+			Loan newLoan = lnDB.getNewLoan(st.getStudentID(), today, returnBy);
 
 			if(newLoan == null){
-				// TODO
-				// Redirect to an error page saying something bad has happned.
-				/*
-				 * rd = request.getRequestDispatcher("SearchBookServlet");
-				 * rd.forward(request, response);
-				 */
-				return;
+				errors = true;
+				if(errorLst == null){
+					errorLst = new ArrayList<>();
+				}
+				errorLst.add("Failed to recieve newLoan.");
 			}
 
 			lpDB = new LibraryPropsDB(cn);
@@ -129,21 +117,22 @@ public class LoanBookFromSearchServlet extends HttpServlet{
 			int maxBooksPerStudent = lpDB.getMaxBooksPerStudent();
 
 			if(st.getCurrentFines() >= maxFinesPerStudent){
-				/*
-				 * TODO
-				 * Redirect to error page about fines.
-				 */
-				return;
+				errors = true;
+				if(errorLst == null){
+					errorLst = new ArrayList<>();
+				}
+				errorLst.add("Student with ID: " + st.getStudentID() + " has fines that exceed the library maximum.");
 			}
-			if(sDB.getCountLoanedBooks(stID) >= maxBooksPerStudent){
-				/*
-				 * TODO
-				 * Redirect to error page about book count.
-				 */
-				return;
+			if(sDB.getCountLoanedBooks(st.getStudentID()) >= maxBooksPerStudent){
+				errors = true;
+				if(errorLst == null){
+					errorLst = new ArrayList<>();
+				}
+				errorLst.add("Student with ID: " + st.getStudentID() + " loaned books count has exceeded the library maximum.");
+
 			}
 
-			if(lnDB.addBookToLoan(newLoan.getLoanID(), bookISBN)){
+			if(errors == false && lnDB.addBookToLoan(newLoan.getLoanID(), bookISBN)){
 				// TODO
 				// Redirect to a page that handles loans.
 				/*
@@ -154,13 +143,17 @@ public class LoanBookFromSearchServlet extends HttpServlet{
 				 */
 				return;
 			} else {
-				// TODO
-				// Redirect to an error page saying something bad has happned.
-				/*
-				 * rd = request.getRequestDispatcher("SearchBookServlet");
-				 * rd.forward(request, response);
-				 */
-				return;
+				errors = true;
+				if(errorLst == null){
+					errorLst = new ArrayList<>();
+				}
+				errorLst.add("Failed to add book copy to loan.");
+			}
+
+			if(errors == true){
+				rd = request.getRequestDispatcher("LoanBookFromSearchPageError.jsp");
+				request.setAttribute("errors", errorLst);
+				rd.forward(request, response);
 			}
 		} catch(SQLException | ClassNotFoundException e){
 			// TODO

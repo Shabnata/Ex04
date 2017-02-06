@@ -21,16 +21,12 @@
 					<br/><br/><br/>
 				</div> <%-- id=leftMenu --%>
 				<div id="contentArea">
-					<jsp:useBean id="bookISBN" type="java.lang.String" scope="request"/>
-					<jsp:useBean id="stNotFound" type="java.lang.String" scope="request"/>
 					<form class="formStyle" action="AddLoanServlet" method="post">
 						<span class="formTxt">Find student by ID:</span><br/>
 						<input type="number" name="stId" min="0" max="999999999" placeholder="9 digits ID" onfocus="focusClearIDTextBox(this)" onblur="studentIDFill(this)" required/>
 						<br/>
-						<input type="hidden" name="bookIsbn" value="${bookISBN}"/>
 						<input type="submit" value="Search"
 					</form>
-					<h1>${stNotFound}</h1>
 				</div> <%-- id=contentArea --%>
 			</div> <%-- id=centerBox --%>
 			<%@include file="Footer.jsp" %>

@@ -169,6 +169,14 @@ public class BookCopyDB{
 		return bc;
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
 	//TODO! still doesnt work
 	public Boolean updateBookCopyLoanState(String copyCode){
 		Boolean updated = false;
@@ -180,9 +188,9 @@ public class BookCopyDB{
 			PreparedStatement pst = this.cn.prepareStatement("UPDATE loaned_books SET returned=? WHERE copy_code=? and returned=?");
 			pst.setString(1, "true");
 			pst.setString(2, copyCode);
-			pst.setString(1, "false");
+			pst.setString(3, "false");
 			updated = pst.execute();
-			cn.close();
+			
 		} catch (SQLException e) {
 			// TODO
 			// Write an error

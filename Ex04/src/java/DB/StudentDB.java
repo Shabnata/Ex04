@@ -182,9 +182,9 @@ public class StudentDB {
 		}
 		return hasBooks;
 	}
-	
+
 	//get Array of Loans per this student
-	public ArrayList<Loan> getLoans(String st_id) throws ClassNotFoundException, SQLException, ParseException {
+	public ArrayList<Loan> getLoans(String st_id) throws ClassNotFoundException, SQLException {
 		Class.forName("org.apache.derby.jdbc.ClientDriver");
 		String urlCn = "jdbc:derby://localhost:1527/LibraryDB";
 		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
@@ -203,23 +203,19 @@ public class StudentDB {
 				loanID = rs.getInt("loan_id");
 				loanIds.add(loanID);
 			}
-			
+
 		} catch (SQLException e) {
 			// TODO
 			// Write an error
 		}
 		LoanDB tmpLoanDB = new LoanDB(cn);
-		Loan tmpLoan =new Loan();
-		for(Integer lnId : loanIds){
-			tmpLoan=tmpLoanDB.getLoanByID((int)lnId);
+		Loan tmpLoan = new Loan();
+		for (Integer lnId : loanIds) {
+			tmpLoan = tmpLoanDB.getLoanByID((int) lnId);
 			loans.add(tmpLoan);
-			
-			}
+		}
 		cn.close();
 		return loans;
 	}
-	
-	
-
 
 }

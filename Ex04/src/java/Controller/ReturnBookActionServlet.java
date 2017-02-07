@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -56,44 +57,41 @@ public class ReturnBookActionServlet extends HttpServlet {
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException, SQLException {
 		Connection cn = DriverManager.getConnection(this.sc.getInitParameter("cnurl"), this.sc.getInitParameter("DBUsername"), this.sc.getInitParameter("DBPassword"));
 		RequestDispatcher dispatcher;
-
-		
+		ArrayList<Loan> loans;
 
 		LoanDB lnDB = new LoanDB(cn);
 		Loan ln = lnDB.getLoanByID((Integer.parseInt(request.getParameter("loanID"))));
 
-		
-		
 		//Update fines
 		StudentDB sDB = new StudentDB();
 		Student st = sDB.getStudent(request.getParameter("studentID"));
-		
+
 		Double oldFines = st.getCurrentFines();
-		Double newFines = oldFines+Double.parseDouble(request.getParameter("generalFines"))+(Double.parseDouble(request.getParameter("lateFines")));
+		Double newFines = oldFines + Double.parseDouble(request.getParameter("generalFines")) + (Double.parseDouble(request.getParameter("lateFines")));
 		st.setCurrentFines(newFines);
 		sDB.updateStudent(st); // change id DB
-		
+
 		//Update bookCopy condition
 		ConditionDB conDB = new ConditionDB();
 		BookCondition con = conDB.getCondition((Integer.parseInt(request.getParameter("newCondition"))));
-		
+
 		BookCopyDB bcDB = new BookCopyDB(cn);
 		BookCopy bc = new BookCopy();
-		bc=bcDB.getBookCopyByCopyCode(request.getParameter("copyCode"));
+		bc = bcDB.getBookCopyByCopyCode(request.getParameter("copyCode"));
 		bc.setCopyCondition(con);
 		bcDB.updateBookCopyCondition(bc);
-		
+
 		//set book to returned in loaned_books
 		String cpCode = request.getParameter("copyCode");
 		bcDB.updateBookCopyLoanState(cpCode);
-		
-	
 
-		if(st == null){
+		if (st == null) {
 			dispatcher = request.getRequestDispatcher("ReturnBookPageResult.jsp");
 			dispatcher.forward(request, response);
 
 		} else {
+			loans = sDB.getLoans(request.getParameter("studentID"));
+			request.setAttribute("loans", loans);
 			request.setAttribute("student", st);
 			dispatcher = request.getRequestDispatcher("ReturnBookPageResult.jsp");
 			dispatcher.forward(request, response);

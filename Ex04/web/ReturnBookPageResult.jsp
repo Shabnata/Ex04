@@ -27,6 +27,7 @@
 		%>
 
 		<jsp:useBean id="student" class="Model.Student" scope="request" />
+		<jsp:useBean id="loans" type="java.util.ArrayList<Model.Loan>" scope="request"/>
 		<div id="outerContainer">
 			<jsp:include page="Header.jsp" />
 			<div id="centerBox">
@@ -48,6 +49,7 @@
 
 
 					<table>
+						<%if (stDB.getCountLoanedBooks(student.getStudentID()) > 0) {%>
 						<tr>
 							<th>LoanID</th>
 							<th>Cover</th>
@@ -60,9 +62,11 @@
 							<th>Fines</th>
 							<th>Return book</th>
 						</tr>
+						<%} else {%> 
+						<h1>This student has no loaned books</h1>
+						<%}%>
+
 						<%
-							ArrayList<Loan> loans = new ArrayList<Loan>();
-							loans = stDB.getLoans(student.getStudentID());
 							for (Loan ln : loans) {
 								ArrayList<BookCopy> bcs = new ArrayList<BookCopy>();
 								bcs = ln.getBooksInLoan();
@@ -75,8 +79,6 @@
 									b = bDB.getBookByBookCopy(bc);
 									GregorianCalendar rtrnDate = ln.getReturnByDate();
 									String dateStr = rtrnDate.get(GregorianCalendar.DAY_OF_MONTH) + "." + (rtrnDate.get(GregorianCalendar.MONTH) + 1) + "." + rtrnDate.get(GregorianCalendar.YEAR);
-
-
 						%>
 						<tr>
 							<td><%=ln.getLoanID()%></td>
@@ -84,12 +86,8 @@
 							<td><%=b.getISBN()%></td> 
 							<td><%=b.getTitle()%></td>
 							<td><%=bc.getCOPY_CODE()%></td>
-
-
-
 							<%LoanDB lnDB = new LoanDB(cn);
 								if (lnDB.isOverdue(ln.getReturnByDate()) < 0) {
-
 							%>
 
 							<td><span style="color: red;"><%=dateStr%></span></td>
@@ -118,8 +116,6 @@
 							<td>
 								<input type="number" name="generalFines" min="0" value="0" >
 							</td>
-
-							
 							<%
 								int lateFine = ((lnDB.isOverdue(ln.getReturnByDate()) * finesPerDay) < 0) ? (int) (lnDB.isOverdue(ln.getReturnByDate()) * finesPerDay * -1) : 0;
 							%>
@@ -139,7 +135,7 @@
 						</tr>
 						<%	}%>
 
-</table>
+					</table>
 				</div> <%-- id=contentArea --%>
 			</div> <%-- id=centerBox --%>
 			<jsp:include page="Footer.jsp" />

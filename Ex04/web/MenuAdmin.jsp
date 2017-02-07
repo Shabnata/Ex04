@@ -6,7 +6,7 @@
 <h4>Add Options:</h4>
 <a href="AddBookServlet">Add new book</a><br/>
 <a href="AddCategoryPage.jsp">Add new category</a><br/>
-<a href="AddLoanPage.jsp">Add new loan</a><br/>
+<a href="AddLoanServlet">Add new loan</a><br/>
 <a href="AddStudentPage.jsp">Add new student</a><br/>
 <h4>Delete options:</h4>
 <a href="DeleteBookServlet">Delete book</a>

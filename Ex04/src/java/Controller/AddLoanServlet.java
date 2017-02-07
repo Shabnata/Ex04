@@ -94,7 +94,9 @@ public class AddLoanServlet extends HttpServlet{
 				rd.forward(request, response);
 				return;
 			} else if(bookISBN == null){
-				ArrayList<Book> bookLst = new ArrayList<>(); //TODO Add method to CategoryDB that returns all books in a category.
+				cDB = new CategoryDB(cn);
+				ArrayList<Book> bookLst = cDB.getBooksByCategoryName(catName);
+				//TODO Add method to CategoryDB that returns all books in a category. getBooksByCategoryName
 				rd = request.getRequestDispatcher("SelectBookForLoanPage.jsp");
 				request.setAttribute("stId", stID);
 				if(loanID != null){

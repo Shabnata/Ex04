@@ -2,10 +2,7 @@ package DB;
 
 import Model.BookCondition;
 import Model.BookCopy;
-import Model.Category;
-import Model.Student;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,13 +16,13 @@ import java.util.ArrayList;
 public class BookCopyDB{
 
 	/*
-		*
-		*
-		* TODO
-		* Remember to test this Class
-		*
-		*
-		*
+	 *
+	 *
+	 * TODO
+	 * Remember to test this Class
+	 *
+	 *
+	 *
 	 */
 	private Connection cn;
 
@@ -91,7 +88,10 @@ public class BookCopyDB{
 			+ "                 AND loaned_books.returned = true "
 			+ "       JOIN conditions "
 			+ "         ON book_copies.copy_cond = conditions.con_key "
-			+ "WHERE  books.isbn = ?";
+			+ "WHERE  books.isbn = ? "
+			+ "       AND book_copies.copy_code NOT IN(SELECT copy_code "
+			+ "                                        FROM   loaned_books "
+			+ "                                        WHERE  returned = false)";
 
 		try{
 			PreparedStatement ps = this.cn.prepareStatement(copiesQuery);
@@ -121,29 +121,30 @@ public class BookCopyDB{
 		}
 		return bcLst;
 	}
+
 	public Boolean updateBookCopyCondition(BookCopy bookCopy){
-	Boolean updated = false;
-	
+		Boolean updated = false;
+
 		BookCopy bc = bookCopy;
 		Statement ps = null;
 
-		try {
+		try{
 			PreparedStatement pst = cn.prepareStatement("UPDATE book_copies SET copy_cond=? WHERE copy_code=?");
 			pst.setDouble(1, bc.getCopyCondition().getConKey());
 			pst.setString(2, bc.getCOPY_CODE());
 			updated = pst.execute();
 			//cn.close();
-		} catch (SQLException e) {
+		} catch(SQLException e){
 			// TODO
 			// Write an error
 		}
-		
-	return updated;
+
+		return updated;
 	}
+
 	public BookCopy getBookCopyByCopyCode(String copyCode) throws ClassNotFoundException{
-	BookCopy bc = null;
+		BookCopy bc = null;
 		String copiesQuery = "select * from book_copies where copy_code=?";
-			
 
 		try{
 			PreparedStatement ps = this.cn.prepareStatement(copiesQuery);
@@ -151,14 +152,14 @@ public class BookCopyDB{
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()){
 				bc = new BookCopy();
-				
+
 				do {
 					bc.setCOPY_CODE(copyCode);
 					ConditionDB conDB = new ConditionDB();
 					BookCondition bCon = new BookCondition();
-					bCon=conDB.getCondition(rs.getInt("copy_cond"));
+					bCon = conDB.getCondition(rs.getInt("copy_cond"));
 					bc.setCopyCondition(bCon);
-				
+
 				} while(rs.next());
 			}
 		} catch(SQLException e){
@@ -168,37 +169,27 @@ public class BookCopyDB{
 		}
 		return bc;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	//TODO! still doesnt work
 	public Boolean updateBookCopyLoanState(String copyCode){
 		Boolean updated = false;
-	
-	
+
 		Statement ps = null;
 
-		try {
+		try{
 			PreparedStatement pst = this.cn.prepareStatement("UPDATE loaned_books SET returned=? WHERE copy_code=? and returned=?");
 			pst.setString(1, "true");
 			pst.setString(2, copyCode);
 			pst.setString(3, "false");
 			updated = pst.execute();
-			
-		} catch (SQLException e) {
+
+		} catch(SQLException e){
 			// TODO
 			// Write an error
 		}
-		
-	return updated;
-		
-		
-		
+
+		return updated;
+
 	}
+
 }

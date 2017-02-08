@@ -15,7 +15,6 @@
 
 --drop table library_props; drop table accounts; drop table loaned_books; drop table loans; drop table book_copies; drop table conditions; drop table books; drop table categories; drop table students;
 
-
 create table students(
 	id integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
 	st_id varchar(9) primary key,

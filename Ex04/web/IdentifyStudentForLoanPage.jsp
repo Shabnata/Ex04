@@ -23,11 +23,27 @@
 				</div> <%-- id=leftMenu --%>
 				<div id="contentArea">
 					<form class="formStyle" action="AddLoanServlet" method="post">
+						<%
+							String bookISBN = (String)request.getAttribute("bookISBN");
+							if(bookISBN != null){
+						%>
+						<input type="hidden" name="bookIsbn" value="<%= bookISBN%>"/>
+						<%
+							}
+						%>
 						<span class="formTxt">Find student by ID:</span><br/>
 						<input type="number" name="stId" min="0" max="999999999" placeholder="9 digits ID" onfocus="focusClearIDTextBox(this)" onblur="studentIDFill(this)" required/>
 						<br/>
-						<input type="submit" value="Search"
+						<input type="submit" value="Search"/>
 					</form>
+					<%
+						String err = (String)request.getAttribute("errMsg");
+						if(err != null){
+					%>
+					<%= err%>
+					<%
+						}
+					%>
 				</div> <%-- id=contentArea --%>
 			</div> <%-- id=centerBox --%>
 			<%@include file="Footer.jsp" %>

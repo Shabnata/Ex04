@@ -65,6 +65,11 @@ public class LoanBookFromSearchServlet extends HttpServlet{
 		 *
 		 */
 
+		//Marking this for deletion
+		if(true){
+			return;
+		}
+
 		Connection cn;
 		RequestDispatcher rd;
 		Cookie currentUser = CookieDB.getCookieValue(request.getCookies(), "username");
@@ -92,7 +97,8 @@ public class LoanBookFromSearchServlet extends HttpServlet{
 
 			sDB = new StudentDB(cn);
 			if(stID == null || (st = sDB.getStudent(stID)) == null){
-				rd = request.getRequestDispatcher("IdentifyStudentServletPage.jsp");
+				rd = request.getRequestDispatcher("IdentifyStudentPage.jsp");
+				request.setAttribute("bookISBN", bookISBN);
 				request.removeAttribute("stId");
 				rd.forward(request, response);
 				return;
@@ -133,14 +139,11 @@ public class LoanBookFromSearchServlet extends HttpServlet{
 			}
 
 			if(errors == false && lnDB.addBookToLoan(newLoan.getLoanID(), bookISBN)){
-				// TODO
-				// Redirect to a page that handles loans.
-				/*
-				 * rd = request.getRequestDispatcher("");
-				 * request.setAttribute("loanID", newLoan.getLoanID());
-				 * request.setAttribute("studentID", userID);
-				 * rd.forward(request, response);
-				 */
+
+				rd = request.getRequestDispatcher("AddLoanServlet");
+				request.setAttribute("stId", stID);
+				request.setAttribute("LoanId", newLoan.getLoanID());
+				rd.forward(request, response);
 				return;
 			} else {
 				errors = true;

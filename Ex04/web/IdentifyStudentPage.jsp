@@ -4,6 +4,9 @@
     Author     : Denis Sh
 --%>
 
+<%-- Marking this for deletion --%>
+<% return;%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -23,15 +26,21 @@
 				</div> <%-- id=leftMenu --%>
 				<div id="contentArea">
 					<jsp:useBean id="bookISBN" type="java.lang.String" scope="request"/>
-					<jsp:useBean id="stNotFound" type="java.lang.String" scope="request"/>
 					<form class="formStyle" action="LoanBookFromSearchServlet" method="post">
 						<span class="formTxt">Find student by ID:</span><br/>
 						<input type="number" name="stId" min="0" max="999999999" placeholder="9 digits ID" onfocus="focusClearIDTextBox(this)" onblur="studentIDFill(this)" required/>
 						<br/>
 						<input type="hidden" name="bookIsbn" value="${bookISBN}"/>
-						<input type="submit" value="Search"
+						<input type="submit" value="Search"/>
 					</form>
+					<%
+						String err = (String)request.getAttribute("stNotFound");
+						if(err != null){
+					%>
 					<h1>${stNotFound}</h1>
+					<%
+						}
+					%>
 				</div> <%-- id=contentArea --%>
 			</div> <%-- id=centerBox --%>
 			<%@include file="Footer.jsp" %>

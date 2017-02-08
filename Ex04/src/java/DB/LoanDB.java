@@ -10,6 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -17,15 +19,6 @@ import java.util.GregorianCalendar;
  */
 public class LoanDB{
 
-	/*
-	 *
-	 *
-	 * TODO
-	 * Remember to test this Class
-	 *
-	 *
-	 *
-	 */
 	private Connection cn;
 
 	public LoanDB(Connection cn){
@@ -89,7 +82,6 @@ public class LoanDB{
 				ln.setLoanID(rs.getInt("loan_id"));
 
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-				//sdf.setLenient(true); This does what?
 				GregorianCalendar loanedDate = new GregorianCalendar();
 				GregorianCalendar returnByDate = new GregorianCalendar();
 				Date lDate = sdf.parse(rs.getString("start_d"));
@@ -130,10 +122,7 @@ public class LoanDB{
 				ln.setBooksReturned(booksReturned);
 			}
 		} catch(SQLException | ParseException e){
-			// TODO
-			// Write an error
-			// Make sure the parsing works correctly and then combine the catches.
-			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
+			Logger.getLogger(LoanDB.class.getName()).log(Level.SEVERE, null, e);
 		}
 		return ln;
 	}
@@ -180,9 +169,7 @@ public class LoanDB{
 				return null;
 			}
 		} catch(SQLException e){
-			// TODO
-			// Write an error
-			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
+			Logger.getLogger(LoanDB.class.getName()).log(Level.SEVERE, null, e);
 		}
 
 		return null;
@@ -210,9 +197,7 @@ public class LoanDB{
 				return false;
 			}
 		} catch(SQLException e){
-			// TODO
-			// Write an error
-			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
+			Logger.getLogger(LoanDB.class.getName()).log(Level.SEVERE, null, e);
 			return false;
 		}
 		return true;

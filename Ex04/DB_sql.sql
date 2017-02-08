@@ -14,15 +14,6 @@
 --delete from library_props; delete from accounts; delete from loaned_books; delete from loans; delete from book_copies; delete from conditions; delete from books; delete from categories; delete from students;
 
 --drop table library_props; drop table accounts; drop table loaned_books; drop table loans; drop table book_copies; drop table conditions; drop table books; drop table categories; drop table students;
---drop table library_props
---drop table accounts
---drop table loaned_books
---drop table loans
---drop table book_copies
---drop table conditions
---drop table books
---drop table categories
---drop table students
 
 create table students(
 	id integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),

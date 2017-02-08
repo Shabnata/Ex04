@@ -37,7 +37,7 @@
 						String err = (String)request.getAttribute("stNotFound");
 						if(err != null){
 					%>
-					<h1>${stNotFound}</h1>
+					<h3>${stNotFound}</h3>
 					<%
 						}
 					%>

@@ -27,10 +27,6 @@
 						String stId = (String)request.getAttribute("stId");
 						String loanId = (String)request.getAttribute("loanId");
 					%>
-					<%--
-					<jsp:useBean id="stId" type="String" scope="request"/>
-					<jsp:useBean id="loanId" type="String" scope="request"/>
-					--%>
 					<jsp:useBean id="bookLst" type="ArrayList<Book>" scope="request"/>
 
 					<form action="AddLoanServlet" method="post">

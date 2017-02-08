@@ -17,7 +17,7 @@
 				</div> <%-- id=leftMenu --%>
 				<div id="contentArea">
 					<%@include file="SearchBookForm.jsp" %><br/>
-					<h4>No books found</h4>
+					<h3>No books found</h3>
 				</div> <%-- id=contentArea --%>
 			</div> <%-- id=centerBox --%>
 			<%@include file="Footer.jsp" %>

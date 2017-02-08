@@ -13,15 +13,6 @@ import java.util.logging.Logger;
 
 public class BookDB{
 
-	/*
-	 *
-	 *
-	 * TODO
-	 * Remember to test this Class
-	 *
-	 *
-	 *
-	 */
 	private Connection cn;
 
 	//Added by Natalie
@@ -82,9 +73,7 @@ public class BookDB{
 				bk.setAvailableCopies(rs.getInt("usable_copy_count"));
 			}
 		} catch(SQLException e){
-			// TODO
-			// Write an error
-			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
+			Logger.getLogger(BookDB.class.getName()).log(Level.SEVERE, null, e);
 		}
 
 		return bk;
@@ -148,9 +137,7 @@ public class BookDB{
 				bksLst.add(bk);
 			}
 		} catch(SQLException e){
-			// TODO
-			// Write an error
-			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
+			Logger.getLogger(BookDB.class.getName()).log(Level.SEVERE, null, e);
 		}
 
 		return bksLst;
@@ -207,9 +194,7 @@ public class BookDB{
 			}
 
 		} catch(SQLException e){
-			// TODO
-			// Write an error
-			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
+			Logger.getLogger(BookDB.class.getName()).log(Level.SEVERE, null, e);
 			return false;
 		}
 		return !failed;
@@ -269,12 +254,10 @@ public class BookDB{
 				 * book_copies and loaned_books with the corrosponding book_isbn
 				 * .
 				 */
-				return (deleteBookPS.executeUpdate() == 1); // TODO Check returned value for deleting multiple copies
+				return (deleteBookPS.executeUpdate() == 1);
 			}
-		} catch(SQLException ex){
-			// TODO
-			// Check this output
-			Logger.getLogger(BookDB.class.getName()).log(Level.SEVERE, null, ex);
+		} catch(SQLException e){
+			Logger.getLogger(BookDB.class.getName()).log(Level.SEVERE, null, e);
 		}
 		return false;
 	}

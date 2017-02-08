@@ -22,7 +22,7 @@
 				</div> <%-- id=leftMenu --%>
 				<div id="contentArea">
 					<%@include file="AddBookForm.jsp" %>
-					<h1>Could not add book</h1>
+					<h3>Could not add book</h3>
 				</div> <%-- id=contentArea --%>
 			</div> <%-- id=centerBox --%>
 			<%@include file="Footer.jsp" %>

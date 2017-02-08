@@ -14,15 +14,6 @@ import java.util.logging.Logger;
  */
 public class LibraryPropsDB{
 
-	/*
-	 *
-	 *
-	 * TODO
-	 * Remember to test this Class
-	 *
-	 *
-	 *
-	 */
 	private Connection cn;
 
 	public LibraryPropsDB(Connection cn){
@@ -43,10 +34,8 @@ public class LibraryPropsDB{
 			if(rs.next()){
 				libName = rs.getString("lib_name");
 			}
-		} catch(SQLException ex){
-			// TODO
-			// Write an error
-			Logger.getLogger(LibraryPropsDB.class.getName()).log(Level.SEVERE, null, ex);
+		} catch(SQLException e){
+			Logger.getLogger(LibraryPropsDB.class.getName()).log(Level.SEVERE, null, e);
 		}
 		return libName;
 	}
@@ -64,10 +53,8 @@ public class LibraryPropsDB{
 			if(ps.executeUpdate() == 1){
 				return true;
 			}
-		} catch(SQLException ex){
-			// TODO
-			// Write an error
-			Logger.getLogger(LibraryPropsDB.class.getName()).log(Level.SEVERE, null, ex);
+		} catch(SQLException e){
+			Logger.getLogger(LibraryPropsDB.class.getName()).log(Level.SEVERE, null, e);
 		}
 		return false;
 	}
@@ -86,10 +73,8 @@ public class LibraryPropsDB{
 			if(rs.next()){
 				finesPerDay = rs.getInt("fine_per_day");
 			}
-		} catch(SQLException ex){
-			// TODO
-			// Write an error
-			Logger.getLogger(LibraryPropsDB.class.getName()).log(Level.SEVERE, null, ex);
+		} catch(SQLException e){
+			Logger.getLogger(LibraryPropsDB.class.getName()).log(Level.SEVERE, null, e);
 		}
 		return finesPerDay;
 	}
@@ -107,10 +92,8 @@ public class LibraryPropsDB{
 			if(ps.executeUpdate() > 0){
 				return true;
 			}
-		} catch(SQLException ex){
-			// TODO
-			// Write an error
-			Logger.getLogger(LibraryPropsDB.class.getName()).log(Level.SEVERE, null, ex);
+		} catch(SQLException e){
+			Logger.getLogger(LibraryPropsDB.class.getName()).log(Level.SEVERE, null, e);
 		}
 		return false;
 	}
@@ -129,10 +112,8 @@ public class LibraryPropsDB{
 			if(rs.next()){
 				finesPerStudent = rs.getInt("max_fines_per_student");
 			}
-		} catch(SQLException ex){
-			// TODO
-			// Write an error
-			Logger.getLogger(LibraryPropsDB.class.getName()).log(Level.SEVERE, null, ex);
+		} catch(SQLException e){
+			Logger.getLogger(LibraryPropsDB.class.getName()).log(Level.SEVERE, null, e);
 		}
 		return finesPerStudent;
 	}
@@ -150,10 +131,8 @@ public class LibraryPropsDB{
 			if(ps.executeUpdate() > 0){
 				return true;
 			}
-		} catch(SQLException ex){
-			// TODO
-			// Write an error
-			Logger.getLogger(LibraryPropsDB.class.getName()).log(Level.SEVERE, null, ex);
+		} catch(SQLException e){
+			Logger.getLogger(LibraryPropsDB.class.getName()).log(Level.SEVERE, null, e);
 		}
 		return false;
 	}
@@ -172,10 +151,8 @@ public class LibraryPropsDB{
 			if(rs.next()){
 				booksPerStudent = rs.getInt("max_books_per_student");
 			}
-		} catch(SQLException ex){
-			// TODO
-			// Write an error
-			Logger.getLogger(LibraryPropsDB.class.getName()).log(Level.SEVERE, null, ex);
+		} catch(SQLException e){
+			Logger.getLogger(LibraryPropsDB.class.getName()).log(Level.SEVERE, null, e);
 		}
 		return booksPerStudent;
 	}
@@ -193,10 +170,8 @@ public class LibraryPropsDB{
 			if(ps.executeUpdate() > 0){
 				return true;
 			}
-		} catch(SQLException ex){
-			// TODO
-			// Write an error
-			Logger.getLogger(LibraryPropsDB.class.getName()).log(Level.SEVERE, null, ex);
+		} catch(SQLException e){
+			Logger.getLogger(LibraryPropsDB.class.getName()).log(Level.SEVERE, null, e);
 		}
 		return false;
 	}
@@ -212,10 +187,8 @@ public class LibraryPropsDB{
 			if(rs.next()){
 				return true;
 			}
-		} catch(SQLException ex){
-			// TODO
-			// Write an error
-			Logger.getLogger(LibraryPropsDB.class.getName()).log(Level.SEVERE, null, ex);
+		} catch(SQLException e){
+			Logger.getLogger(LibraryPropsDB.class.getName()).log(Level.SEVERE, null, e);
 		}
 		return false;
 	}
@@ -250,10 +223,8 @@ public class LibraryPropsDB{
 			if(ps.executeUpdate() == 1){
 				return true;
 			}
-		} catch(SQLException ex){
-			// TODO
-			// Write an error
-			Logger.getLogger(LibraryPropsDB.class.getName()).log(Level.SEVERE, null, ex);
+		} catch(SQLException e){
+			Logger.getLogger(LibraryPropsDB.class.getName()).log(Level.SEVERE, null, e);
 		}
 
 		return false;

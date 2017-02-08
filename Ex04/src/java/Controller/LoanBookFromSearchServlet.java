@@ -12,6 +12,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -37,9 +39,7 @@ public class LoanBookFromSearchServlet extends HttpServlet{
 		try{
 			Class.forName("org.apache.derby.jdbc.ClientDriver");
 		} catch(ClassNotFoundException e){
-			// TODO
-			// Write an error
-			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
+			Logger.getLogger(LoanBookFromSearchServlet.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
 
@@ -55,15 +55,6 @@ public class LoanBookFromSearchServlet extends HttpServlet{
 	 * @throws IOException      if an I/O error occurs
 	 */// </editor-fold>
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		/*
-		 *
-		 *
-		 * TODO
-		 * Remember to test this Servlet
-		 *
-		 *
-		 *
-		 */
 
 		//Marking this for deletion
 		if(true){
@@ -89,8 +80,6 @@ public class LoanBookFromSearchServlet extends HttpServlet{
 			cn = DriverManager.getConnection(this.sc.getInitParameter("cnurl"), this.sc.getInitParameter("DBUsername"), this.sc.getInitParameter("DBPassword"));
 
 			if(bookISBN == null || currentUser == null){
-//				rd = request.getRequestDispatcher("SearchBookServlet");
-//				rd.forward(request, response);
 				response.sendRedirect("SearchBookServlet");
 				return;
 			}
@@ -159,9 +148,7 @@ public class LoanBookFromSearchServlet extends HttpServlet{
 				rd.forward(request, response);
 			}
 		} catch(SQLException | ClassNotFoundException e){
-			// TODO
-			// Write an error
-			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
+			Logger.getLogger(LoanBookFromSearchServlet.class.getName()).log(Level.SEVERE, null, e);
 		}
 
 	}

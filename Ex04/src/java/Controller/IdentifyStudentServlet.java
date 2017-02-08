@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -30,9 +32,7 @@ public class IdentifyStudentServlet extends HttpServlet{
 		try{
 			Class.forName("org.apache.derby.jdbc.ClientDriver");
 		} catch(ClassNotFoundException e){
-			// TODO
-			// Write an error
-			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
+			Logger.getLogger(IdentifyStudentServlet.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
 
@@ -48,15 +48,7 @@ public class IdentifyStudentServlet extends HttpServlet{
 	 * @throws IOException      if an I/O error occurs
 	 */// </editor-fold>
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		/*
-		 *
-		 *
-		 * TODO
-		 * Remember to test this Servlet
-		 *
-		 *
-		 *
-		 */
+
 		RequestDispatcher rd;
 		Connection cn;
 
@@ -71,8 +63,6 @@ public class IdentifyStudentServlet extends HttpServlet{
 			sDB = new StudentDB(cn);
 
 			if(bookISBN == null){
-//				rd = request.getRequestDispatcher("SearchBookServlet");
-//				rd.forward(request, response);
 				response.sendRedirect("SearchBookServlet");
 				return;
 			} else if(stID == null){
@@ -95,9 +85,7 @@ public class IdentifyStudentServlet extends HttpServlet{
 			rd.forward(request, response);
 
 		} catch(SQLException | ClassNotFoundException e){
-			// TODO
-			// Write an error
-			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
+			Logger.getLogger(IdentifyStudentServlet.class.getName()).log(Level.SEVERE, null, e);
 		}
 
 	}

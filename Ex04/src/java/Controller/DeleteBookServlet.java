@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -29,9 +31,7 @@ public class DeleteBookServlet extends HttpServlet{
 		try{
 			Class.forName("org.apache.derby.jdbc.ClientDriver");
 		} catch(ClassNotFoundException e){
-			// TODO
-			// Write an error
-			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
+			Logger.getLogger(DeleteBookServlet.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
 
@@ -47,15 +47,7 @@ public class DeleteBookServlet extends HttpServlet{
 	 * @throws IOException      if an I/O error occurs
 	 */// </editor-fold>
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		/*
-		 *
-		 *
-		 * TODO
-		 * Remember to test this Servlet
-		 *
-		 *
-		 *
-		 */
+
 		Connection cn;
 		RequestDispatcher rd = request.getRequestDispatcher("DeleteBookPage.jsp");
 		String bookIsbn = request.getParameter("bookIsbn");
@@ -70,9 +62,7 @@ public class DeleteBookServlet extends HttpServlet{
 					request.setAttribute("servletMessage", "Cannot delete Book with ISBN " + bookIsbn);
 				}
 			} catch(SQLException e){
-				// TODO
-				// Write an error
-				System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
+				Logger.getLogger(DeleteBookServlet.class.getName()).log(Level.SEVERE, null, e);
 			}
 		}
 

@@ -40,7 +40,7 @@
 						String err = (String)request.getAttribute("errMsg");
 						if(err != null){
 					%>
-					<%= err%>
+					<h3><%= err%></h3>
 					<%
 						}
 					%>

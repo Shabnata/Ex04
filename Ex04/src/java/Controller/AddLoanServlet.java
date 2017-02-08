@@ -18,6 +18,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -43,9 +45,7 @@ public class AddLoanServlet extends HttpServlet{
 		try{
 			Class.forName("org.apache.derby.jdbc.ClientDriver");
 		} catch(ClassNotFoundException e){
-			// TODO
-			// Write an error
-			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
+			Logger.getLogger(AddLoanServlet.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
 
@@ -61,6 +61,7 @@ public class AddLoanServlet extends HttpServlet{
 	 * @throws IOException      if an I/O error occurs
 	 */// </editor-fold>
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+
 		Connection cn;
 		RequestDispatcher rd;
 
@@ -132,12 +133,6 @@ public class AddLoanServlet extends HttpServlet{
 
 					bDB = new BookDB(cn);
 					HashMap<String, Book> bksMap = new HashMap<>();
-//					for(BookCopy bc : ln.getBooksInLoan()){
-//						Book bk = bDB.getBookByBookCopy(bc);
-//						if(bk != null){
-//							bksMap.put(bc.getCOPY_CODE(), bk);
-//						}
-//					}
 					ln.getBooksInLoan().forEach((bc) -> {
 						Book bk = bDB.getBookByBookCopy(bc);
 						if(bk != null){
@@ -152,7 +147,6 @@ public class AddLoanServlet extends HttpServlet{
 			} else if(bookISBN == null){
 				cDB = new CategoryDB(cn);
 				ArrayList<Book> bookLst = cDB.getBooksByCategoryName(catName);
-				//TODO Add method to CategoryDB that returns all books in a category. getBooksByCategoryName
 				rd = request.getRequestDispatcher("SelectBookForLoanPage.jsp");
 				request.setAttribute("stId", stID);
 				if(loanID != null){
@@ -163,8 +157,6 @@ public class AddLoanServlet extends HttpServlet{
 				return;
 			}
 
-			//sDB = new StudentDB(cn);
-			//st = sDB.getStudent(stID);
 			lpDB = new LibraryPropsDB(cn);
 			int maxFinesPerStudent = lpDB.getMaxFinesPerStudent();
 			int maxBooksPerStudent = lpDB.getMaxBooksPerStudent();
@@ -224,9 +216,7 @@ public class AddLoanServlet extends HttpServlet{
 			rd.forward(request, response);
 
 		} catch(SQLException | ClassNotFoundException e){
-			// TODO
-			// Write an error
-			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
+			Logger.getLogger(AddLoanServlet.class.getName()).log(Level.SEVERE, null, e);
 		}
 
 	}

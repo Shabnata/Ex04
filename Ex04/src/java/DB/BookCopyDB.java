@@ -6,8 +6,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -15,15 +16,6 @@ import java.util.ArrayList;
  */
 public class BookCopyDB{
 
-	/*
-	 *
-	 *
-	 * TODO
-	 * Remember to test this Class
-	 *
-	 *
-	 *
-	 */
 	private Connection cn;
 
 	public BookCopyDB(Connection cn){
@@ -66,9 +58,7 @@ public class BookCopyDB{
 				} while(rs.next());
 			}
 		} catch(SQLException e){
-			// TODO
-			// Write an error
-			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
+			Logger.getLogger(BookCopyDB.class.getName()).log(Level.SEVERE, null, e);
 		}
 		return bcLst;
 	}
@@ -115,28 +105,23 @@ public class BookCopyDB{
 				} while(rs.next());
 			}
 		} catch(SQLException e){
-			// TODO
-			// Write an error
-			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
+			Logger.getLogger(BookCopyDB.class.getName()).log(Level.SEVERE, null, e);
 		}
 		return bcLst;
 	}
 
 	public Boolean updateBookCopyCondition(BookCopy bookCopy){
-		Boolean updated = false;
 
+		Boolean updated = false;
 		BookCopy bc = bookCopy;
-		Statement ps = null;
 
 		try{
 			PreparedStatement pst = cn.prepareStatement("UPDATE book_copies SET copy_cond=? WHERE copy_code=?");
 			pst.setDouble(1, bc.getCopyCondition().getConKey());
 			pst.setString(2, bc.getCOPY_CODE());
 			updated = pst.execute();
-			//cn.close();
 		} catch(SQLException e){
-			// TODO
-			// Write an error
+			Logger.getLogger(BookCopyDB.class.getName()).log(Level.SEVERE, null, e);
 		}
 
 		return updated;
@@ -163,9 +148,7 @@ public class BookCopyDB{
 				} while(rs.next());
 			}
 		} catch(SQLException e){
-			// TODO
-			// Write an error
-			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
+			Logger.getLogger(BookCopyDB.class.getName()).log(Level.SEVERE, null, e);
 		}
 		return bc;
 	}
@@ -173,8 +156,6 @@ public class BookCopyDB{
 	//TODO! still doesnt work
 	public Boolean updateBookCopyLoanState(String copyCode){
 		Boolean updated = false;
-
-		Statement ps = null;
 
 		try{
 			PreparedStatement pst = this.cn.prepareStatement("UPDATE loaned_books SET returned=? WHERE copy_code=? and returned=?");
@@ -184,8 +165,7 @@ public class BookCopyDB{
 			updated = pst.execute();
 
 		} catch(SQLException e){
-			// TODO
-			// Write an error
+			Logger.getLogger(BookCopyDB.class.getName()).log(Level.SEVERE, null, e);
 		}
 
 		return updated;

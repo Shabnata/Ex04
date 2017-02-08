@@ -85,11 +85,14 @@ public class AddLoanServlet extends HttpServlet{
 		try{
 			cn = DriverManager.getConnection(this.sc.getInitParameter("cnurl"), this.sc.getInitParameter("DBUsername"), this.sc.getInitParameter("DBPassword"));
 
+			sDB = new StudentDB(cn);
 			if(stID == null){
 				Cookie crrUsr = CookieDB.getCookieValue(request.getCookies(), "username");
 				myUserDb = new UserDB(cn);
-				if(crrUsr != null && !myUserDb.getUser(crrUsr.getValue()).getUserType().equals("admin")){
+				//TODO Remove crrUsr null check after adding redirects
+				if(crrUsr != null && myUserDb.getUser(crrUsr.getValue()).getUserType().equals("user")){
 					stID = myUserDb.getUser(crrUsr.getValue()).getUserID();
+					st = sDB.getStudent(stID);
 				} else {
 					rd = request.getRequestDispatcher("IdentifyStudentForLoanPage.jsp");
 					if(bookISBN != null){
@@ -99,7 +102,16 @@ public class AddLoanServlet extends HttpServlet{
 					return;
 				}
 
+			} else if((st = sDB.getStudent(stID)) == null){
+				rd = request.getRequestDispatcher("IdentifyStudentForLoanPage.jsp");
+				if(bookISBN != null){
+					request.setAttribute("bookISBN", bookISBN);
+				}
+				request.setAttribute("errMsg", "Student not found.");
+				rd.forward(request, response);
+				return;
 			}
+
 			if(catName == null && bookISBN == null){
 				sDB = new StudentDB(cn);
 				if(sDB.getStudent(stID) == null){
@@ -151,9 +163,8 @@ public class AddLoanServlet extends HttpServlet{
 				return;
 			}
 
-			sDB = new StudentDB(cn);
-			st = sDB.getStudent(stID);
-
+			//sDB = new StudentDB(cn);
+			//st = sDB.getStudent(stID);
 			lpDB = new LibraryPropsDB(cn);
 			int maxFinesPerStudent = lpDB.getMaxFinesPerStudent();
 			int maxBooksPerStudent = lpDB.getMaxBooksPerStudent();

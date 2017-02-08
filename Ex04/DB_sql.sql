@@ -1,3 +1,28 @@
+--Queries became complicated to read, using this site to format them automatically:
+--http://www.dpriver.com/pp/sqlformat.htm
+
+--select * from accounts
+--select * from books
+--select * from book_copies
+--select * from categories
+--select * from conditions
+--select * from library_props
+--select * from loaned_books
+--select * from loans
+--select * from students
+
+--delete from library_props; delete from accounts; delete from loaned_books; delete from loans; delete from book_copies; delete from conditions; delete from books; delete from categories; delete from students;
+
+--drop table library_props; drop table accounts; drop table loaned_books; drop table loans; drop table book_copies; drop table conditions; drop table books; drop table categories; drop table students;
+--drop table library_props
+--drop table accounts
+--drop table loaned_books
+--drop table loans
+--drop table book_copies
+--drop table conditions
+--drop table books
+--drop table categories
+--drop table students
 
 create table students(
 	id integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
@@ -63,7 +88,7 @@ create table library_props(
 
 insert into library_props (lib_name, fine_per_day, max_fines_per_student, max_books_per_student) values('Library', 1, 10, 10);
 
-insert into students (st_id, f_name, l_name, email, fine) values('123456789','Noah', 'Smith' , 'Noah@gmail.com@efg',50);
+insert into students (st_id, f_name, l_name, email, fine) values('123456789','Noah', 'Smith' , 'Noah@gmail.com@efg', 50);
 insert into students (st_id, f_name, l_name, email, fine) values('234567891','Emma', 'Williams' , 'Emma@gmail.com', 0);
 insert into students (st_id, f_name, l_name, email, fine) values('345678912','Liam', 'Johnson' , 'Liam@gmail.com', 0);
 insert into students (st_id, f_name, l_name, email, fine) values('456789123','Daniel', 'Brown' , 'Daniel@gmail.com', 0);
@@ -150,21 +175,8 @@ insert into accounts (acc_id, acc_pass, acc_type) values('admin','admin','admin'
 INSERT INTO ADMINISTRATOR.LOANS (ST_ID, START_D, RET_D) VALUES ('123456789', '2017-02-01', '2017-02-05');
 INSERT INTO ADMINISTRATOR.LOANS (ST_ID, START_D, RET_D) VALUES ('123456789', '2017-02-02', '2017-02-09');
 
+-- Using static loan_id causes errors if the tables are not dropped and recreated first.
 INSERT INTO ADMINISTRATOR.LOANED_BOOKS (LOAN_ID, COPY_CODE, RETURNED, DAYS_OVER) VALUES (1, '0000307949486_001', DEFAULT, DEFAULT);
 INSERT INTO ADMINISTRATOR.LOANED_BOOKS (LOAN_ID, COPY_CODE, RETURNED, DAYS_OVER) VALUES (1, '0000307742539_001', DEFAULT, DEFAULT);
 INSERT INTO ADMINISTRATOR.LOANED_BOOKS (LOAN_ID, COPY_CODE, RETURNED, DAYS_OVER) VALUES (2, '0000307949508_001', DEFAULT, DEFAULT);
 INSERT INTO ADMINISTRATOR.LOANED_BOOKS (LOAN_ID, COPY_CODE, RETURNED, DAYS_OVER) VALUES (2, '0001477820019_001', true, DEFAULT);
-
-
---delete from students
---select * from students
---select * from categories
---select * from books
---select * from conditions
---select * from book_copies
---select * from loans
---select * from loaned_books
---select * from library_props
-
---Queries became complicated to read, using this site to format them automatically:
---http://www.dpriver.com/pp/sqlformat.htm

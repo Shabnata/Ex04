@@ -22,4 +22,7 @@
 		<param-name>DBPassword</param-name>
 		<param-value>123456</param-value>
 	</context-param>
+	<welcome-file-list>
+		<welcome-file>SearchBookServlet</welcome-file>
+	</welcome-file-list>
 </web-app>

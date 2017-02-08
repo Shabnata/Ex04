@@ -46,7 +46,7 @@
 							<td><%= bk.getAvailableCopies()%></td>
 							<% if(bk.getAvailableCopies() != 0 && currentUser != null){%>
 							<td>
-								<form action="LoanBookFromSearchServlet" method="post"> 
+								<form action="AddLoanServlet" method="post">
 									<input type="submit" value="Loan"/>
 									<input type="hidden" value="<%= bk.getISBN()%>" name="bookIsbn"/>
 									<%--

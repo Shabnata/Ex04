@@ -4,8 +4,13 @@
     Author     : Denis Sh
 --%>
 
+<%@page import="java.time.Year"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="java.util.HashMap"%>
 <%@page import="Model.Category"%>
+<%@page import="Model.Loan"%>
+<%@page import="Model.Book"%>
+<%@page import="Model.BookCopy"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -26,7 +31,6 @@
 					<%
 						String stId = (String)request.getAttribute("stId");
 						String loanId = (String)request.getAttribute("loanId");
-
 					%>
 					<%--
 					<jsp:useBean id="stId" type="String" scope="request"/>
@@ -69,6 +73,51 @@
 						%>
 						<input type="submit" value="Select"/>
 					</form>
+					<br/><br/><br/>
+
+					<%
+						Loan ln = (Loan)request.getAttribute("loan");
+						HashMap<String, Book> bksLst = (HashMap<String, Book>)request.getAttribute("bksMap");
+						if(ln != null){
+					%>
+					<hr/>
+					Books in this loan:<br/>
+					Books in current loan:
+					<table id="booksInLoan">
+						<tr>
+							<th>Cover</th>
+							<th>BookCopy number</th>
+							<th>Title</th>
+							<th>Author</th>
+							<th>Category</th>
+							<th>Publication year</th>
+						</tr>
+
+						<%
+							for(BookCopy bc : ln.getBooksInLoan()){
+								Book bk = bksLst.get(bc.getCOPY_CODE());
+								String isbnCopy = bc.getCOPY_CODE();
+								String bookTitle = bk.getTitle();
+								String author = bk.getAuthorName();
+								String bookCategory = bk.getCategory().getCatName();
+								Year publication = bk.getBookYear();
+						%>
+
+						<tr>
+							<td><img src="<%= bk.getCoverPath()%>" alt="<%= bookTitle%>" style="height: 80px;"/></td>
+							<td><%= isbnCopy%></td>
+							<td><%= bookTitle%></td>
+							<td><%= author%></td>
+							<td><%= bookCategory%></td>
+							<td><%= publication%></td>
+						</tr>
+						<%
+							}
+						%>
+					</table>
+					<%
+						}
+					%>
 				</div> <%-- id=contentArea --%>
 			</div> <%-- id=centerBox --%>
 			<%@include file="Footer.jsp" %>

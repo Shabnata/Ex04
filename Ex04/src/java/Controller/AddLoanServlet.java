@@ -1,9 +1,12 @@
 package Controller;
 
+import DB.BookDB;
 import DB.CategoryDB;
+import DB.CookieDB;
 import DB.LibraryPropsDB;
 import DB.LoanDB;
 import DB.StudentDB;
+import DB.UserDB;
 import Model.Book;
 import Model.Category;
 import Model.Loan;
@@ -14,10 +17,12 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -63,6 +68,8 @@ public class AddLoanServlet extends HttpServlet{
 		StudentDB sDB;
 		LoanDB lnDB;
 		CategoryDB cDB;
+		BookDB bDB;
+		UserDB myUserDb;
 
 		Student st;
 		Loan ln;
@@ -79,16 +86,53 @@ public class AddLoanServlet extends HttpServlet{
 			cn = DriverManager.getConnection(this.sc.getInitParameter("cnurl"), this.sc.getInitParameter("DBUsername"), this.sc.getInitParameter("DBPassword"));
 
 			if(stID == null){
-				rd = request.getRequestDispatcher("IdentifyStudentForLoanPage.jsp");
-				rd.forward(request, response);
-				return;
-			} else if(catName == null && bookISBN == null){
+				Cookie crrUsr = CookieDB.getCookieValue(request.getCookies(), "username");
+				myUserDb = new UserDB(cn);
+				if(crrUsr != null && !myUserDb.getUser(crrUsr.getValue()).getUserType().equals("admin")){
+					stID = myUserDb.getUser(crrUsr.getValue()).getUserID();
+				} else {
+					rd = request.getRequestDispatcher("IdentifyStudentForLoanPage.jsp");
+					if(bookISBN != null){
+						request.setAttribute("bookISBN", bookISBN);
+					}
+					rd.forward(request, response);
+					return;
+				}
+
+			}
+			if(catName == null && bookISBN == null){
+				sDB = new StudentDB(cn);
+				if(sDB.getStudent(stID) == null){
+					request.setAttribute("errMsg", "Student not found.");
+					rd = request.getRequestDispatcher("IdentifyStudentForLoanPage.jsp");
+					rd.forward(request, response);
+					return;
+				}
 				cDB = new CategoryDB(cn);
 				ArrayList<Category> catLst = cDB.getCategories();
 				rd = request.getRequestDispatcher("SelectCategoryForLoanPage.jsp");
 				request.setAttribute("stId", stID);
 				if(loanID != null){
+					lnDB = new LoanDB(cn);
+					ln = lnDB.getLoanByID(Integer.parseInt(loanID));
 					request.setAttribute("loanId", loanID);
+					request.setAttribute("loan", ln);
+
+					bDB = new BookDB(cn);
+					HashMap<String, Book> bksMap = new HashMap<>();
+//					for(BookCopy bc : ln.getBooksInLoan()){
+//						Book bk = bDB.getBookByBookCopy(bc);
+//						if(bk != null){
+//							bksMap.put(bc.getCOPY_CODE(), bk);
+//						}
+//					}
+					ln.getBooksInLoan().forEach((bc) -> {
+						Book bk = bDB.getBookByBookCopy(bc);
+						if(bk != null){
+							bksMap.put(bc.getCOPY_CODE(), bk);
+						}
+					});
+					request.setAttribute("bksMap", bksMap);
 				}
 				request.setAttribute("catLst", catLst);
 				rd.forward(request, response);
@@ -147,12 +191,24 @@ public class AddLoanServlet extends HttpServlet{
 			}
 
 			lnDB.addBookToLoan(ln.getLoanID(), bookISBN);
+			ln = lnDB.getLoanByID(ln.getLoanID());
 
 			cDB = new CategoryDB(cn);
 			ArrayList<Category> catLst = cDB.getCategories();
 			rd = request.getRequestDispatcher("SelectCategoryForLoanPage.jsp");
 			request.setAttribute("stId", stID);
 			request.setAttribute("loanId", Integer.toString(ln.getLoanID()));
+			request.setAttribute("loan", ln);
+			bDB = new BookDB(cn);
+			HashMap<String, Book> bksMap = new HashMap<>();
+
+			ln.getBooksInLoan().forEach((bc) -> {
+				Book bk = bDB.getBookByBookCopy(bc);
+				if(bk != null){
+					bksMap.put(bc.getCOPY_CODE(), bk);
+				}
+			});
+			request.setAttribute("bksMap", bksMap);
 			request.setAttribute("catLst", catLst);
 			rd.forward(request, response);
 

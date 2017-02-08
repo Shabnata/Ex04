@@ -3,4 +3,4 @@
 <h4>Search options:</h4>
 <a href="SearchBookServlet">Find book</a><br/>
 <h4>Add Options:</h4>
-<a href="AddLoanPage.jsp">Add new loan</a>
+<a href="AddLoanServlet">Add new loan</a>

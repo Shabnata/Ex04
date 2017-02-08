@@ -79,7 +79,7 @@ public class BookDB{
 				bk.setBookYear(Year.parse(rs.getString("p_year"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 				bk.setCoverPath(rs.getString("cover"));
 				bk.setCopyCounter(rs.getInt("copy_cnt"));
-				bk.setAvailableCopies(rs.getInt("copy_count"));
+				bk.setAvailableCopies(rs.getInt("usable_copy_count"));
 			}
 		} catch(SQLException e){
 			// TODO

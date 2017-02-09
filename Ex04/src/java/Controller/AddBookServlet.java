@@ -1,3 +1,4 @@
+
 package Controller;
 
 import DB.*;
@@ -31,7 +32,7 @@ public class AddBookServlet extends HttpServlet{
 	public void init(){
 		this.sc = this.getServletContext();
 
-		try{
+		try {
 			Class.forName("org.apache.derby.jdbc.ClientDriver");
 		} catch(ClassNotFoundException e){
 			Logger.getLogger(AddBookServlet.class.getName()).log(Level.SEVERE, null, e);
@@ -52,11 +53,11 @@ public class AddBookServlet extends HttpServlet{
 	 */// </editor-fold>
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
-		Connection cn;
+		Connection cn = null;
 		RequestDispatcher rd = null;
 		Book bk;
 		ArrayList<Category> catLst;
-		try{
+		try {
 			cn = DriverManager.getConnection(this.sc.getInitParameter("cnurl"), this.sc.getInitParameter("DBUsername"), this.sc.getInitParameter("DBPassword"));
 
 			CategoryDB cDB = new CategoryDB();
@@ -82,12 +83,20 @@ public class AddBookServlet extends HttpServlet{
 				} else {
 					rd = request.getRequestDispatcher("AddBookPageNotAdded.jsp");
 				}
-				cn.close();
+				//cn.close();
 			} else {
 				rd = request.getRequestDispatcher("AddBookPage.jsp");
 			}
 		} catch(SQLException | ClassNotFoundException e){
 			Logger.getLogger(AddBookServlet.class.getName()).log(Level.SEVERE, null, e);
+		} finally {
+			try {
+				if(cn != null){
+					cn.close();
+				}
+			} catch(SQLException e){
+				Logger.getLogger(AddBookServlet.class.getName()).log(Level.SEVERE, null, e);
+			}
 		}
 
 		if(rd != null){

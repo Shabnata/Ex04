@@ -1,3 +1,4 @@
+
 package Controller;
 
 import DB.BookDB;
@@ -28,7 +29,7 @@ public class DeleteBookServlet extends HttpServlet{
 	public void init(){
 		this.sc = this.getServletContext();
 
-		try{
+		try {
 			Class.forName("org.apache.derby.jdbc.ClientDriver");
 		} catch(ClassNotFoundException e){
 			Logger.getLogger(DeleteBookServlet.class.getName()).log(Level.SEVERE, null, e);
@@ -48,11 +49,11 @@ public class DeleteBookServlet extends HttpServlet{
 	 */// </editor-fold>
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
-		Connection cn;
+		Connection cn = null;
 		RequestDispatcher rd = request.getRequestDispatcher("DeleteBookPage.jsp");
 		String bookIsbn = request.getParameter("bookIsbn");
 		if(bookIsbn != null){
-			try{
+			try {
 				cn = DriverManager.getConnection(this.sc.getInitParameter("cnurl"), this.sc.getInitParameter("DBUsername"), this.sc.getInitParameter("DBPassword"));
 				BookDB bDB = new BookDB(cn);
 
@@ -63,6 +64,14 @@ public class DeleteBookServlet extends HttpServlet{
 				}
 			} catch(SQLException e){
 				Logger.getLogger(DeleteBookServlet.class.getName()).log(Level.SEVERE, null, e);
+			} finally {
+				try {
+					if(cn != null){
+						cn.close();
+					}
+				} catch(SQLException e){
+					Logger.getLogger(DeleteBookServlet.class.getName()).log(Level.SEVERE, null, e);
+				}
 			}
 		}
 

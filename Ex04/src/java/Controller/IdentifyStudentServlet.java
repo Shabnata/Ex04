@@ -1,3 +1,4 @@
+
 package Controller;
 
 import DB.StudentDB;
@@ -29,7 +30,7 @@ public class IdentifyStudentServlet extends HttpServlet{
 	public void init(){
 		this.sc = this.getServletContext();
 
-		try{
+		try {
 			Class.forName("org.apache.derby.jdbc.ClientDriver");
 		} catch(ClassNotFoundException e){
 			Logger.getLogger(IdentifyStudentServlet.class.getName()).log(Level.SEVERE, null, e);
@@ -50,7 +51,7 @@ public class IdentifyStudentServlet extends HttpServlet{
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
 		RequestDispatcher rd;
-		Connection cn;
+		Connection cn = null;
 
 		String bookISBN = request.getParameter("bookIsbn");
 		String stID = request.getParameter("stId");
@@ -58,7 +59,7 @@ public class IdentifyStudentServlet extends HttpServlet{
 		StudentDB sDB;
 		Student st;
 
-		try{
+		try {
 			cn = DriverManager.getConnection(this.sc.getInitParameter("cnurl"), this.sc.getInitParameter("DBUsername"), this.sc.getInitParameter("DBPassword"));
 			sDB = new StudentDB(cn);
 
@@ -86,6 +87,14 @@ public class IdentifyStudentServlet extends HttpServlet{
 
 		} catch(SQLException | ClassNotFoundException e){
 			Logger.getLogger(IdentifyStudentServlet.class.getName()).log(Level.SEVERE, null, e);
+		} finally {
+			try {
+				if(cn != null){
+					cn.close();
+				}
+			} catch(SQLException e){
+				Logger.getLogger(IdentifyStudentServlet.class.getName()).log(Level.SEVERE, null, e);
+			}
 		}
 
 	}

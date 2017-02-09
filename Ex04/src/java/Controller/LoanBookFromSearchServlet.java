@@ -1,3 +1,4 @@
+
 package Controller;
 
 import DB.CookieDB;
@@ -36,7 +37,7 @@ public class LoanBookFromSearchServlet extends HttpServlet{
 	public void init(){
 		this.sc = this.getServletContext();
 
-		try{
+		try {
 			Class.forName("org.apache.derby.jdbc.ClientDriver");
 		} catch(ClassNotFoundException e){
 			Logger.getLogger(LoanBookFromSearchServlet.class.getName()).log(Level.SEVERE, null, e);
@@ -61,7 +62,7 @@ public class LoanBookFromSearchServlet extends HttpServlet{
 			return;
 		}
 
-		Connection cn;
+		Connection cn = null;
 		RequestDispatcher rd;
 		Cookie currentUser = CookieDB.getCookieValue(request.getCookies(), "username");
 
@@ -76,7 +77,7 @@ public class LoanBookFromSearchServlet extends HttpServlet{
 
 		boolean errors = false;
 		ArrayList<String> errorLst = null;
-		try{
+		try {
 			cn = DriverManager.getConnection(this.sc.getInitParameter("cnurl"), this.sc.getInitParameter("DBUsername"), this.sc.getInitParameter("DBPassword"));
 
 			if(bookISBN == null || currentUser == null){
@@ -149,6 +150,14 @@ public class LoanBookFromSearchServlet extends HttpServlet{
 			}
 		} catch(SQLException | ClassNotFoundException e){
 			Logger.getLogger(LoanBookFromSearchServlet.class.getName()).log(Level.SEVERE, null, e);
+		} finally {
+			try {
+				if(cn != null){
+					cn.close();
+				}
+			} catch(SQLException e){
+				Logger.getLogger(LoanBookFromSearchServlet.class.getName()).log(Level.SEVERE, null, e);
+			}
 		}
 
 	}

@@ -1,3 +1,4 @@
+
 package Controller;
 
 import DB.BookDB;
@@ -42,7 +43,7 @@ public class AddLoanServlet extends HttpServlet{
 	public void init(){
 		this.sc = this.getServletContext();
 
-		try{
+		try {
 			Class.forName("org.apache.derby.jdbc.ClientDriver");
 		} catch(ClassNotFoundException e){
 			Logger.getLogger(AddLoanServlet.class.getName()).log(Level.SEVERE, null, e);
@@ -62,7 +63,7 @@ public class AddLoanServlet extends HttpServlet{
 	 */// </editor-fold>
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
-		Connection cn;
+		Connection cn = null;
 		RequestDispatcher rd;
 
 		LibraryPropsDB lpDB;
@@ -83,7 +84,7 @@ public class AddLoanServlet extends HttpServlet{
 		String catName = request.getParameter("catName");
 		String bookISBN = request.getParameter("bookIsbn");
 
-		try{
+		try {
 			cn = DriverManager.getConnection(this.sc.getInitParameter("cnurl"), this.sc.getInitParameter("DBUsername"), this.sc.getInitParameter("DBPassword"));
 
 			sDB = new StudentDB(cn);
@@ -217,6 +218,14 @@ public class AddLoanServlet extends HttpServlet{
 
 		} catch(SQLException | ClassNotFoundException e){
 			Logger.getLogger(AddLoanServlet.class.getName()).log(Level.SEVERE, null, e);
+		} finally {
+			try {
+				if(cn != null){
+					cn.close();
+				}
+			} catch(SQLException e){
+				Logger.getLogger(AddLoanServlet.class.getName()).log(Level.SEVERE, null, e);
+			}
 		}
 
 	}

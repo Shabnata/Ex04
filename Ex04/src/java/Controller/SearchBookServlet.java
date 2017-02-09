@@ -1,3 +1,4 @@
+
 package Controller;
 
 import DB.*;
@@ -26,7 +27,7 @@ public class SearchBookServlet extends HttpServlet{
 	public void init(){
 		this.sc = this.getServletContext();
 
-		try{
+		try {
 			Class.forName("org.apache.derby.jdbc.ClientDriver");
 		} catch(ClassNotFoundException e){
 			Logger.getLogger(SearchBookServlet.class.getName()).log(Level.SEVERE, null, e);
@@ -46,17 +47,17 @@ public class SearchBookServlet extends HttpServlet{
 	 */// </editor-fold>
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
-		Connection cn;
+		Connection cn = null;
 		RequestDispatcher rd = null;
 		ArrayList<Book> bksLst;
-		try{
+		try {
 			cn = DriverManager.getConnection(this.sc.getInitParameter("cnurl"), this.sc.getInitParameter("DBUsername"), this.sc.getInitParameter("DBPassword"));
 
 			String titleParam = request.getParameter("title");
 			if(titleParam != null){
 				BookDB bDB = new BookDB(cn);
 				bksLst = bDB.getBooksByTitle(request.getParameter("title"));
-				cn.close();
+				//cn.close();
 
 				if(!bksLst.isEmpty()){
 					rd = request.getRequestDispatcher("SearchBookPageResult.jsp");
@@ -69,6 +70,14 @@ public class SearchBookServlet extends HttpServlet{
 			}
 		} catch(SQLException e){
 			Logger.getLogger(SearchBookServlet.class.getName()).log(Level.SEVERE, null, e);
+		} finally {
+			try {
+				if(cn != null){
+					cn.close();
+				}
+			} catch(SQLException e){
+				Logger.getLogger(SearchBookServlet.class.getName()).log(Level.SEVERE, null, e);
+			}
 		}
 
 		if(rd != null){

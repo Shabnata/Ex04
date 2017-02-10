@@ -1,3 +1,4 @@
+
 package DB;
 
 import Model.*;
@@ -36,6 +37,7 @@ public class BookDB{
 			+ "         ON books.book_category = categories.cat_name "
 			+ "       LEFT JOIN book_copies "
 			+ "         ON books.isbn = book_copies.isbn "
+			+ "            AND book_copies.copy_cond != 5 "
 			+ "            AND book_copies.copy_code NOT IN (SELECT copy_code "
 			+ "                                              FROM   loaned_books "
 			+ "                                              WHERE  returned = false) "
@@ -52,7 +54,7 @@ public class BookDB{
 			+ "          books.book_category, "
 			+ "          categories.id";
 		Book bk = null;
-		try{
+		try {
 			PreparedStatement ps = this.cn.prepareStatement(bookQuery);
 			ps.setString(1, isbn);
 			ResultSet rs = ps.executeQuery();
@@ -95,6 +97,7 @@ public class BookDB{
 			+ "         ON books.book_category = categories.cat_name "
 			+ "       LEFT JOIN book_copies "
 			+ "         ON books.isbn = book_copies.isbn "
+			+ "            AND book_copies.copy_cond != 5 "
 			+ "            AND book_copies.copy_code NOT IN (SELECT copy_code "
 			+ "                                              FROM   loaned_books "
 			+ "                                              WHERE  returned = false) "
@@ -112,7 +115,7 @@ public class BookDB{
 			+ "          categories.id";
 		ArrayList<Book> bksLst = new ArrayList<>();
 
-		try{
+		try {
 			Book bk;
 			Category bk_cat;
 			PreparedStatement ps = this.cn.prepareStatement(bookQuery);
@@ -147,7 +150,7 @@ public class BookDB{
 
 		PreparedStatement ps;
 		boolean failed = false;
-		try{
+		try {
 			ps = cn.prepareStatement(""
 				+ "INSERT INTO books "
 				+ "            (isbn, "
@@ -231,7 +234,7 @@ public class BookDB{
 			+ "DELETE FROM books "
 			+ "WHERE  isbn = ?";
 
-		try{
+		try {
 			PreparedStatement checkLoanedCopiesPS = this.cn.prepareStatement(getLoanedCopiesQuery);
 			checkLoanedCopiesPS.setString(1, isbn);
 			ResultSet clcRS = checkLoanedCopiesPS.executeQuery();

@@ -1,3 +1,4 @@
+
 package DB;
 
 import Model.BookCondition;
@@ -36,7 +37,7 @@ public class BookCopyDB{
 			+ "         ON book_copies.copy_cond = conditions.con_key "
 			+ "WHERE  books.isbn = ?";
 
-		try{
+		try {
 			PreparedStatement ps = this.cn.prepareStatement(copiesQuery);
 			ps.setString(1, book_isbn);
 			ResultSet rs = ps.executeQuery();
@@ -73,6 +74,7 @@ public class BookCopyDB{
 			+ "FROM   books "
 			+ "       JOIN book_copies "
 			+ "         ON books.isbn = book_copies.isbn "
+			+ "            AND book_copies.copy_cond != 5"
 			+ "       LEFT JOIN loaned_books "
 			+ "              ON book_copies.copy_code = loaned_books.copy_code "
 			+ "                 AND loaned_books.returned = true "
@@ -83,7 +85,7 @@ public class BookCopyDB{
 			+ "                                        FROM   loaned_books "
 			+ "                                        WHERE  returned = false)";
 
-		try{
+		try {
 			PreparedStatement ps = this.cn.prepareStatement(copiesQuery);
 			ps.setString(1, book_isbn);
 			ResultSet rs = ps.executeQuery();
@@ -115,7 +117,7 @@ public class BookCopyDB{
 		Boolean updated = false;
 		BookCopy bc = bookCopy;
 
-		try{
+		try {
 			PreparedStatement pst = cn.prepareStatement("UPDATE book_copies SET copy_cond=? WHERE copy_code=?");
 			pst.setDouble(1, bc.getCopyCondition().getConKey());
 			pst.setString(2, bc.getCOPY_CODE());
@@ -131,7 +133,7 @@ public class BookCopyDB{
 		BookCopy bc = null;
 		String copiesQuery = "select * from book_copies where copy_code=?";
 
-		try{
+		try {
 			PreparedStatement ps = this.cn.prepareStatement(copiesQuery);
 			ps.setString(1, copyCode);
 			ResultSet rs = ps.executeQuery();
@@ -157,7 +159,7 @@ public class BookCopyDB{
 	public Boolean updateBookCopyLoanState(String copyCode){
 		Boolean updated = false;
 
-		try{
+		try {
 			PreparedStatement pst = this.cn.prepareStatement("UPDATE loaned_books SET returned=? WHERE copy_code=? and returned=?");
 			pst.setString(1, "true");
 			pst.setString(2, copyCode);

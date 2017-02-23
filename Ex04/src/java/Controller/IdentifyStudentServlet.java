@@ -1,4 +1,3 @@
-
 package Controller;
 
 import DB.StudentDB;
@@ -22,33 +21,32 @@ import javax.servlet.http.HttpServletResponse;
  * @author Denis Sh
  */
 @WebServlet(name = "IdentifyStudentServlet", urlPatterns = {"/IdentifyStudentServlet"})
-public class IdentifyStudentServlet extends HttpServlet{
+public class IdentifyStudentServlet extends HttpServlet {
 
 	ServletContext sc;
 
 	@Override
-	public void init(){
+	public void init() {
 		this.sc = this.getServletContext();
 
 		try {
 			Class.forName("org.apache.derby.jdbc.ClientDriver");
-		} catch(ClassNotFoundException e){
+		} catch (ClassNotFoundException e) {
 			Logger.getLogger(IdentifyStudentServlet.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
 
-	// <editor-fold defaultstate="collapsed" desc="Pancackes.">
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
 	 * methods.
 	 *
-	 * @param request  servlet request
+	 * @param request servlet request
 	 * @param response servlet response
 	 *
 	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException      if an I/O error occurs
-	 */// </editor-fold>
-	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	 * @throws IOException if an I/O error occurs
+	 */
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		RequestDispatcher rd;
 		Connection cn = null;
@@ -63,15 +61,15 @@ public class IdentifyStudentServlet extends HttpServlet{
 			cn = DriverManager.getConnection(this.sc.getInitParameter("cnurl"), this.sc.getInitParameter("DBUsername"), this.sc.getInitParameter("DBPassword"));
 			sDB = new StudentDB(cn);
 
-			if(bookISBN == null){
+			if (bookISBN == null) {
 				response.sendRedirect("SearchBookServlet");
 				return;
-			} else if(stID == null){
+			} else if (stID == null) {
 				rd = request.getRequestDispatcher("IdentifyStudentPage.jsp");
 				request.setAttribute("bookISBN", bookISBN);
 				rd.forward(request, response);
 				return;
-			} else if((st = sDB.getStudent(stID)) == null){
+			} else if ((st = sDB.getStudent(stID)) == null) {
 
 				rd = request.getRequestDispatcher("IdentifyStudentPage.jsp");
 				request.setAttribute("bookISBN", bookISBN);
@@ -85,14 +83,14 @@ public class IdentifyStudentServlet extends HttpServlet{
 			rd = request.getRequestDispatcher("LoanBookFromSearchServlet");
 			rd.forward(request, response);
 
-		} catch(SQLException | ClassNotFoundException e){
+		} catch (SQLException | ClassNotFoundException e) {
 			Logger.getLogger(IdentifyStudentServlet.class.getName()).log(Level.SEVERE, null, e);
 		} finally {
 			try {
-				if(cn != null){
+				if (cn != null) {
 					cn.close();
 				}
-			} catch(SQLException e){
+			} catch (SQLException e) {
 				Logger.getLogger(IdentifyStudentServlet.class.getName()).log(Level.SEVERE, null, e);
 			}
 		}
@@ -103,28 +101,28 @@ public class IdentifyStudentServlet extends HttpServlet{
 	/**
 	 * Handles the HTTP <code>GET</code> method.
 	 *
-	 * @param request  servlet request
+	 * @param request servlet request
 	 * @param response servlet response
 	 *
 	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException      if an I/O error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		processRequest(request, response);
 	}
 
 	/**
 	 * Handles the HTTP <code>POST</code> method.
 	 *
-	 * @param request  servlet request
+	 * @param request servlet request
 	 * @param response servlet response
 	 *
 	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException      if an I/O error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		processRequest(request, response);
 	}
 
@@ -134,7 +132,7 @@ public class IdentifyStudentServlet extends HttpServlet{
 	 * @return a String containing servlet description
 	 */
 	@Override
-	public String getServletInfo(){
+	public String getServletInfo() {
 		return "Short description";
 	}// </editor-fold>
 

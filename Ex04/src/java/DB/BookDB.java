@@ -1,4 +1,3 @@
-
 package DB;
 
 import Model.*;
@@ -12,53 +11,53 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class BookDB{
+public class BookDB {
 
 	private Connection cn;
 
 	//Added by Natalie
-	public BookDB(Connection cn){
+	public BookDB(Connection cn) {
 		this.cn = cn;
 	}
 
-	public Book getBookByISBN(String isbn){
+	public Book getBookByISBN(String isbn) {
 		String bookQuery = ""
-			+ "SELECT books.isbn, "
-			+ "       books.title, "
-			+ "       books.author, "
-			+ "       books.p_year, "
-			+ "       books.cover, "
-			+ "       books.copy_cnt, "
-			+ "       books.book_category, "
-			+ "       categories.id                AS cat_id, "
-			+ "       Count(book_copies.copy_code) AS usable_copy_count "
-			+ "FROM   books "
-			+ "       JOIN categories "
-			+ "         ON books.book_category = categories.cat_name "
-			+ "       LEFT JOIN book_copies "
-			+ "         ON books.isbn = book_copies.isbn "
-			+ "            AND book_copies.copy_cond != 5 "
-			+ "            AND book_copies.copy_code NOT IN (SELECT copy_code "
-			+ "                                              FROM   loaned_books "
-			+ "                                              WHERE  returned = false) "
-			+ "       --LEFT JOIN loaned_books "
-			+ "              --ON book_copies.copy_code = loaned_books.copy_code "
-			+ "                --AND loaned_books.returned = false "
-			+ "WHERE  books.isbn = ? "
-			+ "GROUP  BY books.isbn, "
-			+ "          books.title, "
-			+ "          books.author, "
-			+ "          books.p_year, "
-			+ "          books.cover, "
-			+ "          books.copy_cnt, "
-			+ "          books.book_category, "
-			+ "          categories.id";
+						   + "SELECT books.isbn, "
+						   + "       books.title, "
+						   + "       books.author, "
+						   + "       books.p_year, "
+						   + "       books.cover, "
+						   + "       books.copy_cnt, "
+						   + "       books.book_category, "
+						   + "       categories.id                AS cat_id, "
+						   + "       Count(book_copies.copy_code) AS usable_copy_count "
+						   + "FROM   books "
+						   + "       JOIN categories "
+						   + "         ON books.book_category = categories.cat_name "
+						   + "       LEFT JOIN book_copies "
+						   + "         ON books.isbn = book_copies.isbn "
+						   + "            AND book_copies.copy_cond != 5 "
+						   + "            AND book_copies.copy_code NOT IN (SELECT copy_code "
+						   + "                                              FROM   loaned_books "
+						   + "                                              WHERE  returned = false) "
+						   + "       /*LEFT JOIN loaned_books*/ "
+						   + "              /*ON book_copies.copy_code = loaned_books.copy_code*/ "
+						   + "                /*AND loaned_books.returned = false*/ "
+						   + "WHERE  books.isbn = ? "
+						   + "GROUP  BY books.isbn, "
+						   + "          books.title, "
+						   + "          books.author, "
+						   + "          books.p_year, "
+						   + "          books.cover, "
+						   + "          books.copy_cnt, "
+						   + "          books.book_category, "
+						   + "          categories.id";
 		Book bk = null;
 		try {
 			PreparedStatement ps = this.cn.prepareStatement(bookQuery);
 			ps.setString(1, isbn);
 			ResultSet rs = ps.executeQuery();
-			if(rs.next()){
+			if (rs.next()) {
 				bk = new Book();
 				bk.setISBN(rs.getString("isbn"));
 				bk.setTitle(rs.getString("title"));
@@ -74,45 +73,45 @@ public class BookDB{
 				bk.setCopyCounter(rs.getInt("copy_cnt"));
 				bk.setAvailableCopies(rs.getInt("usable_copy_count"));
 			}
-		} catch(SQLException e){
+		} catch (SQLException e) {
 			Logger.getLogger(BookDB.class.getName()).log(Level.SEVERE, null, e);
 		}
 
 		return bk;
 	}
 
-	public ArrayList<Book> getBooksByTitle(String title){
+	public ArrayList<Book> getBooksByTitle(String title) {
 		String bookQuery = ""
-			+ "SELECT books.isbn, "
-			+ "       books.title, "
-			+ "       books.author, "
-			+ "       books.p_year, "
-			+ "       books.cover, "
-			+ "       books.copy_cnt, "
-			+ "       books.book_category, "
-			+ "       categories.id                AS cat_id, "
-			+ "       Count(book_copies.copy_code) AS usable_copy_count "
-			+ "FROM   books "
-			+ "       JOIN categories "
-			+ "         ON books.book_category = categories.cat_name "
-			+ "       LEFT JOIN book_copies "
-			+ "         ON books.isbn = book_copies.isbn "
-			+ "            AND book_copies.copy_cond != 5 "
-			+ "            AND book_copies.copy_code NOT IN (SELECT copy_code "
-			+ "                                              FROM   loaned_books "
-			+ "                                              WHERE  returned = false) "
-			+ "       --LEFT JOIN loaned_books "
-			+ "              --ON book_copies.copy_code = loaned_books.copy_code "
-			+ "                 --AND loaned_books.returned = false "
-			+ "WHERE  Lower(books.title) LIKE ? "
-			+ "GROUP  BY books.isbn, "
-			+ "          books.title, "
-			+ "          books.author, "
-			+ "          books.p_year, "
-			+ "          books.cover, "
-			+ "          books.copy_cnt, "
-			+ "          books.book_category, "
-			+ "          categories.id";
+						   + "SELECT books.isbn, "
+						   + "       books.title, "
+						   + "       books.author, "
+						   + "       books.p_year, "
+						   + "       books.cover, "
+						   + "       books.copy_cnt, "
+						   + "       books.book_category, "
+						   + "       categories.id                AS cat_id, "
+						   + "       Count(book_copies.copy_code) AS usable_copy_count "
+						   + "FROM   books "
+						   + "       JOIN categories "
+						   + "         ON books.book_category = categories.cat_name "
+						   + "       LEFT JOIN book_copies "
+						   + "         ON books.isbn = book_copies.isbn "
+						   + "            AND book_copies.copy_cond != 5 "
+						   + "            AND book_copies.copy_code NOT IN (SELECT copy_code "
+						   + "                                              FROM   loaned_books "
+						   + "                                              WHERE  returned = false) "
+						   + "       /*LEFT JOIN loaned_books*/ "
+						   + "              /*ON book_copies.copy_code = loaned_books.copy_code*/ "
+						   + "                 /*AND loaned_books.returned = false*/ "
+						   + "WHERE  Lower(books.title) LIKE ? "
+						   + "GROUP  BY books.isbn, "
+						   + "          books.title, "
+						   + "          books.author, "
+						   + "          books.p_year, "
+						   + "          books.cover, "
+						   + "          books.copy_cnt, "
+						   + "          books.book_category, "
+						   + "          categories.id";
 		ArrayList<Book> bksLst = new ArrayList<>();
 
 		try {
@@ -121,7 +120,7 @@ public class BookDB{
 			PreparedStatement ps = this.cn.prepareStatement(bookQuery);
 			ps.setString(1, "%" + title.toLowerCase() + "%");
 			ResultSet rs = ps.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				bk = new Book();
 				bk.setISBN(rs.getString("isbn"));
 				bk.setTitle(rs.getString("title"));
@@ -139,34 +138,34 @@ public class BookDB{
 
 				bksLst.add(bk);
 			}
-		} catch(SQLException e){
+		} catch (SQLException e) {
 			Logger.getLogger(BookDB.class.getName()).log(Level.SEVERE, null, e);
 		}
 
 		return bksLst;
 	}
 
-	public boolean addBook(String isbn, String title, String author, Category cat, Year year, String cover, int numOfCopies){
+	public boolean addBook(String isbn, String title, String author, Category cat, Year year, String cover, int numOfCopies) {
 
 		PreparedStatement ps;
 		boolean failed = false;
 		try {
 			ps = cn.prepareStatement(""
-				+ "INSERT INTO books "
-				+ "            (isbn, "
-				+ "             title, "
-				+ "             author, "
-				+ "             book_category, "
-				+ "             p_year, "
-				+ "             cover, "
-				+ "             copy_cnt) "
-				+ "VALUES     (?, "
-				+ "            ?, "
-				+ "            ?, "
-				+ "            ?, "
-				+ "            ?, "
-				+ "            ?, "
-				+ "            ?)");
+									 + "INSERT INTO books "
+									 + "            (isbn, "
+									 + "             title, "
+									 + "             author, "
+									 + "             book_category, "
+									 + "             p_year, "
+									 + "             cover, "
+									 + "             copy_cnt) "
+									 + "VALUES     (?, "
+									 + "            ?, "
+									 + "            ?, "
+									 + "            ?, "
+									 + "            ?, "
+									 + "            ?, "
+									 + "            ?)");
 			ps.setString(1, isbn);
 			ps.setString(2, title);
 			ps.setString(3, author);
@@ -175,19 +174,19 @@ public class BookDB{
 			ps.setString(6, cover);
 			ps.setInt(7, numOfCopies);
 
-			if(ps.executeUpdate() != 0){
+			if (ps.executeUpdate() != 0) {
 				PreparedStatement psc = cn.prepareStatement(""
-					+ "INSERT INTO book_copies "
-					+ "            (isbn, "
-					+ "             copy_code, "
-					+ "             copy_cond) "
-					+ "VALUES     (?, "
-					+ "            ?, "
-					+ "            1)");
+															+ "INSERT INTO book_copies "
+															+ "            (isbn, "
+															+ "             copy_code, "
+															+ "             copy_cond) "
+															+ "VALUES     (?, "
+															+ "            ?, "
+															+ "            1)");
 				psc.setString(1, isbn);
-				for(int i = 1; i <= numOfCopies && !failed; i++){
+				for (int i = 1; i <= numOfCopies && !failed; i++) {
 					psc.setString(2, isbn + "_" + String.format("%03d", i));
-					if(psc.executeUpdate() == 0){
+					if (psc.executeUpdate() == 0) {
 						failed = true;
 					}
 				}
@@ -196,25 +195,25 @@ public class BookDB{
 				failed = true;
 			}
 
-		} catch(SQLException e){
+		} catch (SQLException e) {
 			Logger.getLogger(BookDB.class.getName()).log(Level.SEVERE, null, e);
 			return false;
 		}
 		return !failed;
 	}
 
-	public boolean deleteBookByISBN(String isbn){
+	public boolean deleteBookByISBN(String isbn) {
 		String getLoanedCopiesQuery = ""
-			+ "SELECT books.isbn, "
-			+ "       book_copies.copy_code, "
-			+ "       loaned_books.loan_id "
-			+ "FROM   books "
-			+ "       LEFT JOIN book_copies "
-			+ "              ON books.isbn = book_copies.isbn "
-			+ "       LEFT JOIN loaned_books "
-			+ "              ON book_copies.copy_code = loaned_books.copy_code "
-			+ "                 AND loaned_books.returned = false "
-			+ "WHERE  books.isbn = ?";
+									  + "SELECT books.isbn, "
+									  + "       book_copies.copy_code, "
+									  + "       loaned_books.loan_id "
+									  + "FROM   books "
+									  + "       LEFT JOIN book_copies "
+									  + "              ON books.isbn = book_copies.isbn "
+									  + "       LEFT JOIN loaned_books "
+									  + "              ON book_copies.copy_code = loaned_books.copy_code "
+									  + "                 AND loaned_books.returned = false "
+									  + "WHERE  books.isbn = ?";
 		/*
 		 * Returns a table of book_isbn X copy_code X loan_id
 		 * Where copy_code is a copy of the book with isbn = book_isbn
@@ -231,23 +230,23 @@ public class BookDB{
 		 */
 
 		String deleteBookQuery = ""
-			+ "DELETE FROM books "
-			+ "WHERE  isbn = ?";
+								 + "DELETE FROM books "
+								 + "WHERE  isbn = ?";
 
 		try {
 			PreparedStatement checkLoanedCopiesPS = this.cn.prepareStatement(getLoanedCopiesQuery);
 			checkLoanedCopiesPS.setString(1, isbn);
 			ResultSet clcRS = checkLoanedCopiesPS.executeQuery();
-			if(!clcRS.next()){ // Result has no rows, the book doesn't exists
+			if (!clcRS.next()) { // Result has no rows, the book doesn't exists
 				return false;
 			} else {
 
 				do {
 					// TODO Make sure the comparison is correct for requesting null objects
-					if(clcRS.getString("loan_id") != null){ // At least one copy is being loaned right now
+					if (clcRS.getString("loan_id") != null) { // At least one copy is being loaned right now
 						return false;
 					}
-				} while(clcRS.next());
+				} while (clcRS.next());
 
 				PreparedStatement deleteBookPS = this.cn.prepareStatement(deleteBookQuery);
 				deleteBookPS.setString(1, isbn);
@@ -259,14 +258,14 @@ public class BookDB{
 				 */
 				return (deleteBookPS.executeUpdate() == 1);
 			}
-		} catch(SQLException e){
+		} catch (SQLException e) {
 			Logger.getLogger(BookDB.class.getName()).log(Level.SEVERE, null, e);
 		}
 		return false;
 	}
 
 	//Natalie: get book by bookCopy
-	public Book getBookByBookCopy(BookCopy bc){
+	public Book getBookByBookCopy(BookCopy bc) {
 		Book tmpBook = new Book();
 		String copyCode = bc.getCOPY_CODE();
 		String[] parts = copyCode.split("_");

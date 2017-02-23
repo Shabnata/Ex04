@@ -1,7 +1,7 @@
 <%--
-    Document   : DeleteBookPage
-    Created on : Feb 1, 2017, 9:20:32 PM
-    Author     : Denis Sh
+   Document   : DeleteBookPage
+   Created on : Feb 1, 2017, 9:20:32 PM
+   Author     : Denis Sh
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -24,8 +24,8 @@
 					<%@include file="DeleteBookForm.jsp" %>
 					<br/>
 					<%
-						String servletMessage = (String)request.getAttribute("servletMessage");
-						if(servletMessage != null){%>
+						String servletMessage = (String) request.getAttribute("servletMessage");
+						if (servletMessage != null) {%>
 					<h3><%= servletMessage%></h3>
 					<%}%>
 				</div> <%-- id=contentArea --%>

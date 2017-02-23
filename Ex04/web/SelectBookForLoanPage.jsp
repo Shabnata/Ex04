@@ -1,7 +1,7 @@
 <%--
-    Document   : SelectBookForLoanPage
-    Created on : Feb 6, 2017, 11:30:51 AM
-    Author     : Denis Sh
+   Document   : SelectBookForLoanPage
+   Created on : Feb 6, 2017, 11:30:51 AM
+   Author     : Denis Sh
 --%>
 
 <%@page import="java.util.ArrayList"%>
@@ -24,17 +24,17 @@
 				</div> <%-- id=leftMenu --%>
 				<div id="contentArea">
 					<%
-						String stId = (String)request.getAttribute("stId");
-						String loanId = (String)request.getAttribute("loanId");
+						String stId = (String) request.getAttribute("stId");
+						String loanId = (String) request.getAttribute("loanId");
 					%>
 					<jsp:useBean id="bookLst" type="ArrayList<Book>" scope="request"/>
 
 					<form action="AddLoanServlet" method="post">
 						<input type="submit" value="Return"/>
-						<%if(stId != null){%>
+						<%if (stId != null) {%>
 						<input type="hidden" name="stId" value="${stId}"/>
 						<%}%>
-						<%if(loanId != null){%>
+						<%if (loanId != null) {%>
 						<input type="hidden" name="loanId" value="${loanId}"/>
 						<%}%>
 					</form><br/>
@@ -50,7 +50,7 @@
 							<th>Loan Book</th>
 						</tr>
 
-						<% for(Book bk : bookLst){%>
+						<% for (Book bk : bookLst) {%>
 						<tr>
 							<td><img src=<%= bk.getCoverPath()%> alt=<%= bk.getTitle()%> style="height: 80px;"/></td>
 							<td><%= bk.getISBN()%></td>
@@ -59,14 +59,14 @@
 							<td><%= bk.getCategory().getCatName()%></td>
 							<td><%= bk.getBookYear()%></td>
 							<td><%= bk.getAvailableCopies()%></td>
-							<% if(bk.getAvailableCopies() != 0){%>
+							<% if (bk.getAvailableCopies() != 0) {%>
 							<td>
 								<form action="AddLoanServlet" method="post">
 									<input type="submit" value="Loan"/>
-									<%if(stId != null){%>
+									<%if (stId != null) {%>
 									<input type="hidden" name="stId" value="${stId}"/>
 									<%}%>
-									<%if(loanId != null){%>
+									<%if (loanId != null) {%>
 									<input type="hidden" name="loanId" value="${loanId}"/>
 									<%}%>
 									<input type="hidden" value="<%= bk.getISBN()%>" name="bookIsbn"/>

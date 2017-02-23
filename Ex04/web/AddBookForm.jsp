@@ -1,7 +1,7 @@
 <%--
-    Document   : AddBookForm
-    Created on : Jan 31, 2017, 3:33:46 PM
-    Author     : Denis Sh
+   Document   : AddBookForm
+   Created on : Jan 31, 2017, 3:33:46 PM
+   Author     : Denis Sh
 --%>
 
 <%@page import="java.util.ArrayList"%>
@@ -26,8 +26,8 @@
 		<jsp:useBean id="categories" class="java.util.ArrayList<Category>" type="java.util.ArrayList<Category>" scope="request"/>
 		<%
 			boolean flagFirst = true;
-			for(Category c : categories){
-				if(flagFirst){
+			for (Category c : categories) {
+				if (flagFirst) {
 		%>
 		<input type="radio" name="category" checked="checked" value="<%= c.getCatName()%>"/> <%= c.getCatName()%> <br/>
 		<%

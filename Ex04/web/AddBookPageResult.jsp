@@ -1,7 +1,7 @@
 <%--
-    Document   : AddBookPageResult
-    Created on : Jan 31, 2017, 4:47:46 PM
-    Author     : Denis Sh
+   Document   : AddBookPageResult
+   Created on : Jan 31, 2017, 4:47:46 PM
+   Author     : Denis Sh
 --%>
 
 <%@page import="Model.Book"%>

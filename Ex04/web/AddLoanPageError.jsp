@@ -1,7 +1,7 @@
 <%--
-    Document   : AddLoanPageError
-    Created on : Feb 6, 2017, 3:40:00 PM
-    Author     : Denis Sh
+   Document   : AddLoanPageError
+   Created on : Feb 6, 2017, 3:40:00 PM
+   Author     : Denis Sh
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -22,7 +22,7 @@
 				</div> <%-- id=leftMenu --%>
 				<div id="contentArea">
 					<jsp:useBean id="errors" type="java.util.ArrayList<java.lang.String>" scope="request"/>
-					<% for(String err : errors){%>
+					<% for (String err : errors) {%>
 					<h3><%= err%></h3>
 					<%}%>
 				</div> <%-- id=contentArea --%>

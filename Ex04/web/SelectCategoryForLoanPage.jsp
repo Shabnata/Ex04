@@ -1,7 +1,7 @@
 <%--
-    Document   : SelectCategoryForLoan
-    Created on : Feb 6, 2017, 11:09:08 AM
-    Author     : Denis Sh
+   Document   : SelectCategoryForLoan
+   Created on : Feb 6, 2017, 11:09:08 AM
+   Author     : Denis Sh
 --%>
 
 <%@page import="java.time.Year"%>
@@ -29,33 +29,33 @@
 				</div> <%-- id=leftMenu --%>
 				<div id="contentArea">
 					<%
-						String stId = (String)request.getAttribute("stId");
-						String loanId = (String)request.getAttribute("loanId");
+						String stId = (String) request.getAttribute("stId");
+						String loanId = (String) request.getAttribute("loanId");
 					%>
 					<jsp:useBean id="catLst" type="ArrayList<Model.Category>" scope="request"/>
 
 					<form action="AddLoanServlet" method="post">
 						<input type="submit" value="Return"/>
-						<%if(stId != null){%>
+						<%if (stId != null) {%>
 						<input type="hidden" name="stId" value="${stId}"/>
 						<%}%>
-						<%if(loanId != null){%>
+						<%if (loanId != null) {%>
 						<input type="hidden" name="loanId" value="<%= loanId%>"/>
 						<%}%>
 					</form><br/>
 					<form class="formStyle" action="AddLoanServlet" method="post">
 
-						<%if(stId != null){%>
+						<%if (stId != null) {%>
 						<input type="hidden" name="stId" value="${stId}"/>
 						<%}%>
-						<%if(loanId != null){%>
+						<%if (loanId != null) {%>
 						<input type="hidden" name="loanId" value="<%= loanId%>"/>
 						<%}%>
 
 						<%
 							boolean flagFirst = true;
-							for(Category c : catLst){
-								if(flagFirst){
+							for (Category c : catLst) {
+								if (flagFirst) {
 						%>
 						<input type="radio" name="catName" checked="checked" value="<%= c.getCatName()%>"/> <%= c.getCatName()%> <br/>
 						<%
@@ -72,9 +72,9 @@
 					<br/><br/><br/>
 
 					<%
-						Loan ln = (Loan)request.getAttribute("loan");
-						HashMap<String, Book> bksLst = (HashMap<String, Book>)request.getAttribute("bksMap");
-						if(ln != null){
+						Loan ln = (Loan) request.getAttribute("loan");
+						HashMap<String, Book> bksLst = (HashMap<String, Book>) request.getAttribute("bksMap");
+						if (ln != null) {
 					%>
 					<hr/>
 					Books in this loan:<br/>
@@ -90,7 +90,7 @@
 						</tr>
 
 						<%
-							for(BookCopy bc : ln.getBooksInLoan()){
+							for (BookCopy bc : ln.getBooksInLoan()) {
 								Book bk = bksLst.get(bc.getCOPY_CODE());
 								String isbnCopy = bc.getCOPY_CODE();
 								String bookTitle = bk.getTitle();

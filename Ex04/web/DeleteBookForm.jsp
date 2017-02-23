@@ -1,7 +1,7 @@
 <%--
-    Document   : DeleteBookForm
-    Created on : Feb 1, 2017, 9:21:00 PM
-    Author     : Denis Sh
+   Document   : DeleteBookForm
+   Created on : Feb 1, 2017, 9:21:00 PM
+   Author     : Denis Sh
 --%>
 
 <form class="formStyle" action="DeleteBookServlet" method="POST">

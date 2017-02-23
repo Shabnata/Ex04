@@ -1,7 +1,7 @@
 <%--
-    Document   : IdentifyStudentForLoanPage
-    Created on : Feb 6, 2017, 11:07:18 AM
-    Author     : Denis Sh
+   Document   : IdentifyStudentForLoanPage
+   Created on : Feb 6, 2017, 11:07:18 AM
+   Author     : Denis Sh
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -24,8 +24,8 @@
 				<div id="contentArea">
 					<form class="formStyle" action="AddLoanServlet" method="post">
 						<%
-							String bookISBN = (String)request.getAttribute("bookISBN");
-							if(bookISBN != null){
+							String bookISBN = (String) request.getAttribute("bookISBN");
+							if (bookISBN != null) {
 						%>
 						<input type="hidden" name="bookIsbn" value="<%= bookISBN%>"/>
 						<%
@@ -37,8 +37,8 @@
 						<input type="submit" value="Search"/>
 					</form>
 					<%
-						String err = (String)request.getAttribute("errMsg");
-						if(err != null){
+						String err = (String) request.getAttribute("errMsg");
+						if (err != null) {
 					%>
 					<h3><%= err%></h3>
 					<%

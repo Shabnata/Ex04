@@ -22,7 +22,7 @@
 				</div> <%-- id=leftMenu --%>
 				<div id="contentArea">
 					<%@include file="DeleteBookForm.jsp" %>
-					<br/>
+					<br/><br/><br/><br/><br/><br/>
 					<%
 						String servletMessage = (String) request.getAttribute("servletMessage");
 						if (servletMessage != null) {%>

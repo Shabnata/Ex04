@@ -36,7 +36,7 @@
 							<th>Number of copies</th>
 						</tr>
 						<tr>
-							<td><img src=${book.title} alt=${book.title} style="height: 80px;"/>${book.coverPath}</td>
+							<td><img src=${book.coverPath} alt=${book.title} style="height: 80px;"/></td>
 							<td>${book.ISBN}</td>
 							<td>${book.title}</td>
 							<td>${book.authorName}</td>

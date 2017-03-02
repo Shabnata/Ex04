@@ -1,5 +1,6 @@
 package DB;
 
+import Util.DButil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,8 +17,18 @@ public class LibraryPropsDB{
 
 	private Connection cn;
 
-	public LibraryPropsDB(Connection cn){
-		this.cn = cn;
+	public LibraryPropsDB() {
+		cn = DButil.getConnection();
+	}
+
+	public void closeConnection() {
+		try {
+			cn.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
 	}
 
 	public String getLibraryName(){

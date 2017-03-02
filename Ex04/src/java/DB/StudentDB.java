@@ -1,6 +1,7 @@
 package DB;
 
 import Model.*;
+import Util.DButil;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -17,11 +18,18 @@ public class StudentDB {
 
 	private Connection cn;
 
-	public StudentDB(Connection cn) {
-		this.cn = cn;
+	public StudentDB() {
+		cn = DButil.getConnection();
 	}
 
-	public StudentDB() {
+	public void closeConnection() {
+		try {
+			cn.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
 	}
 
 	public Student getStudent(String st_id) throws ClassNotFoundException, SQLException {
@@ -208,7 +216,7 @@ public class StudentDB {
 			// TODO
 			// Write an error
 		}
-		LoanDB tmpLoanDB = new LoanDB(cn);
+		LoanDB tmpLoanDB = new LoanDB();
 		Loan tmpLoan = new Loan();
 		for (Integer lnId : loanIds) {
 			tmpLoan = tmpLoanDB.getLoanByID((int) lnId);

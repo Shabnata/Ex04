@@ -1,6 +1,7 @@
 package DB;
 
 import Model.*;
+import Util.DButil;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -15,11 +16,18 @@ public class UserDB {
 
 	private Connection cn;
 
-	public UserDB(Connection cn) {
-		this.cn = cn;
+	public UserDB() {
+		cn = DButil.getConnection();
 	}
 
-	public UserDB() {
+	public void closeConnection() {
+		try {
+			cn.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
 	}
 	public User getUser(String userID) throws ClassNotFoundException, SQLException {
 		Class.forName("org.apache.derby.jdbc.ClientDriver");

@@ -1,6 +1,7 @@
 package DB;
 
 import Model.*;
+import Util.DButil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,12 +14,23 @@ import java.util.logging.Logger;
 
 public class BookDB {
 
+	
 	private Connection cn;
 
-	//Added by Natalie
-	public BookDB(Connection cn) {
-		this.cn = cn;
+	public BookDB() {
+		cn = DButil.getConnection();
 	}
+
+	public void closeConnection() {
+		try {
+			cn.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+	
 
 	public Book getBookByISBN(String isbn) {
 		String bookQuery = ""

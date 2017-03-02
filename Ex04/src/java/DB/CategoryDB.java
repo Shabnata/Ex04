@@ -2,6 +2,7 @@
 package DB;
 
 import Model.*;
+import Util.DButil;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,14 +15,24 @@ import java.util.ArrayList;
 
 public class CategoryDB{
 
+
+
 	private Connection cn;
 
-	public CategoryDB(Connection cn){
-		this.cn = cn;
+	public CategoryDB() {
+		cn = DButil.getConnection();
 	}
 
-	public CategoryDB(){
+	public void closeConnection() {
+		try {
+			cn.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
 	}
+	
 
 	public Category getCategory(String catName) throws ClassNotFoundException, SQLException{
 		Class.forName("org.apache.derby.jdbc.ClientDriver");

@@ -53,7 +53,7 @@ public class DeleteBookServlet extends HttpServlet {
 		if (bookIsbn != null) {
 			try {
 				cn = DriverManager.getConnection(this.sc.getInitParameter("cnurl"), this.sc.getInitParameter("DBUsername"), this.sc.getInitParameter("DBPassword"));
-				BookDB bDB = new BookDB(cn);
+				BookDB bDB = new BookDB();
 
 				if (bDB.deleteBookByISBN(bookIsbn)) {
 					request.setAttribute("servletMessage", "Book with ISBN " + bookIsbn + " was deleted successfully.");

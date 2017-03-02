@@ -59,7 +59,7 @@ public class IdentifyStudentServlet extends HttpServlet {
 
 		try {
 			cn = DriverManager.getConnection(this.sc.getInitParameter("cnurl"), this.sc.getInitParameter("DBUsername"), this.sc.getInitParameter("DBPassword"));
-			sDB = new StudentDB(cn);
+			sDB = new StudentDB();
 
 			if (bookISBN == null) {
 				response.sendRedirect("SearchBookServlet");

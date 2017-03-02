@@ -59,7 +59,7 @@ public class ReturnBookActionServlet extends HttpServlet {
 		RequestDispatcher dispatcher;
 		ArrayList<Loan> loans;
 
-		LoanDB lnDB = new LoanDB(cn);
+		LoanDB lnDB = new LoanDB();
 		Loan ln = lnDB.getLoanByID((Integer.parseInt(request.getParameter("loanID"))));
 
 		//Update fines
@@ -75,7 +75,7 @@ public class ReturnBookActionServlet extends HttpServlet {
 		ConditionDB conDB = new ConditionDB();
 		BookCondition con = conDB.getCondition((Integer.parseInt(request.getParameter("newCondition"))));
 
-		BookCopyDB bcDB = new BookCopyDB(cn);
+		BookCopyDB bcDB = new BookCopyDB();
 		BookCopy bc = new BookCopy();
 		bc = bcDB.getBookCopyByCopyCode(request.getParameter("copyCode"));
 		bc.setCopyCondition(con);

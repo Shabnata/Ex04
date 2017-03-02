@@ -39,16 +39,7 @@ public class AddBookServlet extends HttpServlet {
 
 	}
 
-	/**
-	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-	 * methods.
-	 *
-	 * @param request servlet request
-	 * @param response servlet response
-	 *
-	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException if an I/O error occurs
-	 */
+
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		Connection cn = null;
@@ -72,7 +63,8 @@ public class AddBookServlet extends HttpServlet {
 					}
 				}
 
-				BookDB bDB = new BookDB(cn);
+				BookDB bDB = new BookDB();
+			
 				boolean failed = !bDB.addBook(request.getParameter("isbn"), request.getParameter("title"), request.getParameter("author"), addToCategory, Year.parse(request.getParameter("year")), request.getParameter("cover"), Integer.parseInt(request.getParameter("numCopies")));
 				if (!failed) {
 					bk = bDB.getBookByISBN(request.getParameter("isbn"));

@@ -53,7 +53,7 @@ public class SearchBookServlet extends HttpServlet {
 
 			String titleParam = request.getParameter("title");
 			if (titleParam != null) {
-				BookDB bDB = new BookDB(cn);
+				BookDB bDB = new BookDB();
 				bksLst = bDB.getBooksByTitle(request.getParameter("title"));
 				//cn.close();
 

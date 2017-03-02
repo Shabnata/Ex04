@@ -168,6 +168,7 @@ public class AddLoanServlet extends HttpServlet{
 			rd = request.getRequestDispatcher("AddLoanPageError.jsp");
 			request.setAttribute("errors", errorLst);
 			rd.forward(request, response);
+			return;
 		}
 
 		lnDB = new LoanDB();

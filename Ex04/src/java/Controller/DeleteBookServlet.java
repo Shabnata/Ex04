@@ -1,4 +1,3 @@
-
 package Controller;
 
 import DB.BookDB;
@@ -19,12 +18,12 @@ import javax.servlet.http.HttpServletResponse;
  * @author Denis Sh
  */
 @WebServlet(name = "DeleteBookServlet", urlPatterns = {"/DeleteBookServlet"})
-public class DeleteBookServlet extends HttpServlet{
+public class DeleteBookServlet extends HttpServlet {
 
 	ServletContext sc;
 
 	@Override
-	public void init(){
+	public void init() {
 		this.sc = this.getServletContext();
 	}
 
@@ -32,34 +31,32 @@ public class DeleteBookServlet extends HttpServlet{
 	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
 	 * methods.
 	 *
-	 * @param request  servlet request
+	 * @param request servlet request
 	 * @param response servlet response
 	 *
 	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException      if an I/O error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
-	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		RequestDispatcher rd = request.getRequestDispatcher("DeleteBookPage.jsp");
 		BookDB bDB = null;
 
 		String bookIsbn = request.getParameter("bookIsbn");
-		if(bookIsbn != null){
-			try {
-				bDB = new BookDB();
+		if (bookIsbn != null) {
 
-				if(bDB.deleteBookByISBN(bookIsbn)){
-					request.setAttribute("servletMessage", "Book with ISBN " + bookIsbn + " was deleted successfully.");
-				} else {
-					request.setAttribute("servletMessage", "Cannot delete Book with ISBN " + bookIsbn);
-				}
-			} catch(SQLException e){
-				Logger.getLogger(DeleteBookServlet.class.getName()).log(Level.SEVERE, null, e);
-			} finally {
-				if(bDB != null){
-					bDB.closeConnection();
-				}
+			bDB = new BookDB();
+
+			if (bDB.deleteBookByISBN(bookIsbn)) {
+				request.setAttribute("servletMessage", "Book with ISBN " + bookIsbn + " was deleted successfully.");
+			} else {
+				request.setAttribute("servletMessage", "Cannot delete Book with ISBN " + bookIsbn);
 			}
+
+			if (bDB != null) {
+				bDB.closeConnection();
+			}
+
 		}
 
 		rd.forward(request, response);
@@ -70,28 +67,28 @@ public class DeleteBookServlet extends HttpServlet{
 	/**
 	 * Handles the HTTP <code>GET</code> method.
 	 *
-	 * @param request  servlet request
+	 * @param request servlet request
 	 * @param response servlet response
 	 *
 	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException      if an I/O error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		processRequest(request, response);
 	}
 
 	/**
 	 * Handles the HTTP <code>POST</code> method.
 	 *
-	 * @param request  servlet request
+	 * @param request servlet request
 	 * @param response servlet response
 	 *
 	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException      if an I/O error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		processRequest(request, response);
 	}
 
@@ -101,7 +98,7 @@ public class DeleteBookServlet extends HttpServlet{
 	 * @return a String containing servlet description
 	 */
 	@Override
-	public String getServletInfo(){
+	public String getServletInfo() {
 		return "Short description";
 	}// </editor-fold>
 

@@ -49,7 +49,7 @@ public class IdentifyStudentServlet extends HttpServlet{
 		StudentDB sDB = null;
 		Student st;
 
-		try {
+		
 			sDB = new StudentDB();
 
 			if(bookISBN == null){
@@ -74,14 +74,12 @@ public class IdentifyStudentServlet extends HttpServlet{
 			rd = request.getRequestDispatcher("LoanBookFromSearchServlet");
 			rd.forward(request, response);
 
-		} catch(SQLException | ClassNotFoundException e){
-			Logger.getLogger(IdentifyStudentServlet.class.getName()).log(Level.SEVERE, null, e);
-		} finally {
+		
 			if(sDB != null){
 				sDB.closeConnection();
 			}
 
-		}
+		
 	}
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 

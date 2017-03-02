@@ -36,7 +36,7 @@ public class ReturnBookServlet extends HttpServlet{
 		Student st = null;
 		ArrayList<Loan> loans;
 
-		try {
+		
 			st = sDB.getStudent(request.getParameter("stID"));
 			if(st == null){
 				dispatcher = request.getRequestDispatcher("ReturnBookPageResult.jsp");
@@ -49,15 +49,11 @@ public class ReturnBookServlet extends HttpServlet{
 				dispatcher = request.getRequestDispatcher("ReturnBookPageResult.jsp");
 				dispatcher.forward(request, response);
 			}
-		} catch(SQLException e){
-			// TODO
-			// Write an error
-			System.err.println("*\n*\n*\n" + e.getMessage() + "\n*\n*\n*");
-		} finally {
+	
 			if(sDB != null){
 				sDB.closeConnection();
 			}
-		}
+		
 
 	}
 

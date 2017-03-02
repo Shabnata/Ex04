@@ -41,7 +41,7 @@ public class SearchBookServlet extends HttpServlet{
 		RequestDispatcher rd = null;
 		BookDB bDB = null;
 		ArrayList<Book> bksLst;
-		try {
+		
 
 			String titleParam = request.getParameter("title");
 			if(titleParam != null){
@@ -57,13 +57,11 @@ public class SearchBookServlet extends HttpServlet{
 			} else {
 				rd = request.getRequestDispatcher("SearchBookPage.jsp");
 			}
-		} catch(SQLException e){
-			Logger.getLogger(SearchBookServlet.class.getName()).log(Level.SEVERE, null, e);
-		} finally {
+		
 			if(bDB != null){
 				bDB.closeConnection();
 			}
-		}
+		
 
 		if(rd != null){
 			rd.forward(request, response);

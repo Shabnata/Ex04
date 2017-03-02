@@ -12,6 +12,8 @@ import java.sql.Statement;
 import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CategoryDB{
 

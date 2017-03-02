@@ -20,7 +20,7 @@
 			String urlCn = "jdbc:derby:C:\\Users\\Kotya\\Desktop\\College\\Year 3\\Semester A\\BasicWeb\\HW\\Ex04\\LibraryDB";
 			Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
 
-			LibraryPropsDB libDB = new LibraryPropsDB(cn);
+			LibraryPropsDB libDB = new LibraryPropsDB();
 			int finesPerDay = libDB.getFinesPerDay();
 			StudentDB stDB = new StudentDB();
 
@@ -71,7 +71,7 @@
 								ArrayList<BookCopy> bcs = new ArrayList<BookCopy>();
 								bcs = ln.getBooksInLoan();
 								for (BookCopy bc : bcs) {
-									BookDB bDB = new BookDB(cn);
+									BookDB bDB = new BookDB();
 									ConditionDB cndDB = new ConditionDB();
 									ArrayList<BookCondition> cnd = new ArrayList<BookCondition>();
 									cnd = cndDB.getConditions();
@@ -86,7 +86,7 @@
 							<td><%=b.getISBN()%></td> 
 							<td><%=b.getTitle()%></td>
 							<td><%=bc.getCOPY_CODE()%></td>
-							<%LoanDB lnDB = new LoanDB(cn);
+							<%LoanDB lnDB = new LoanDB();
 								if (lnDB.isOverdue(ln.getReturnByDate()) < 0) {
 							%>
 

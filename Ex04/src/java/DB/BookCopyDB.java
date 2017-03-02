@@ -20,7 +20,7 @@ public class BookCopyDB{
 
 	private Connection cn;
 
-	public BookCopyDB() {
+	public BookCopyDB(){
 		cn = DButil.getConnection();
 	}
 
@@ -33,8 +33,7 @@ public class BookCopyDB{
 			}
 		}
 	}
-	
-	
+
 	// Returns null if book not found, empty list if no copies
 	public ArrayList<BookCopy> getAllCopiesOfBook(String book_isbn){
 		ArrayList<BookCopy> bcLst = null;
@@ -141,7 +140,7 @@ public class BookCopyDB{
 		return updated;
 	}
 
-	public BookCopy getBookCopyByCopyCode(String copyCode) throws ClassNotFoundException{
+	public BookCopy getBookCopyByCopyCode(String copyCode){
 		BookCopy bc = null;
 		String copiesQuery = "select * from book_copies where copy_code=?";
 

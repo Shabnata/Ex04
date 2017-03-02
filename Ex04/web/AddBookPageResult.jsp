@@ -22,7 +22,7 @@
 				</div> <%-- id=leftMenu --%>
 				<div id="contentArea">
 					<%@include file="AddBookForm.jsp" %>
-					<hr/><br/>
+					<br/><br/><hr/><br/>
 					<jsp:useBean id="book" type="Model.Book" scope="request"/>
 
 					<table id="bookSearchRes">
@@ -36,7 +36,7 @@
 							<th>Number of copies</th>
 						</tr>
 						<tr>
-							<td><img src=${book.title} alt=${book.title} style="height: 80px;"/></td>
+							<td><img src=${book.title} alt=${book.title} style="height: 80px;"/>${book.coverPath}</td>
 							<td>${book.ISBN}</td>
 							<td>${book.title}</td>
 							<td>${book.authorName}</td>

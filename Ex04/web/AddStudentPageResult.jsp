@@ -37,11 +37,11 @@
 							<td><%=student.getFirstName()%></td>
 							<td><%=student.getLastName()%></td>
 							<td><%=student.getEmailAddress()%></td>
-							
+
 							<%
-							//get loaned bookks num
-							StudentDB stDB= new StudentDB();
-							int num = stDB.getCountLoanedBooks(student.getStudentID());
+								//get loaned bookks num
+								StudentDB stDB = new StudentDB();
+								int num = stDB.getCountLoanedBooks(student.getStudentID());
 							%>
 							<td><%=num%></td>
 							<td><%=student.getCurrentFines()%></td>
@@ -64,4 +64,7 @@
 			<jsp:include page="Footer.jsp" />
 		</div> <%-- id=outerContainer --%>
 	</body>
+	<%if (stDB != null) {
+			stDB.closeConnection();
+		}%>
 </html>

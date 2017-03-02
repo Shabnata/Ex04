@@ -77,7 +77,7 @@
 						if (ln != null) {
 					%>
 					<hr/>
-					Books in this loan:<br/>
+					<br/>
 					Books in current loan:
 					<table id="booksInLoan">
 						<tr>

@@ -23,7 +23,7 @@
 				</div> <%-- id=leftMenu --%>
 				<div id="contentArea">
 					<jsp:include page="AddCategoryForm.jsp" />
-					
+
 					Existing categories:
 					<% ArrayList<Category> cat = new ArrayList<Category>();
 						CategoryDB cDb = new CategoryDB();
@@ -37,4 +37,7 @@
 				<jsp:include page="Footer.jsp" />
 			</div> <%-- id=outerContainer --%>
 	</body>
+	<%if (cDb != null) {
+				cDb.closeConnection();
+			}%>
 </html>

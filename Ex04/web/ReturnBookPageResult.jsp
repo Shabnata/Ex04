@@ -43,7 +43,7 @@
 
 
 					<table>
-						<%if(stDB.getCountLoanedBooks(student.getStudentID()) > 0){%>
+						<%if (stDB.getCountLoanedBooks(student.getStudentID()) > 0) {%>
 						<tr>
 							<th>LoanID</th>
 							<th>Cover</th>
@@ -61,10 +61,10 @@
 						<%}%>
 
 						<%
-							for(Loan ln : loans){
+							for (Loan ln : loans) {
 								ArrayList<BookCopy> bcs = new ArrayList<BookCopy>();
 								bcs = ln.getBooksInLoan();
-								for(BookCopy bc : bcs){
+								for (BookCopy bc : bcs) {
 									BookDB bDB = new BookDB();
 									ConditionDB cndDB = new ConditionDB();
 									ArrayList<BookCondition> cnd = new ArrayList<BookCondition>();
@@ -80,8 +80,9 @@
 							<td><%=b.getISBN()%></td>
 							<td><%=b.getTitle()%></td>
 							<td><%=bc.getCOPY_CODE()%></td>
-							<%LoanDB lnDB = new LoanDB();
-								if(lnDB.isOverdue(ln.getReturnByDate()) < 0){
+							<%!LoanDB lnDB = null;%>
+							<%lnDB = new LoanDB();
+								if (lnDB.isOverdue(ln.getReturnByDate()) < 0) {
 							%>
 
 							<td><span style="color: red;"><%=dateStr%></span></td>
@@ -101,7 +102,7 @@
 								<%=bc.getCopyCondition().getConDesc()%><br/>
 								New cond:
 								<select name=newCondition>
-									<%for(BookCondition c : cnd){%>
+									<%for (BookCondition c : cnd) {%>
 									<option value="<%=c.getConKey()%>"><%=c.getConDesc()%></option>
 									<%}%>
 								</select>
@@ -111,7 +112,7 @@
 								<input type="number" name="generalFines" min="0" value="0" >
 							</td>
 							<%
-								int lateFine = ((lnDB.isOverdue(ln.getReturnByDate()) * finesPerDay) < 0) ? (int)(lnDB.isOverdue(ln.getReturnByDate()) * finesPerDay * -1) : 0;
+								int lateFine = ((lnDB.isOverdue(ln.getReturnByDate()) * finesPerDay) < 0) ? (int) (lnDB.isOverdue(ln.getReturnByDate()) * finesPerDay * -1) : 0;
 							%>
 
 							<td>
@@ -135,4 +136,7 @@
 			<jsp:include page="Footer.jsp" />
 		</div> <%-- id=outerContainer --%>
 	</body>
+	<%if (lnDB != null) {
+			lnDB.closeConnection();
+		}%>
 </html>

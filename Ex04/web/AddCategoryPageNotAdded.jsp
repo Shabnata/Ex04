@@ -37,4 +37,7 @@
 				<jsp:include page="Footer.jsp" />
 			</div> <%-- id=outerContainer --%>
 	</body>
+		<%if (cDb != null) {
+			cDb.closeConnection();
+		}%>
 </html>

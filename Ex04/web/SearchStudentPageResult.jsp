@@ -64,4 +64,7 @@
 			<jsp:include page="Footer.jsp" />
 		</div> <%-- id=outerContainer --%>
 	</body>
+	<%if (stDB != null) {
+				stDB.closeConnection();
+			}%>
 </html>

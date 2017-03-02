@@ -54,8 +54,11 @@
 									because they are defined in an "if" scope in Menu.jsp
 									thus they only exist in that scope.
 									--%>
+									<%!
+										UserDB myUserDb2 = null;
+										%>
 									<%
-										UserDB myUserDb2 = new UserDB();
+										myUserDb2 = new UserDB();
 										User crrUser2 = myUserDb2.getUser(currentUser.getValue());
 										if (crrUser2.getUserType().equals("user")) {
 									%>
@@ -79,4 +82,7 @@
 			<%@include file="Footer.jsp" %>
 		</div> <%-- id=outerContainer --%>
 	</body>
+	<%if (myUserDb2 != null) {
+				myUserDb2.closeConnection();
+			}%>
 </html>

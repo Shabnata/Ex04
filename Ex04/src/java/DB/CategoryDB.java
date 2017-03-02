@@ -23,12 +23,13 @@ public class CategoryDB{
 		cn = DButil.getConnection();
 	}
 
-	public void closeConnection() {
-		try {
-			cn.close();
-		} catch (SQLException e) {
-
-			e.printStackTrace();
+	public void closeConnection(){
+		if(this.cn != null){
+			try {
+				this.cn.close();
+			} catch(SQLException e){
+				Logger.getLogger(CategoryDB.class.getName()).log(Level.SEVERE, null, e);
+			}
 		}
 
 	}

@@ -4,7 +4,6 @@ package Controller;
 import DB.StudentDB;
 import Model.*;
 import java.io.IOException;
-import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -21,20 +20,6 @@ public class SearchStudentServlet extends HttpServlet{
 	@Override
 	public void init(){
 		this.sc = this.getServletContext();
-
-		try {
-			Class.forName("org.apache.derby.jdbc.ClientDriver");
-		} catch(ClassNotFoundException e){
-
-			// TODO
-			// Write an error
-			//public void init() {
-			//try {
-			//Class.forName("org.apache.derby.jdbc.ClientDriver");
-			//} catch (ClassNotFoundException ex) {
-			//Logger.getLogger(dbServlet.class.getName()).log(Level.SEVERE, null, ex);
-			//}
-		}
 	}
 
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -52,7 +37,9 @@ public class SearchStudentServlet extends HttpServlet{
 			dispatcher = request.getRequestDispatcher("SearchStudentPageResult.jsp");
 			dispatcher.forward(request, response);
 		}
-
+		if(sDB != null){
+			sDB.closeConnection();
+		}
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -84,7 +71,7 @@ public class SearchStudentServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException{
-	processRequest(request, response);
+		processRequest(request, response);
 	}
 
 	/**

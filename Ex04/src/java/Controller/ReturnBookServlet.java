@@ -38,7 +38,7 @@ public class ReturnBookServlet extends HttpServlet{
 		st = sDB.getStudent(request.getParameter("stID"));
 		if(st == null){
 			request.setAttribute("StudentNotFound", true);
-			dispatcher = request.getRequestDispatcher("ReturnBookPageResult.jsp");
+			dispatcher = request.getRequestDispatcher("ReturnBookPage.jsp");
 			dispatcher.forward(request, response);
 
 		} else {

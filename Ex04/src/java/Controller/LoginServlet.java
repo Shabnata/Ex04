@@ -39,11 +39,10 @@ public class LoginServlet extends HttpServlet{
 			userName.setPath("/");
 			response.addCookie(userName);
 			response.sendRedirect("SearchBookPage.jsp");
-//			dispatcher = request.getRequestDispatcher("SearchStudentPage.jsp");
-//			dispatcher.forward(request, response);
+
 		} else {
-//			dispatcher = request.getRequestDispatcher("SearchBookPage.jsp");
-//			dispatcher.forward(request, response);
+			dispatcher = request.getRequestDispatcher("ErrorLogin.jsp");
+			dispatcher.forward(request, response);
 		}
 		if(userDB != null){
 			userDB.closeConnection();

@@ -4,7 +4,6 @@ package DB;
 import Model.*;
 import Util.DButil;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,11 +16,9 @@ import java.util.logging.Logger;
 
 public class CategoryDB{
 
-
-
 	private Connection cn;
 
-	public CategoryDB() {
+	public CategoryDB(){
 		cn = DButil.getConnection();
 	}
 
@@ -35,7 +32,6 @@ public class CategoryDB{
 		}
 
 	}
-	
 
 	public Category getCategory(String catName){
 
@@ -61,7 +57,6 @@ public class CategoryDB{
 	}
 
 	public ArrayList<Category> getCategories(){
-	
 
 		ArrayList<Category> cat = new ArrayList<Category>();
 		Statement ps = null;
@@ -106,7 +101,6 @@ public class CategoryDB{
 	}
 
 	public ArrayList<Book> getBooksByCategoryName(String catName){
-
 
 		String booksQuery = ""
 			+ "SELECT books.isbn, "

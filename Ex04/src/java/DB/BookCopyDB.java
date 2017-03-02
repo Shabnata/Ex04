@@ -143,17 +143,19 @@ public class BookCopyDB{
 	public BookCopy getBookCopyByCopyCode(String copyCode){
 		BookCopy bc = null;
 		String copiesQuery = "select * from book_copies where copy_code=?";
+		ConditionDB conDB = null;
 
 		try {
 			PreparedStatement ps = this.cn.prepareStatement(copiesQuery);
 			ps.setString(1, copyCode);
 			ResultSet rs = ps.executeQuery();
+
 			if(rs.next()){
 				bc = new BookCopy();
 
 				do {
 					bc.setCOPY_CODE(copyCode);
-					ConditionDB conDB = new ConditionDB();
+					conDB = new ConditionDB();
 					BookCondition bCon = new BookCondition();
 					bCon = conDB.getCondition(rs.getInt("copy_cond"));
 					bc.setCopyCondition(bCon);
@@ -162,6 +164,10 @@ public class BookCopyDB{
 			}
 		} catch(SQLException e){
 			Logger.getLogger(BookCopyDB.class.getName()).log(Level.SEVERE, null, e);
+		} finally {
+			if(conDB != null){
+				conDB.closeConnection();
+			}
 		}
 		return bc;
 	}

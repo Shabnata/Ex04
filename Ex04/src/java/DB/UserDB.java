@@ -29,10 +29,8 @@ public class UserDB {
 		}
 
 	}
-	public User getUser(String userID) throws ClassNotFoundException, SQLException {
-		Class.forName("org.apache.derby.jdbc.ClientDriver");
-		String urlCn = "jdbc:derby:C:\\Users\\Kotya\\Desktop\\College\\Year 3\\Semester A\\BasicWeb\\HW\\Ex04\\LibraryDB";
-		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
+	public User getUser(String userID) {
+	
 
 		User us = null;
 		//PreparedStatement ps = null;
@@ -46,7 +44,7 @@ public class UserDB {
 				us.setUserPas(rs.getString("acc_pass"));
 				us.setUserType(rs.getString("acc_type"));	
 			}
-			cn.close();
+		
 		} catch (SQLException e) {
 			// TODO
 			// Write an error

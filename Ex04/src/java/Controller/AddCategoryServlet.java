@@ -33,7 +33,7 @@ public class AddCategoryServlet extends HttpServlet {
 		}
 	}
 
-	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException, SQLException {
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CategoryDB cDB = new CategoryDB();
 		RequestDispatcher dispatcher;
 		String catName = request.getParameter("category");
@@ -56,29 +56,17 @@ public class AddCategoryServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		try {
+		
 			processRequest(request, response);
-		} catch(ClassNotFoundException ex){
-			//todo
-		} catch(SQLException ex){
-			//todo
-		}
+		
 	}
-
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		try {
-			processRequest(request, response);
-		} catch(ClassNotFoundException ex){
-			//todo
-		} catch(SQLException ex){
-			//todo
-		}
+		
+			processRequest(request, response);			
 	}
-
-
 	@Override
 	public String getServletInfo() {
 		return "Short description";

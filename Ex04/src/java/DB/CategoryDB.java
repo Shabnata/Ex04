@@ -34,10 +34,7 @@ public class CategoryDB{
 	}
 	
 
-	public Category getCategory(String catName) throws ClassNotFoundException, SQLException{
-		Class.forName("org.apache.derby.jdbc.ClientDriver");
-		String urlCn = "jdbc:derby:C:\\Users\\Kotya\\Desktop\\College\\Year 3\\Semester A\\BasicWeb\\HW\\Ex04\\LibraryDB";
-		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
+	public Category getCategory(String catName){
 
 		Category ct = null;
 		//PreparedStatement ps = null;
@@ -53,7 +50,6 @@ public class CategoryDB{
 				ct.setCatID(rs.getInt("id"));
 				ct.setCatName(rs.getString("cat_name"));
 			}
-			cn.close();
 		} catch(SQLException e){
 			// TODO
 			// Write an error
@@ -61,10 +57,8 @@ public class CategoryDB{
 		return ct;
 	}
 
-	public ArrayList<Category> getCategories() throws ClassNotFoundException, SQLException{
-		Class.forName("org.apache.derby.jdbc.ClientDriver");
-		String urlCn = "jdbc:derby:C:\\Users\\Kotya\\Desktop\\College\\Year 3\\Semester A\\BasicWeb\\HW\\Ex04\\LibraryDB";
-		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
+	public ArrayList<Category> getCategories(){
+	
 
 		ArrayList<Category> cat = new ArrayList<Category>();
 		Statement ps = null;
@@ -80,7 +74,6 @@ public class CategoryDB{
 				c.setCatName(rs.getString(2));
 				cat.add(c);
 			}
-			cn.close();
 		} catch(SQLException e){
 			// TODO
 			// Write an error
@@ -88,11 +81,8 @@ public class CategoryDB{
 		return cat;
 	}
 
-	public Boolean addCategory(String catName) throws ClassNotFoundException, SQLException{
+	public Boolean addCategory(String catName){
 		Boolean added = false;
-		Class.forName("org.apache.derby.jdbc.ClientDriver");
-		String urlCn = "jdbc:derby:C:\\Users\\Kotya\\Desktop\\College\\Year 3\\Semester A\\BasicWeb\\HW\\Ex04\\LibraryDB";
-		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
 
 		Category cat = null;
 		//PreparedStatement ps = null;
@@ -105,8 +95,6 @@ public class CategoryDB{
 			if(nor != 0){
 				added = true;
 			}
-
-			cn.close();
 		} catch(SQLException e){
 			// TODO
 			// Write an error
@@ -114,10 +102,8 @@ public class CategoryDB{
 		return added;
 	}
 
-	public ArrayList<Book> getBooksByCategoryName(String catName) throws ClassNotFoundException, SQLException{
-		Class.forName("org.apache.derby.jdbc.ClientDriver");
-		String urlCn = "jdbc:derby:C:\\Users\\Kotya\\Desktop\\College\\Year 3\\Semester A\\BasicWeb\\HW\\Ex04\\LibraryDB";
-		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
+	public ArrayList<Book> getBooksByCategoryName(String catName){
+
 
 		String booksQuery = ""
 			+ "SELECT books.isbn, "
@@ -164,7 +150,6 @@ public class CategoryDB{
 				b.setAvailableCopies(rs.getInt("usable_copy_count"));
 				books.add(b);
 			}
-			cn.close();
 		} catch(SQLException e){
 			// TODO
 			// Write an error

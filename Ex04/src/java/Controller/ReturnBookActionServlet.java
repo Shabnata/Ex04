@@ -54,7 +54,7 @@ public class ReturnBookActionServlet extends HttpServlet {
 	 * @throws ServletException if a servlet-specific error occurs
 	 * @throws IOException if an I/O error occurs
 	 */
-	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException, SQLException {
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		Connection cn = DriverManager.getConnection(this.sc.getInitParameter("cnurl"), this.sc.getInitParameter("DBUsername"), this.sc.getInitParameter("DBPassword"));
 		RequestDispatcher dispatcher;
 		ArrayList<Loan> loans;
@@ -110,13 +110,7 @@ public class ReturnBookActionServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		try {
-			processRequest(request, response);
-		} catch (ClassNotFoundException ex) {
-			//todo
-		} catch (SQLException ex) {
-			//todo
-		}
+		processRequest(request, response);
 	}
 
 	/**
@@ -130,13 +124,7 @@ public class ReturnBookActionServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		try {
-			processRequest(request, response);
-		} catch (ClassNotFoundException ex) {
-			//todo
-		} catch (SQLException ex) {
-			//todo
-		}
+		processRequest(request, response);
 	}
 
 	/**

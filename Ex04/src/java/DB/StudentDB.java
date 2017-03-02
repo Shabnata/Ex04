@@ -32,10 +32,8 @@ public class StudentDB {
 
 	}
 
-	public Student getStudent(String st_id) throws ClassNotFoundException, SQLException {
-		Class.forName("org.apache.derby.jdbc.ClientDriver");
-		String urlCn = "jdbc:derby:C:\\Users\\Kotya\\Desktop\\College\\Year 3\\Semester A\\BasicWeb\\HW\\Ex04\\LibraryDB";
-		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
+	public Student getStudent(String st_id) {
+		
 
 		Student st = null;
 		//PreparedStatement ps = null;
@@ -54,7 +52,6 @@ public class StudentDB {
 				st.setEmailAddress(rs.getString("email"));
 				st.setCurrentFines(Double.parseDouble(rs.getString("fine")));
 			}
-			cn.close();
 		} catch (SQLException e) {
 			// TODO
 			// Write an error
@@ -62,11 +59,9 @@ public class StudentDB {
 		return st;
 	}
 
-	public Boolean addStudent(String stID, String fName, String lName, String email, float fine) throws ClassNotFoundException, SQLException {
+	public Boolean addStudent(String stID, String fName, String lName, String email, float fine) {
 		Boolean added = false;
-		Class.forName("org.apache.derby.jdbc.ClientDriver");
-		String urlCn = "jdbc:derby:C:\\Users\\Kotya\\Desktop\\College\\Year 3\\Semester A\\BasicWeb\\HW\\Ex04\\LibraryDB";
-		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
+
 
 		Student st = null;
 		//PreparedStatement ps = null;
@@ -82,8 +77,6 @@ public class StudentDB {
 			if (nor != 0) {
 				added = true;
 			}
-
-			cn.close();
 		} catch (SQLException e) {
 			// TODO
 			// Write an error
@@ -91,11 +84,9 @@ public class StudentDB {
 		return added;
 	}
 
-	public Boolean updateStudent(Student stud) throws ClassNotFoundException, SQLException {
+	public Boolean updateStudent(Student stud)  {
 		Boolean updated = false;
-		Class.forName("org.apache.derby.jdbc.ClientDriver");
-		String urlCn = "jdbc:derby:C:\\Users\\Kotya\\Desktop\\College\\Year 3\\Semester A\\BasicWeb\\HW\\Ex04\\LibraryDB";
-		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
+		
 
 		Student st = stud;
 		Statement ps = null;
@@ -105,7 +96,6 @@ public class StudentDB {
 			pst.setDouble(1, st.getCurrentFines());
 			pst.setString(2, st.getStudentID());
 			updated = pst.execute();
-			cn.close();
 		} catch (SQLException e) {
 			// TODO
 			// Write an error
@@ -113,12 +103,10 @@ public class StudentDB {
 		return updated;
 	}
 
-	public int getCountLoanedBooks(String st_id) throws ClassNotFoundException, SQLException {
+	public int getCountLoanedBooks(String st_id)  {
 		int cnt = 0;
 		String s = "";
-		Class.forName("org.apache.derby.jdbc.ClientDriver");
-		String urlCn = "jdbc:derby:C:\\Users\\Kotya\\Desktop\\College\\Year 3\\Semester A\\BasicWeb\\HW\\Ex04\\LibraryDB";
-		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
+	
 
 		Student st = null;
 		//PreparedStatement ps = null;
@@ -140,7 +128,6 @@ public class StudentDB {
 			if (rs.next()) {
 				cnt = rs.getInt("num");
 			}
-			cn.close();
 		} catch (SQLException e) {
 			s = e.getMessage();
 		}
@@ -149,10 +136,8 @@ public class StudentDB {
 	}
 
 	//get Array of books that this Student has in loans
-	public ArrayList<BookCopy> getBooksInLoans(String st_id) throws ClassNotFoundException, SQLException {
-		Class.forName("org.apache.derby.jdbc.ClientDriver");
-		String urlCn = "jdbc:derby:C:\\Users\\Kotya\\Desktop\\College\\Year 3\\Semester A\\BasicWeb\\HW\\Ex04\\LibraryDB";
-		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
+	public ArrayList<BookCopy> getBooksInLoans(String st_id)  {
+
 
 		ArrayList<BookCopy> hasBooks = new ArrayList<BookCopy>();
 		Statement ps = null;
@@ -183,7 +168,7 @@ public class StudentDB {
 				bcC.setCOPY_CODE(rs.getString("copy_code"));
 				hasBooks.add(bcC);
 			}
-			cn.close();
+			
 		} catch (SQLException e) {
 			// TODO
 			// Write an error
@@ -192,10 +177,8 @@ public class StudentDB {
 	}
 
 	//get Array of Loans per this student
-	public ArrayList<Loan> getLoans(String st_id) throws ClassNotFoundException, SQLException {
-		Class.forName("org.apache.derby.jdbc.ClientDriver");
-		String urlCn = "jdbc:derby:C:\\Users\\Kotya\\Desktop\\College\\Year 3\\Semester A\\BasicWeb\\HW\\Ex04\\LibraryDB";
-		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
+	public ArrayList<Loan> getLoans(String st_id){
+		
 		ArrayList<Integer> loanIds = new ArrayList<Integer>();
 		ArrayList<Loan> loans = new ArrayList<Loan>();
 		Statement ps = null;
@@ -222,7 +205,7 @@ public class StudentDB {
 			tmpLoan = tmpLoanDB.getLoanByID((int) lnId);
 			loans.add(tmpLoan);
 		}
-		cn.close();
+		
 		return loans;
 	}
 

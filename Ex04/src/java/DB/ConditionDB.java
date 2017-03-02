@@ -35,10 +35,8 @@ public class ConditionDB {
 
 	}
 
-	public BookCondition getCondition(int conKey) throws ClassNotFoundException, SQLException {
-		Class.forName("org.apache.derby.jdbc.ClientDriver");
-		String urlCn = "jdbc:derby:C:\\Users\\Kotya\\Desktop\\College\\Year 3\\Semester A\\BasicWeb\\HW\\Ex04\\LibraryDB";
-		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
+	public BookCondition getCondition(int conKey) {
+		
 
 		BookCondition cd = null;
 		//PreparedStatement ps = null;
@@ -56,7 +54,6 @@ public class ConditionDB {
 				cd.setConKey(rs.getInt("con_key"));
 				cd.setConDesc(rs.getString("con_desc"));
 			}
-			cn.close();
 		} catch (SQLException e) {
 			// TODO
 			// Write an error
@@ -64,10 +61,8 @@ public class ConditionDB {
 		return cd;
 	}
 
-	public ArrayList<BookCondition> getConditions() throws ClassNotFoundException, SQLException {
-		Class.forName("org.apache.derby.jdbc.ClientDriver");
-		String urlCn = "jdbc:derby:C:\\Users\\Kotya\\Desktop\\College\\Year 3\\Semester A\\BasicWeb\\HW\\Ex04\\LibraryDB";
-		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
+	public ArrayList<BookCondition> getConditions() {
+
 
 		ArrayList<BookCondition> con = new ArrayList<BookCondition>();
 		Statement ps = null;
@@ -83,7 +78,6 @@ public class ConditionDB {
 				cd.setConDesc(rs.getString(3));
 				con.add(cd);
 			}
-			cn.close();
 		} catch (SQLException e) {
 			// TODO
 			// Write an error

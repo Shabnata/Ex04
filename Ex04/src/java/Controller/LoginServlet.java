@@ -33,13 +33,11 @@ public class LoginServlet extends HttpServlet {
 		}
 	}
 
-	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException, SQLException {
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String username = request.getParameter("Username");
 		String password = request.getParameter("Password");
 		RequestDispatcher dispatcher;
-		Class.forName("org.apache.derby.jdbc.ClientDriver");
-		String urlCn = "jdbc:derby:C:\\Users\\Kotya\\Desktop\\College\\Year 3\\Semester A\\BasicWeb\\HW\\Ex04\\LibraryDB";
-		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
+		
 
 		UserDB userDB = new UserDB();
 		User crrUser = userDB.getUser(username);
@@ -74,13 +72,7 @@ public class LoginServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		try {
-			processRequest(request, response);
-		} catch (ClassNotFoundException ex) {
-			//todo
-		} catch (SQLException ex) {
-			//todo
-		}
+	processRequest(request, response);
 	}
 
 	/**
@@ -95,13 +87,7 @@ public class LoginServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		try {
-			processRequest(request, response);
-		} catch (ClassNotFoundException ex) {
-			//todo
-		} catch (SQLException ex) {
-			//todo
-		}
+		processRequest(request, response);
 	}
 
 	/**

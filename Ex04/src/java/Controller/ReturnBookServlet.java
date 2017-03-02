@@ -47,7 +47,7 @@ public class ReturnBookServlet extends HttpServlet {
 		}
 	}
 
-	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException, SQLException {
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
 		StudentDB sDB = new StudentDB();
 		RequestDispatcher dispatcher;
@@ -87,13 +87,7 @@ public class ReturnBookServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		try {
-			processRequest(request, response);
-		} catch (ClassNotFoundException ex) {
-			//todo
-		} catch (SQLException ex) {
-			//todo
-		}
+		processRequest(request, response);
 	}
 
 	/**
@@ -107,13 +101,7 @@ public class ReturnBookServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		try {
-			processRequest(request, response);
-		} catch (ClassNotFoundException ex) {
-			//todo
-		} catch (SQLException ex) {
-			//todo
-		}
+		processRequest(request, response);
 	}
 
 	/**

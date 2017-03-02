@@ -5,7 +5,6 @@ import DB.StudentDB;
 import Model.Loan;
 import Model.Student;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -36,24 +35,23 @@ public class ReturnBookServlet extends HttpServlet{
 		Student st = null;
 		ArrayList<Loan> loans;
 
-		
-			st = sDB.getStudent(request.getParameter("stID"));
-			if(st == null){
-				dispatcher = request.getRequestDispatcher("ReturnBookPageResult.jsp");
-				dispatcher.forward(request, response);
+		st = sDB.getStudent(request.getParameter("stID"));
+		if(st == null){
+			request.setAttribute("StudentNotFound", true);
+			dispatcher = request.getRequestDispatcher("ReturnBookPageResult.jsp");
+			dispatcher.forward(request, response);
 
-			} else {
-				loans = sDB.getLoans(request.getParameter("stID"));
-				request.setAttribute("loans", loans);
-				request.setAttribute("student", st);
-				dispatcher = request.getRequestDispatcher("ReturnBookPageResult.jsp");
-				dispatcher.forward(request, response);
-			}
-	
-			if(sDB != null){
-				sDB.closeConnection();
-			}
-		
+		} else {
+			loans = sDB.getLoans(request.getParameter("stID"));
+			request.setAttribute("loans", loans);
+			request.setAttribute("student", st);
+			dispatcher = request.getRequestDispatcher("ReturnBookPageResult.jsp");
+			dispatcher.forward(request, response);
+		}
+
+		if(sDB != null){
+			sDB.closeConnection();
+		}
 
 	}
 

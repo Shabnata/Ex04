@@ -25,7 +25,7 @@ public class CategoryDB{
 
 	public Category getCategory(String catName) throws ClassNotFoundException, SQLException{
 		Class.forName("org.apache.derby.jdbc.ClientDriver");
-		String urlCn = "jdbc:derby://localhost:1527/LibraryDB";
+		String urlCn = "jdbc:derby:C:\\Users\\Kotya\\Desktop\\College\\Year 3\\Semester A\\BasicWeb\\HW\\Ex04\\LibraryDB";
 		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
 
 		Category ct = null;
@@ -52,7 +52,7 @@ public class CategoryDB{
 
 	public ArrayList<Category> getCategories() throws ClassNotFoundException, SQLException{
 		Class.forName("org.apache.derby.jdbc.ClientDriver");
-		String urlCn = "jdbc:derby://localhost:1527/LibraryDB";
+		String urlCn = "jdbc:derby:C:\\Users\\Kotya\\Desktop\\College\\Year 3\\Semester A\\BasicWeb\\HW\\Ex04\\LibraryDB";
 		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
 
 		ArrayList<Category> cat = new ArrayList<Category>();
@@ -80,7 +80,7 @@ public class CategoryDB{
 	public Boolean addCategory(String catName) throws ClassNotFoundException, SQLException{
 		Boolean added = false;
 		Class.forName("org.apache.derby.jdbc.ClientDriver");
-		String urlCn = "jdbc:derby://localhost:1527/LibraryDB";
+		String urlCn = "jdbc:derby:C:\\Users\\Kotya\\Desktop\\College\\Year 3\\Semester A\\BasicWeb\\HW\\Ex04\\LibraryDB";
 		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
 
 		Category cat = null;
@@ -105,7 +105,7 @@ public class CategoryDB{
 
 	public ArrayList<Book> getBooksByCategoryName(String catName) throws ClassNotFoundException, SQLException{
 		Class.forName("org.apache.derby.jdbc.ClientDriver");
-		String urlCn = "jdbc:derby://localhost:1527/LibraryDB";
+		String urlCn = "jdbc:derby:C:\\Users\\Kotya\\Desktop\\College\\Year 3\\Semester A\\BasicWeb\\HW\\Ex04\\LibraryDB";
 		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
 
 		String booksQuery = ""

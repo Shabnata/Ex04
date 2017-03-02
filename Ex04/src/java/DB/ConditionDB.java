@@ -28,7 +28,7 @@ public ConditionDB(Connection cn) {
 	
 	public BookCondition getCondition(int conKey) throws ClassNotFoundException, SQLException{
 		Class.forName("org.apache.derby.jdbc.ClientDriver");
-		String urlCn = "jdbc:derby://localhost:1527/LibraryDB";
+		String urlCn = "jdbc:derby:C:\\Users\\Kotya\\Desktop\\College\\Year 3\\Semester A\\BasicWeb\\HW\\Ex04\\LibraryDB";
 		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
 
 		BookCondition cd = null;
@@ -56,7 +56,7 @@ public ConditionDB(Connection cn) {
 	}
 	public ArrayList<BookCondition> getConditions() throws ClassNotFoundException, SQLException{
 		Class.forName("org.apache.derby.jdbc.ClientDriver");
-		String urlCn = "jdbc:derby://localhost:1527/LibraryDB";
+		String urlCn = "jdbc:derby:C:\\Users\\Kotya\\Desktop\\College\\Year 3\\Semester A\\BasicWeb\\HW\\Ex04\\LibraryDB";
 		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
 
 		ArrayList<BookCondition> con = new ArrayList<BookCondition>();

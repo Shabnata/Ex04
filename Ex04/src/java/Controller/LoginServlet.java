@@ -38,7 +38,7 @@ public class LoginServlet extends HttpServlet {
 		String password = request.getParameter("Password");
 		RequestDispatcher dispatcher;
 		Class.forName("org.apache.derby.jdbc.ClientDriver");
-		String urlCn = "jdbc:derby://localhost:1527/LibraryDB";
+		String urlCn = "jdbc:derby:C:\\Users\\Kotya\\Desktop\\College\\Year 3\\Semester A\\BasicWeb\\HW\\Ex04\\LibraryDB";
 		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
 
 		UserDB userDB = new UserDB();

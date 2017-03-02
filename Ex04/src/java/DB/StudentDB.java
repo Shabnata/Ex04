@@ -26,7 +26,7 @@ public class StudentDB {
 
 	public Student getStudent(String st_id) throws ClassNotFoundException, SQLException {
 		Class.forName("org.apache.derby.jdbc.ClientDriver");
-		String urlCn = "jdbc:derby://localhost:1527/LibraryDB";
+		String urlCn = "jdbc:derby:C:\\Users\\Kotya\\Desktop\\College\\Year 3\\Semester A\\BasicWeb\\HW\\Ex04\\LibraryDB";
 		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
 
 		Student st = null;
@@ -57,7 +57,7 @@ public class StudentDB {
 	public Boolean addStudent(String stID, String fName, String lName, String email, float fine) throws ClassNotFoundException, SQLException {
 		Boolean added = false;
 		Class.forName("org.apache.derby.jdbc.ClientDriver");
-		String urlCn = "jdbc:derby://localhost:1527/LibraryDB";
+		String urlCn = "jdbc:derby:C:\\Users\\Kotya\\Desktop\\College\\Year 3\\Semester A\\BasicWeb\\HW\\Ex04\\LibraryDB";
 		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
 
 		Student st = null;
@@ -86,7 +86,7 @@ public class StudentDB {
 	public Boolean updateStudent(Student stud) throws ClassNotFoundException, SQLException {
 		Boolean updated = false;
 		Class.forName("org.apache.derby.jdbc.ClientDriver");
-		String urlCn = "jdbc:derby://localhost:1527/LibraryDB";
+		String urlCn = "jdbc:derby:C:\\Users\\Kotya\\Desktop\\College\\Year 3\\Semester A\\BasicWeb\\HW\\Ex04\\LibraryDB";
 		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
 
 		Student st = stud;
@@ -109,7 +109,7 @@ public class StudentDB {
 		int cnt = 0;
 		String s = "";
 		Class.forName("org.apache.derby.jdbc.ClientDriver");
-		String urlCn = "jdbc:derby://localhost:1527/LibraryDB";
+		String urlCn = "jdbc:derby:C:\\Users\\Kotya\\Desktop\\College\\Year 3\\Semester A\\BasicWeb\\HW\\Ex04\\LibraryDB";
 		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
 
 		Student st = null;
@@ -143,7 +143,7 @@ public class StudentDB {
 	//get Array of books that this Student has in loans
 	public ArrayList<BookCopy> getBooksInLoans(String st_id) throws ClassNotFoundException, SQLException {
 		Class.forName("org.apache.derby.jdbc.ClientDriver");
-		String urlCn = "jdbc:derby://localhost:1527/LibraryDB";
+		String urlCn = "jdbc:derby:C:\\Users\\Kotya\\Desktop\\College\\Year 3\\Semester A\\BasicWeb\\HW\\Ex04\\LibraryDB";
 		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
 
 		ArrayList<BookCopy> hasBooks = new ArrayList<BookCopy>();
@@ -186,7 +186,7 @@ public class StudentDB {
 	//get Array of Loans per this student
 	public ArrayList<Loan> getLoans(String st_id) throws ClassNotFoundException, SQLException {
 		Class.forName("org.apache.derby.jdbc.ClientDriver");
-		String urlCn = "jdbc:derby://localhost:1527/LibraryDB";
+		String urlCn = "jdbc:derby:C:\\Users\\Kotya\\Desktop\\College\\Year 3\\Semester A\\BasicWeb\\HW\\Ex04\\LibraryDB";
 		Connection cn = DriverManager.getConnection(urlCn, "administrator", "123456");
 		ArrayList<Integer> loanIds = new ArrayList<Integer>();
 		ArrayList<Loan> loans = new ArrayList<Loan>();

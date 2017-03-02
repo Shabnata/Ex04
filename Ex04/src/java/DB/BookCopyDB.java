@@ -3,6 +3,7 @@ package DB;
 
 import Model.BookCondition;
 import Model.BookCopy;
+import Util.DButil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,10 +20,21 @@ public class BookCopyDB{
 
 	private Connection cn;
 
-	public BookCopyDB(Connection cn){
-		this.cn = cn;
+	public BookCopyDB() {
+		cn = DButil.getConnection();
 	}
 
+	public void closeConnection() {
+		try {
+			cn.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+	
+	
 	// Returns null if book not found, empty list if no copies
 	public ArrayList<BookCopy> getAllCopiesOfBook(String book_isbn){
 		ArrayList<BookCopy> bcLst = null;

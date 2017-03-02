@@ -4,9 +4,6 @@ package Controller;
 import DB.StudentDB;
 import Model.Student;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -49,37 +46,34 @@ public class IdentifyStudentServlet extends HttpServlet{
 		StudentDB sDB = null;
 		Student st;
 
-		
-			sDB = new StudentDB();
+		sDB = new StudentDB();
 
-			if(bookISBN == null){
-				response.sendRedirect("SearchBookServlet");
-				return;
-			} else if(stID == null){
-				rd = request.getRequestDispatcher("IdentifyStudentPage.jsp");
-				request.setAttribute("bookISBN", bookISBN);
-				rd.forward(request, response);
-				return;
-			} else if((st = sDB.getStudent(stID)) == null){
-
-				rd = request.getRequestDispatcher("IdentifyStudentPage.jsp");
-				request.setAttribute("bookISBN", bookISBN);
-				request.setAttribute("stNotFound", "Student not found.");
-				rd.forward(request, response);
-				return;
-			}
-
-			request.setAttribute("bookIsbn", bookISBN);
-			request.setAttribute("stId", stID);
-			rd = request.getRequestDispatcher("LoanBookFromSearchServlet");
+		if(bookISBN == null){
+			response.sendRedirect("SearchBookServlet");
+			return;
+		} else if(stID == null){
+			rd = request.getRequestDispatcher("IdentifyStudentPage.jsp");
+			request.setAttribute("bookISBN", bookISBN);
 			rd.forward(request, response);
+			return;
+		} else if((st = sDB.getStudent(stID)) == null){
 
-		
-			if(sDB != null){
-				sDB.closeConnection();
-			}
+			rd = request.getRequestDispatcher("IdentifyStudentPage.jsp");
+			request.setAttribute("bookISBN", bookISBN);
+			request.setAttribute("stNotFound", "Student not found.");
+			rd.forward(request, response);
+			return;
+		}
 
-		
+		request.setAttribute("bookIsbn", bookISBN);
+		request.setAttribute("stId", stID);
+		rd = request.getRequestDispatcher("LoanBookFromSearchServlet");
+		rd.forward(request, response);
+
+		if(sDB != null){
+			sDB.closeConnection();
+		}
+
 	}
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 

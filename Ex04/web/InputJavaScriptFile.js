@@ -1,20 +1,20 @@
-function studentIDFill(textBox) {
-	if (textBox === null) {
+function studentIDFill(textBox){
+	if(textBox === null){
 		return;
 	}
 
 	var idMinLength = 9;
 	var boxText = textBox.value;
 
-	while (boxText.length < idMinLength) {
+	while(boxText.length < idMinLength){
 		boxText = "0" + boxText;
 	}
 
 	textBox.value = boxText;
 }
 
-function bookISBNFill(textBox) {
-	if (textBox === null) {
+function bookISBNFill(textBox){
+	if(textBox === null){
 		return;
 	}
 	// Wikipedia states that ISBN's are 13 digits long
@@ -22,25 +22,25 @@ function bookISBNFill(textBox) {
 	var ISBNMinLength = 13;
 	var boxText = textBox.value;
 
-	while (boxText.length < ISBNMinLength) {
+	while(boxText.length < ISBNMinLength){
 		boxText = "0" + boxText;
 	}
 
 	textBox.value = boxText;
 }
 
-function focusClearIDTextBox(textBox) {
+function focusClearIDTextBox(textBox){
 	var idMinLength = 9;
-	if (textBox === null || textBox.value.length >= idMinLength) {
+	if(textBox === null || textBox.value.length >= idMinLength){
 		return;
 	}
 
 	textBox.value = "";
 }
 
-function focusClearISBNTextBox(textBox) {
+function focusClearISBNTextBox(textBox){
 	var ISBNMinLength = 13;
-	if (textBox === null || textBox.value.length >= ISBNMinLength) {
+	if(textBox === null || textBox.value.length >= ISBNMinLength){
 		return;
 	}
 

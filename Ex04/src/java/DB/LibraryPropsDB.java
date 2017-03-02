@@ -1,3 +1,4 @@
+
 package DB;
 
 import Util.DButil;
@@ -17,7 +18,7 @@ public class LibraryPropsDB{
 
 	private Connection cn;
 
-	public LibraryPropsDB() {
+	public LibraryPropsDB(){
 		cn = DButil.getConnection();
 	}
 
@@ -39,7 +40,7 @@ public class LibraryPropsDB{
 			+ "ORDER  BY lib_name asc "
 			+ "FETCH first 1 ROWS only";
 
-		try{
+		try {
 			Statement ps = this.cn.createStatement();
 			ResultSet rs = ps.executeQuery(getNameQuery);
 			if(rs.next()){
@@ -57,7 +58,7 @@ public class LibraryPropsDB{
 			+ "UPDATE library_props "
 			+ "SET    lib_name = ?";
 
-		try{
+		try {
 			PreparedStatement ps = this.cn.prepareCall(setNameQuery);
 			ps.setString(1, newName);
 
@@ -78,7 +79,7 @@ public class LibraryPropsDB{
 			+ "ORDER  BY lib_name asc "
 			+ "FETCH first 1 ROWS only";
 
-		try{
+		try {
 			Statement ps = this.cn.createStatement();
 			ResultSet rs = ps.executeQuery(getNameQuery);
 			if(rs.next()){
@@ -96,7 +97,7 @@ public class LibraryPropsDB{
 			+ "UPDATE library_props "
 			+ "SET    fine_per_day = ?";
 
-		try{
+		try {
 			PreparedStatement ps = this.cn.prepareCall(setFineQuery);
 			ps.setInt(1, newFine);
 
@@ -117,7 +118,7 @@ public class LibraryPropsDB{
 			+ "ORDER  BY lib_name asc "
 			+ "FETCH first 1 ROWS only";
 
-		try{
+		try {
 			Statement ps = this.cn.createStatement();
 			ResultSet rs = ps.executeQuery(getNameQuery);
 			if(rs.next()){
@@ -135,7 +136,7 @@ public class LibraryPropsDB{
 			+ "UPDATE library_props "
 			+ "SET    max_fines_per_student = ?";
 
-		try{
+		try {
 			PreparedStatement ps = this.cn.prepareCall(setFineQuery);
 			ps.setInt(1, newFine);
 
@@ -156,7 +157,7 @@ public class LibraryPropsDB{
 			+ "ORDER  BY lib_name asc "
 			+ "FETCH first 1 ROWS only";
 
-		try{
+		try {
 			Statement ps = this.cn.createStatement();
 			ResultSet rs = ps.executeQuery(getNameQuery);
 			if(rs.next()){
@@ -174,7 +175,7 @@ public class LibraryPropsDB{
 			+ "UPDATE library_props "
 			+ "SET    max_books_per_student = ?";
 
-		try{
+		try {
 			PreparedStatement ps = this.cn.prepareCall(setBooksQuery);
 			ps.setInt(1, newFine);
 
@@ -192,7 +193,7 @@ public class LibraryPropsDB{
 			+ "SELECT * "
 			+ "FROM   library_props";
 
-		try{
+		try {
 			PreparedStatement ps = this.cn.prepareStatement(varname1);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()){
@@ -218,7 +219,7 @@ public class LibraryPropsDB{
 		String varname2 = ""
 			+ "DELETE FROM library_props";
 		PreparedStatement ps;
-		try{
+		try {
 			ps = this.cn.prepareStatement(varname1);
 			ps.setString(1, libName);
 			ps.setInt(2, finePerDay);

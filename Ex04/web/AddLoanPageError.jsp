@@ -22,7 +22,7 @@
 				</div> <%-- id=leftMenu --%>
 				<div id="contentArea">
 					<jsp:useBean id="errors" type="java.util.ArrayList<java.lang.String>" scope="request"/>
-					<% for (String err : errors) {%>
+					<% for(String err : errors){%>
 					<h3><%= err%></h3>
 					<%}%>
 				</div> <%-- id=contentArea --%>

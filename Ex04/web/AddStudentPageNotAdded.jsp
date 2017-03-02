@@ -20,7 +20,7 @@
 					<jsp:include page="AddStudentForm.jsp" />
 					<h1>Could not add student</h1>
 				</div> <%-- id=contentArea --%>
-				
+
 			</div> <%-- id=centerBox --%>
 			<jsp:include page="Footer.jsp" />
 		</div> <%-- id=outerContainer --%>

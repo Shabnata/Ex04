@@ -29,7 +29,7 @@
 						CategoryDB cDb = new CategoryDB();
 						cat = cDb.getCategories(); %>
 					<ul>
-						<%for (Category c : cat) {%>
+						<%for(Category c : cat){%>
 						<li><%=c.getCatName()%></li>
 							<%}%>
 					</ul>
@@ -37,7 +37,7 @@
 				<jsp:include page="Footer.jsp" />
 			</div> <%-- id=outerContainer --%>
 	</body>
-		<%if (cDb != null) {
+	<%if(cDb != null){
 			cDb.closeConnection();
 		}%>
 </html>

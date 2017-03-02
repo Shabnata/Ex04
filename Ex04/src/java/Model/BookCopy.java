@@ -9,28 +9,28 @@ package Model;
  *
  * @author Kotya
  */
-public class BookCopy {
+public class BookCopy{
+
 	private String COPY_CODE; //isbn_copyCode
 	private BookCondition copyCondition;
 
-	public BookCopy() {
+	public BookCopy(){
 	}
 
-	public String getCOPY_CODE() {
+	public String getCOPY_CODE(){
 		return COPY_CODE;
 	}
 
-	public void setCOPY_CODE(String COPY_CODE) {
+	public void setCOPY_CODE(String COPY_CODE){
 		this.COPY_CODE = COPY_CODE;
 	}
 
-	public BookCondition getCopyCondition() {
+	public BookCondition getCopyCondition(){
 		return copyCondition;
 	}
 
-	public void setCopyCondition(BookCondition copyCondition) {
+	public void setCopyCondition(BookCondition copyCondition){
 		this.copyCondition = copyCondition;
 	}
-	
-	
+
 }

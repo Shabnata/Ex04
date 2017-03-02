@@ -14,11 +14,11 @@
 				<div id="leftMenu">
 					<jsp:include page="Menu.jsp" />
 					<br/><br/><br/>
-				
+
 				</div> <%-- id=leftMenu --%>
 				<div id="contentArea">
 					<h1>Wrong username or password, please try again</h1>
-					
+
 				</div> <%-- id=contentArea --%>
 			</div> <%-- id=centerBox --%>
 			<jsp:include page="Footer.jsp" />

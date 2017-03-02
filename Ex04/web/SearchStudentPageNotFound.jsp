@@ -14,13 +14,13 @@
 				<div id="leftMenu">
 					<jsp:include page="Menu.jsp" />
 					<br/><br/><br/>
-					
+
 				</div> <%-- id=leftMenu --%>
 				<div id="contentArea">
 					<jsp:include page="SearchStudentForm.jsp" />
 					<h1>Student not found</h1>
 				</div> <%-- id=contentArea --%>
-				
+
 			</div> <%-- id=centerBox --%>
 			<jsp:include page="Footer.jsp" />
 		</div> <%-- id=outerContainer --%>

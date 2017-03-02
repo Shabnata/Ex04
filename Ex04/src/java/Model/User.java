@@ -9,32 +9,31 @@ public class User implements Serializable{
 	private String userPas;
 	private String userType;
 
-
 	public User(){
 	}
 
-	public String getUserID() {
+	public String getUserID(){
 		return userID;
 	}
 
-	public void setUserID(String userID) {
+	public void setUserID(String userID){
 		this.userID = userID;
 	}
 
-	public String getUserPas() {
+	public String getUserPas(){
 		return userPas;
 	}
 
-	public void setUserPas(String userPas) {
+	public void setUserPas(String userPas){
 		this.userPas = userPas;
 	}
 
-	public String getUserType() {
+	public String getUserType(){
 		return userType;
 	}
 
-	public void setUserType(String userType) {
+	public void setUserType(String userType){
 		this.userType = userType;
 	}
-	
+
 }

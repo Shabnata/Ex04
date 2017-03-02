@@ -4,10 +4,7 @@ package Controller;
 import DB.BookDB;
 import Model.*;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -41,27 +38,25 @@ public class SearchBookServlet extends HttpServlet{
 		RequestDispatcher rd = null;
 		BookDB bDB = null;
 		ArrayList<Book> bksLst;
-		
 
-			String titleParam = request.getParameter("title");
-			if(titleParam != null){
-				bDB = new BookDB();
-				bksLst = bDB.getBooksByTitle(request.getParameter("title"));
+		String titleParam = request.getParameter("title");
+		if(titleParam != null){
+			bDB = new BookDB();
+			bksLst = bDB.getBooksByTitle(request.getParameter("title"));
 
-				if(!bksLst.isEmpty()){
-					rd = request.getRequestDispatcher("SearchBookPageResult.jsp");
-					request.setAttribute("bksLst", bksLst);
-				} else {
-					rd = request.getRequestDispatcher("SearchBookPageNotFound.jsp");
-				}
+			if(!bksLst.isEmpty()){
+				rd = request.getRequestDispatcher("SearchBookPageResult.jsp");
+				request.setAttribute("bksLst", bksLst);
 			} else {
-				rd = request.getRequestDispatcher("SearchBookPage.jsp");
+				rd = request.getRequestDispatcher("SearchBookPageNotFound.jsp");
 			}
-		
-			if(bDB != null){
-				bDB.closeConnection();
-			}
-		
+		} else {
+			rd = request.getRequestDispatcher("SearchBookPage.jsp");
+		}
+
+		if(bDB != null){
+			bDB.closeConnection();
+		}
 
 		if(rd != null){
 			rd.forward(request, response);

@@ -14,7 +14,7 @@
 				<div id="leftMenu">
 					<jsp:include page="Menu.jsp" />
 					<br/><br/><br/>
-				
+
 				</div> <%-- id=leftMenu --%>
 				<div id="contentArea">
 					<jsp:include page="SearchStudentForm.jsp" />

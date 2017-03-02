@@ -3,7 +3,6 @@ package Model;
 
 import java.io.Serializable;
 
-
 public class Student implements Serializable{
 
 	private String studentID;
@@ -55,5 +54,4 @@ public class Student implements Serializable{
 		this.currentFines = currentFines;
 	}
 
-	
 }

@@ -30,7 +30,9 @@
 							<th>Email</th>
 							<th>Number of books currently loaned</th>
 							<th>Fines</th>
-							<th>Pay fines</th>
+								<%--
+								<th>Pay fines</th>
+								--%>
 						</tr>
 						<tr>
 							<td><%=student.getStudentID()%></td>
@@ -45,6 +47,7 @@
 							%>
 							<td><%=num%></td>
 							<td><%=student.getCurrentFines()%></td>
+							<%--
 							<td>
 								<form class="formStyle" action="PayFineServlet" method="POST">
 									<input type="number" name="payAmount" min=0 max="<%=student.getCurrentFines()%>"/>
@@ -52,6 +55,7 @@
 									<input type="submit" value="pay" />
 								</form>
 							</td>
+							--%>
 						</tr>
 
 

@@ -1,4 +1,3 @@
-
 package Controller;
 
 import DB.BookDB;
@@ -31,12 +30,12 @@ import javax.servlet.http.HttpServletResponse;
  * @author Denis Sh
  */
 @WebServlet(name = "AddLoanServlet", urlPatterns = {"/AddLoanServlet"})
-public class AddLoanServlet extends HttpServlet{
+public class AddLoanServlet extends HttpServlet {
 
 	ServletContext sc;
 
 	@Override
-	public void init(){
+	public void init() {
 		this.sc = this.getServletContext();
 
 	}
@@ -45,13 +44,13 @@ public class AddLoanServlet extends HttpServlet{
 	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
 	 * methods.
 	 *
-	 * @param request  servlet request
+	 * @param request servlet request
 	 * @param response servlet response
 	 *
 	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException      if an I/O error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
-	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		RequestDispatcher rd;
 
@@ -74,24 +73,24 @@ public class AddLoanServlet extends HttpServlet{
 		String bookISBN = request.getParameter("bookIsbn");
 
 		sDB = new StudentDB();
-		if(stID == null){
+		if (stID == null) {
 			Cookie crrUsr = CookieDB.getCookieValue(request.getCookies(), "username");
 			myUserDb = new UserDB();
-			if(crrUsr != null && myUserDb.getUser(crrUsr.getValue()).getUserType().equals("user")){
+			if (crrUsr != null && myUserDb.getUser(crrUsr.getValue()).getUserType().equals("user")) {
 				stID = myUserDb.getUser(crrUsr.getValue()).getUserID();
 				st = sDB.getStudent(stID);
 			} else {
 				rd = request.getRequestDispatcher("IdentifyStudentForLoanPage.jsp");
-				if(bookISBN != null){
+				if (bookISBN != null) {
 					request.setAttribute("bookISBN", bookISBN);
 				}
 				rd.forward(request, response);
 				return;
 			}
 
-		} else if((st = sDB.getStudent(stID)) == null){
+		} else if ((st = sDB.getStudent(stID)) == null) {
 			rd = request.getRequestDispatcher("IdentifyStudentForLoanPage.jsp");
-			if(bookISBN != null){
+			if (bookISBN != null) {
 				request.setAttribute("bookISBN", bookISBN);
 			}
 			request.setAttribute("errMsg", "Student not found.");
@@ -99,9 +98,9 @@ public class AddLoanServlet extends HttpServlet{
 			return;
 		}
 
-		if(catName == null && bookISBN == null){
+		if (catName == null && bookISBN == null) {
 			sDB = new StudentDB();
-			if(sDB.getStudent(stID) == null){
+			if (sDB.getStudent(stID) == null) {
 				request.setAttribute("errMsg", "Student not found.");
 				rd = request.getRequestDispatcher("IdentifyStudentForLoanPage.jsp");
 				rd.forward(request, response);
@@ -111,7 +110,7 @@ public class AddLoanServlet extends HttpServlet{
 			ArrayList<Category> catLst = cDB.getCategories();
 			rd = request.getRequestDispatcher("SelectCategoryForLoanPage.jsp");
 			request.setAttribute("stId", stID);
-			if(loanID != null){
+			if (loanID != null) {
 				lnDB = new LoanDB();
 				ln = lnDB.getLoanByID(Integer.parseInt(loanID));
 				request.setAttribute("loanId", loanID);
@@ -119,9 +118,9 @@ public class AddLoanServlet extends HttpServlet{
 
 				bDB = new BookDB();
 				HashMap<String, Book> bksMap = new HashMap<>();
-				for(BookCopy bc : ln.getBooksInLoan()){
+				for (BookCopy bc : ln.getBooksInLoan()) {
 					Book bk = bDB.getBookByBookCopy(bc);
-					if(bk != null){
+					if (bk != null) {
 						bksMap.put(bc.getCOPY_CODE(), bk);
 					}
 				}
@@ -131,12 +130,12 @@ public class AddLoanServlet extends HttpServlet{
 			request.setAttribute("catLst", catLst);
 			rd.forward(request, response);
 			return;
-		} else if(bookISBN == null){
+		} else if (bookISBN == null) {
 			cDB = new CategoryDB();
 			ArrayList<Book> bookLst = cDB.getBooksByCategoryName(catName);
 			rd = request.getRequestDispatcher("SelectBookForLoanPage.jsp");
 			request.setAttribute("stId", stID);
-			if(loanID != null){
+			if (loanID != null) {
 				request.setAttribute("loanId", loanID);
 			}
 			request.setAttribute("bookLst", bookLst);
@@ -148,23 +147,23 @@ public class AddLoanServlet extends HttpServlet{
 		int maxFinesPerStudent = lpDB.getMaxFinesPerStudent();
 		int maxBooksPerStudent = lpDB.getMaxBooksPerStudent();
 
-		if(st.getCurrentFines() >= maxFinesPerStudent){
+		if (st.getCurrentFines() >= maxFinesPerStudent) {
 			errors = true;
-			if(errorLst == null){
+			if (errorLst == null) {
 				errorLst = new ArrayList<>();
 			}
 			errorLst.add("Student with ID: " + st.getStudentID() + " has fines that exceed the library maximum.");
 		}
-		if(sDB.getCountLoanedBooks(st.getStudentID()) >= maxBooksPerStudent){
+		if (sDB.getCountLoanedBooks(st.getStudentID()) >= maxBooksPerStudent) {
 			errors = true;
-			if(errorLst == null){
+			if (errorLst == null) {
 				errorLst = new ArrayList<>();
 			}
 			errorLst.add("Student with ID: " + st.getStudentID() + " loaned books count has exceeded the library maximum.");
 
 		}
 
-		if(errors == true){
+		if (errors == true) {
 			rd = request.getRequestDispatcher("AddLoanPageError.jsp");
 			request.setAttribute("errors", errorLst);
 			rd.forward(request, response);
@@ -172,7 +171,7 @@ public class AddLoanServlet extends HttpServlet{
 		}
 
 		lnDB = new LoanDB();
-		if(loanID == null){
+		if (loanID == null) {
 			GregorianCalendar start_d = new GregorianCalendar();
 			GregorianCalendar ret_d = new GregorianCalendar();
 			ret_d.add(GregorianCalendar.DAY_OF_MONTH, 14);
@@ -193,9 +192,9 @@ public class AddLoanServlet extends HttpServlet{
 		bDB = new BookDB();
 		HashMap<String, Book> bksMap = new HashMap<>();
 
-		for(BookCopy bc : ln.getBooksInLoan()){
+		for (BookCopy bc : ln.getBooksInLoan()) {
 			Book bk = bDB.getBookByBookCopy(bc);
-			if(bk != null){
+			if (bk != null) {
 				bksMap.put(bc.getCOPY_CODE(), bk);
 			}
 		}
@@ -204,19 +203,19 @@ public class AddLoanServlet extends HttpServlet{
 		request.setAttribute("catLst", catLst);
 		rd.forward(request, response);
 
-		if(bDB != null){
+		if (bDB != null) {
 			bDB.closeConnection();
 		}
 
-		if(cDB != null){
+		if (cDB != null) {
 			cDB.closeConnection();
 		}
 
-		if(lnDB != null){
+		if (lnDB != null) {
 			lnDB.closeConnection();
 		}
 
-		if(sDB != null){
+		if (sDB != null) {
 			sDB.closeConnection();
 		}
 
@@ -226,28 +225,28 @@ public class AddLoanServlet extends HttpServlet{
 	/**
 	 * Handles the HTTP <code>GET</code> method.
 	 *
-	 * @param request  servlet request
+	 * @param request servlet request
 	 * @param response servlet response
 	 *
 	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException      if an I/O error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		processRequest(request, response);
 	}
 
 	/**
 	 * Handles the HTTP <code>POST</code> method.
 	 *
-	 * @param request  servlet request
+	 * @param request servlet request
 	 * @param response servlet response
 	 *
 	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException      if an I/O error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		processRequest(request, response);
 	}
 
@@ -257,7 +256,7 @@ public class AddLoanServlet extends HttpServlet{
 	 * @return a String containing servlet description
 	 */
 	@Override
-	public String getServletInfo(){
+	public String getServletInfo() {
 		return "Short description";
 	}// </editor-fold>
 

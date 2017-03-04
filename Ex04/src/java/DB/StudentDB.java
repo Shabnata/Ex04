@@ -1,4 +1,3 @@
-
 package DB;
 
 import Model.*;
@@ -12,25 +11,25 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class StudentDB{
+public class StudentDB {
 
 	private Connection cn;
 
-	public StudentDB(){
+	public StudentDB() {
 		cn = DButil.getConnection();
 	}
 
-	public void closeConnection(){
-		if(this.cn != null){
+	public void closeConnection() {
+		if (this.cn != null) {
 			try {
 				this.cn.close();
-			} catch(SQLException e){
+			} catch (SQLException e) {
 				Logger.getLogger(StudentDB.class.getName()).log(Level.SEVERE, null, e);
 			}
 		}
 	}
 
-	public Student getStudent(String st_id){
+	public Student getStudent(String st_id) {
 
 		Student st = null;
 		//PreparedStatement ps = null;
@@ -41,7 +40,7 @@ public class StudentDB{
 			ps = cn.createStatement();
 
 			ResultSet rs = ps.executeQuery("SELECT * FROM students WHERE st_id=\'" + st_id + "\'");
-			while(rs.next()){
+			while (rs.next()) {
 				st = new Student();
 				st.setStudentID(rs.getString("st_id"));
 				st.setFirstName(rs.getString("f_name"));
@@ -49,14 +48,13 @@ public class StudentDB{
 				st.setEmailAddress(rs.getString("email"));
 				st.setCurrentFines(Double.parseDouble(rs.getString("fine")));
 			}
-		} catch(SQLException e){
-			// TODO
-			// Write an error
+		} catch (SQLException e) {
+			Logger.getLogger(StudentDB.class.getName()).log(Level.SEVERE, null, e);
 		}
 		return st;
 	}
 
-	public Boolean addStudent(String stID, String fName, String lName, String email, float fine){
+	public Boolean addStudent(String stID, String fName, String lName, String email, float fine) {
 		Boolean added = false;
 
 		Student st = null;
@@ -70,17 +68,16 @@ public class StudentDB{
 			pst.setString(4, email);
 			pst.setFloat(5, fine);
 			int nor = pst.executeUpdate();
-			if(nor != 0){
+			if (nor != 0) {
 				added = true;
 			}
-		} catch(SQLException e){
-			// TODO
-			// Write an error
+		} catch (SQLException e) {
+			Logger.getLogger(StudentDB.class.getName()).log(Level.SEVERE, null, e);
 		}
 		return added;
 	}
 
-	public Boolean updateStudent(Student stud){
+	public Boolean updateStudent(Student stud) {
 		Boolean updated = false;
 
 		Student st = stud;
@@ -91,14 +88,13 @@ public class StudentDB{
 			pst.setDouble(1, st.getCurrentFines());
 			pst.setString(2, st.getStudentID());
 			updated = pst.execute();
-		} catch(SQLException e){
-			// TODO
-			// Write an error
+		} catch (SQLException e) {
+			Logger.getLogger(StudentDB.class.getName()).log(Level.SEVERE, null, e);
 		}
 		return updated;
 	}
 
-	public int getCountLoanedBooks(String st_id){
+	public int getCountLoanedBooks(String st_id) {
 		int cnt = 0;
 		String s = "";
 
@@ -109,20 +105,20 @@ public class StudentDB{
 		try {
 			//ps = cn.createStatement();
 			PreparedStatement pst = cn.prepareStatement("select count(*) as num from students , loans, loaned_books "
-				+ "where students.st_id=? "
-				+ "and students.st_id = loans.st_id "
-				+ "and loans.loan_id=loaned_books.loan_id "
-				+ "and loaned_books.returned=? "
-				+ "group by students.st_id");
+														+ "where students.st_id=? "
+														+ "and students.st_id = loans.st_id "
+														+ "and loans.loan_id=loaned_books.loan_id "
+														+ "and loaned_books.returned=? "
+														+ "group by students.st_id");
 
 			pst.setString(1, st_id);
 			pst.setString(2, "false");
 
 			ResultSet rs = pst.executeQuery();
-			if(rs.next()){
+			if (rs.next()) {
 				cnt = rs.getInt("num");
 			}
-		} catch(SQLException e){
+		} catch (SQLException e) {
 			s = e.getMessage();
 		}
 
@@ -130,7 +126,7 @@ public class StudentDB{
 	}
 
 	//get Array of books that this Student has in loans
-	public ArrayList<BookCopy> getBooksInLoans(String st_id){
+	public ArrayList<BookCopy> getBooksInLoans(String st_id) {
 
 		ArrayList<BookCopy> hasBooks = new ArrayList<BookCopy>();
 		Statement ps = null;
@@ -139,38 +135,37 @@ public class StudentDB{
 			ps = cn.createStatement();
 
 			PreparedStatement pst = cn.prepareStatement("SELECT book_copies.copy_cond, "
-				+ "       loaned_books.copy_code, "
-				+ "       loaned_books.loan_id, "
-				+ "       loaned_books.returned, "
-				+ "       loaned_books.days_over, "
-				+ "       loans.start_d, "
-				+ "       loans.ret_d "
-				+ "FROM   book_copies, "
-				+ "       students, "
-				+ "       loans, "
-				+ "       loaned_books "
-				+ "WHERE  book_copies.copy_code = loaned_books.copy_code "
-				+ "       AND students.st_id = ? "
-				+ "       AND students.st_id = loans.st_id "
-				+ "       AND loans.loan_id = loaned_books.loan_id "
-				+ "       AND loaned_books.returned = 'false'  ");
+														+ "       loaned_books.copy_code, "
+														+ "       loaned_books.loan_id, "
+														+ "       loaned_books.returned, "
+														+ "       loaned_books.days_over, "
+														+ "       loans.start_d, "
+														+ "       loans.ret_d "
+														+ "FROM   book_copies, "
+														+ "       students, "
+														+ "       loans, "
+														+ "       loaned_books "
+														+ "WHERE  book_copies.copy_code = loaned_books.copy_code "
+														+ "       AND students.st_id = ? "
+														+ "       AND students.st_id = loans.st_id "
+														+ "       AND loans.loan_id = loaned_books.loan_id "
+														+ "       AND loaned_books.returned = 'false'  ");
 			pst.setString(1, st_id);
 			ResultSet rs = pst.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				BookCopy bcC = new BookCopy();
 				bcC.setCOPY_CODE(rs.getString("copy_code"));
 				hasBooks.add(bcC);
 			}
 
-		} catch(SQLException e){
-			// TODO
-			// Write an error
+		} catch (SQLException e) {
+			Logger.getLogger(StudentDB.class.getName()).log(Level.SEVERE, null, e);
 		}
 		return hasBooks;
 	}
 
 	//get Array of Loans per this student
-	public ArrayList<Loan> getLoans(String st_id){
+	public ArrayList<Loan> getLoans(String st_id) {
 
 		ArrayList<Integer> loanIds = new ArrayList<Integer>();
 		ArrayList<Loan> loans = new ArrayList<Loan>();
@@ -183,23 +178,22 @@ public class StudentDB{
 			PreparedStatement pst = cn.prepareStatement("select loan_id from loans where st_id=?");
 			pst.setString(1, st_id);
 			ResultSet rs = pst.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				loanID = rs.getInt("loan_id");
 				loanIds.add(loanID);
 			}
 
-		} catch(SQLException e){
-			// TODO
-			// Write an error
+		} catch (SQLException e) {
+			Logger.getLogger(StudentDB.class.getName()).log(Level.SEVERE, null, e);
 		}
 		LoanDB tmpLoanDB = new LoanDB();
 		Loan tmpLoan = new Loan();
-		for(Integer lnId : loanIds){
-			tmpLoan = tmpLoanDB.getLoanByID((int)lnId);
+		for (Integer lnId : loanIds) {
+			tmpLoan = tmpLoanDB.getLoanByID((int) lnId);
 			loans.add(tmpLoan);
 		}
 
-		if(tmpLoanDB != null){
+		if (tmpLoanDB != null) {
 			tmpLoanDB.closeConnection();
 		}
 		return loans;

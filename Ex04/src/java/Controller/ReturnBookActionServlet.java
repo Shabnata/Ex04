@@ -1,4 +1,3 @@
-
 package Controller;
 
 import DB.BookCopyDB;
@@ -21,12 +20,12 @@ import javax.servlet.http.HttpServletResponse;
  * @author Kotya
  */
 @WebServlet(name = "ReturnBookActionServlet", urlPatterns = {"/ReturnBookActionServlet"})
-public class ReturnBookActionServlet extends HttpServlet{
+public class ReturnBookActionServlet extends HttpServlet {
 
 	ServletContext sc;
 
 	@Override
-	public void init(){
+	public void init() {
 		this.sc = this.getServletContext();
 
 	}
@@ -35,13 +34,13 @@ public class ReturnBookActionServlet extends HttpServlet{
 	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
 	 * methods.
 	 *
-	 * @param request  servlet request
+	 * @param request servlet request
 	 * @param response servlet response
 	 *
 	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException      if an I/O error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
-	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher dispatcher;
 		ArrayList<Loan> loans;
 
@@ -71,7 +70,7 @@ public class ReturnBookActionServlet extends HttpServlet{
 		String cpCode = request.getParameter("copyCode");
 		bcDB.updateBookCopyLoanState(cpCode);
 
-		if(st == null){
+		if (st == null) {
 			dispatcher = request.getRequestDispatcher("ReturnBookPageResult.jsp");
 			dispatcher.forward(request, response);
 
@@ -83,19 +82,19 @@ public class ReturnBookActionServlet extends HttpServlet{
 			dispatcher.forward(request, response);
 		}
 
-		if(bcDB != null){
+		if (bcDB != null) {
 			bcDB.closeConnection();
 		}
 
-		if(conDB != null){
+		if (conDB != null) {
 			conDB.closeConnection();
 		}
 
-		if(lnDB != null){
+		if (lnDB != null) {
 			lnDB.closeConnection();
 		}
 
-		if(sDB != null){
+		if (sDB != null) {
 			sDB.closeConnection();
 		}
 	}
@@ -104,30 +103,28 @@ public class ReturnBookActionServlet extends HttpServlet{
 	/**
 	 * Handles the HTTP <code>GET</code> method.
 	 *
-	 * @param request  servlet request
+	 * @param request servlet request
 	 * @param response servlet response
 	 *
 	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException      if an I/O error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException{
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		processRequest(request, response);
 	}
 
 	/**
 	 * Handles the HTTP <code>POST</code> method.
 	 *
-	 * @param request  servlet request
+	 * @param request servlet request
 	 * @param response servlet response
 	 *
 	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException      if an I/O error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException{
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		processRequest(request, response);
 	}
 
@@ -137,7 +134,7 @@ public class ReturnBookActionServlet extends HttpServlet{
 	 * @return a String containing servlet description
 	 */
 	@Override
-	public String getServletInfo(){
+	public String getServletInfo() {
 		return "Short description";
 	}// </editor-fold>
 

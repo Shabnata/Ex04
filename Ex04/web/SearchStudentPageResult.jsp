@@ -65,6 +65,6 @@
 		</div> <%-- id=outerContainer --%>
 	</body>
 	<%if (stDB != null) {
-				stDB.closeConnection();
-			}%>
+			stDB.closeConnection();
+		}%>
 </html>

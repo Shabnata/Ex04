@@ -28,8 +28,8 @@
 					</form>
 
 					<%
-						Boolean notFound = (request.getAttribute("StudentNotFound") != null && (Boolean)request.getAttribute("StudentNotFound") == true);
-						if(notFound){
+						Boolean notFound = (request.getAttribute("StudentNotFound") != null && (Boolean) request.getAttribute("StudentNotFound") == true);
+						if (notFound) {
 					%>
 					<h1>Student not found</h1>
 					<%}%>

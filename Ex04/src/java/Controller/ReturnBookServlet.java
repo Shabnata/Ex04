@@ -1,4 +1,3 @@
-
 package Controller;
 
 import DB.StudentDB;
@@ -19,16 +18,16 @@ import javax.servlet.http.HttpServletResponse;
  * @author Kotya
  */
 @WebServlet(name = "ReturnBookServlet", urlPatterns = {"/ReturnBookServlet"})
-public class ReturnBookServlet extends HttpServlet{
+public class ReturnBookServlet extends HttpServlet {
 
 	ServletContext sc;
 
 	@Override
-	public void init(){
+	public void init() {
 		this.sc = this.getServletContext();
 	}
 
-	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		StudentDB sDB = new StudentDB();
 		RequestDispatcher dispatcher;
@@ -36,7 +35,7 @@ public class ReturnBookServlet extends HttpServlet{
 		ArrayList<Loan> loans;
 
 		st = sDB.getStudent(request.getParameter("stID"));
-		if(st == null){
+		if (st == null) {
 			request.setAttribute("StudentNotFound", true);
 			dispatcher = request.getRequestDispatcher("ReturnBookPage.jsp");
 			dispatcher.forward(request, response);
@@ -49,7 +48,7 @@ public class ReturnBookServlet extends HttpServlet{
 			dispatcher.forward(request, response);
 		}
 
-		if(sDB != null){
+		if (sDB != null) {
 			sDB.closeConnection();
 		}
 
@@ -59,30 +58,28 @@ public class ReturnBookServlet extends HttpServlet{
 	/**
 	 * Handles the HTTP <code>GET</code> method.
 	 *
-	 * @param request  servlet request
+	 * @param request servlet request
 	 * @param response servlet response
 	 *
 	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException      if an I/O error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException{
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		processRequest(request, response);
 	}
 
 	/**
 	 * Handles the HTTP <code>POST</code> method.
 	 *
-	 * @param request  servlet request
+	 * @param request servlet request
 	 * @param response servlet response
 	 *
 	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException      if an I/O error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException{
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		processRequest(request, response);
 	}
 
@@ -92,7 +89,7 @@ public class ReturnBookServlet extends HttpServlet{
 	 * @return a String containing servlet description
 	 */
 	@Override
-	public String getServletInfo(){
+	public String getServletInfo() {
 		return "Short description";
 	}// </editor-fold>
 

@@ -56,7 +56,7 @@
 									--%>
 									<%!
 										UserDB myUserDb2 = null;
-																																							%>
+									%>
 									<%
 										myUserDb2 = new UserDB();
 										User crrUser2 = myUserDb2.getUser(currentUser.getValue());

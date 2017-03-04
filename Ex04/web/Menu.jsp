@@ -7,12 +7,12 @@
 %>
 <%!UserDB myUserDb = null;%>
 
-<%  if(currentUser == null){%>
+<%  if (currentUser == null) {%>
 <jsp:include page="MenuGuest.jsp" />
-<%  } else if(currentUser != null){
+<%  } else if (currentUser != null) {
 	myUserDb = new UserDB();
 	User crrUser = myUserDb.getUser(currentUser.getValue());
-	if(crrUser.getUserType().equals("admin")){%>
+	if (crrUser.getUserType().equals("admin")) {%>
 <jsp:include page="MenuAdmin.jsp" />
 <%} else {%>
 
@@ -21,7 +21,7 @@
 	}%>
 <jsp:include page="LoginForm.jsp" />
 <jsp:include page="LogoutForm.jsp" />
-<%if(myUserDb != null){
+<%if (myUserDb != null) {
 		myUserDb.closeConnection();
 	}%>
 

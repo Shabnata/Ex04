@@ -3,7 +3,7 @@
 <%
 	//User currentUser = (User)request.getSession().getAttribute("user");
 	Cookie currentUser = CookieDB.getCookieValue(request.getCookies(), "username");
-	
+
 %>
 
 

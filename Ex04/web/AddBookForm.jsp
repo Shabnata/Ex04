@@ -26,8 +26,8 @@
 		<jsp:useBean id="categories" class="java.util.ArrayList<Category>" type="java.util.ArrayList<Category>" scope="request"/>
 		<%
 			boolean flagFirst = true;
-			for(Category c : categories){
-				if(flagFirst){
+			for (Category c : categories) {
+				if (flagFirst) {
 		%>
 		<input type="radio" name="category" checked="checked" value="<%= c.getCatName()%>"/> <%= c.getCatName()%> <br/>
 		<%

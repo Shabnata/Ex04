@@ -1,4 +1,3 @@
-
 package DB;
 
 import Model.*;
@@ -14,25 +13,25 @@ import java.util.logging.Logger;
  *
  * @author Kotya
  */
-public class UserDB{
+public class UserDB {
 
 	private Connection cn;
 
-	public UserDB(){
+	public UserDB() {
 		cn = DButil.getConnection();
 	}
 
-	public void closeConnection(){
-		if(this.cn != null){
+	public void closeConnection() {
+		if (this.cn != null) {
 			try {
 				this.cn.close();
-			} catch(SQLException e){
+			} catch (SQLException e) {
 				Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, e);
 			}
 		}
 	}
 
-	public User getUser(String userID){
+	public User getUser(String userID) {
 
 		User us = null;
 		//PreparedStatement ps = null;
@@ -40,16 +39,15 @@ public class UserDB{
 		try {
 			ps = cn.createStatement();
 			ResultSet rs = ps.executeQuery("SELECT * FROM accounts WHERE acc_id=\'" + userID + "\'");
-			while(rs.next()){
+			while (rs.next()) {
 				us = new User();
 				us.setUserID(rs.getString("acc_id"));
 				us.setUserPas(rs.getString("acc_pass"));
 				us.setUserType(rs.getString("acc_type"));
 			}
 
-		} catch(SQLException e){
-			// TODO 
-			// Write an error
+		} catch (SQLException e) {
+			Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, e);
 		}
 		return us;
 	}

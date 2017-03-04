@@ -1,4 +1,3 @@
-
 package Controller;
 
 import DB.StudentDB;
@@ -17,12 +16,12 @@ import javax.servlet.http.HttpServletResponse;
  * @author Denis Sh
  */
 @WebServlet(name = "IdentifyStudentServlet", urlPatterns = {"/IdentifyStudentServlet"})
-public class IdentifyStudentServlet extends HttpServlet{
+public class IdentifyStudentServlet extends HttpServlet {
 
 	ServletContext sc;
 
 	@Override
-	public void init(){
+	public void init() {
 		this.sc = this.getServletContext();
 	}
 
@@ -30,13 +29,13 @@ public class IdentifyStudentServlet extends HttpServlet{
 	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
 	 * methods.
 	 *
-	 * @param request  servlet request
+	 * @param request servlet request
 	 * @param response servlet response
 	 *
 	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException      if an I/O error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
-	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		RequestDispatcher rd;
 
@@ -48,15 +47,15 @@ public class IdentifyStudentServlet extends HttpServlet{
 
 		sDB = new StudentDB();
 
-		if(bookISBN == null){
+		if (bookISBN == null) {
 			response.sendRedirect("SearchBookServlet");
 			return;
-		} else if(stID == null){
+		} else if (stID == null) {
 			rd = request.getRequestDispatcher("IdentifyStudentPage.jsp");
 			request.setAttribute("bookISBN", bookISBN);
 			rd.forward(request, response);
 			return;
-		} else if((st = sDB.getStudent(stID)) == null){
+		} else if ((st = sDB.getStudent(stID)) == null) {
 
 			rd = request.getRequestDispatcher("IdentifyStudentPage.jsp");
 			request.setAttribute("bookISBN", bookISBN);
@@ -70,7 +69,7 @@ public class IdentifyStudentServlet extends HttpServlet{
 		rd = request.getRequestDispatcher("LoanBookFromSearchServlet");
 		rd.forward(request, response);
 
-		if(sDB != null){
+		if (sDB != null) {
 			sDB.closeConnection();
 		}
 
@@ -80,28 +79,28 @@ public class IdentifyStudentServlet extends HttpServlet{
 	/**
 	 * Handles the HTTP <code>GET</code> method.
 	 *
-	 * @param request  servlet request
+	 * @param request servlet request
 	 * @param response servlet response
 	 *
 	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException      if an I/O error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		processRequest(request, response);
 	}
 
 	/**
 	 * Handles the HTTP <code>POST</code> method.
 	 *
-	 * @param request  servlet request
+	 * @param request servlet request
 	 * @param response servlet response
 	 *
 	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException      if an I/O error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		processRequest(request, response);
 	}
 
@@ -111,7 +110,7 @@ public class IdentifyStudentServlet extends HttpServlet{
 	 * @return a String containing servlet description
 	 */
 	@Override
-	public String getServletInfo(){
+	public String getServletInfo() {
 		return "Short description";
 	}// </editor-fold>
 

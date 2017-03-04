@@ -1,4 +1,3 @@
-
 package Controller;
 
 import DB.UserDB;
@@ -14,17 +13,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
-public class LoginServlet extends HttpServlet{
+public class LoginServlet extends HttpServlet {
 
 	ServletContext sc;
 
 	@Override
-	public void init(){
+	public void init() {
 		this.sc = this.getServletContext();
 
 	}
 
-	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String username = request.getParameter("Username");
 		String password = request.getParameter("Password");
 		RequestDispatcher dispatcher;
@@ -32,7 +31,7 @@ public class LoginServlet extends HttpServlet{
 		UserDB userDB = new UserDB();
 		User crrUser = userDB.getUser(username);
 
-		if(crrUser != null && crrUser.getUserPas().equals(password)){
+		if (crrUser != null && crrUser.getUserPas().equals(password)) {
 
 			Cookie userName = new Cookie("username", crrUser.getUserID());
 			userName.setMaxAge(60 * 60 * 24 * 7);
@@ -44,7 +43,7 @@ public class LoginServlet extends HttpServlet{
 			dispatcher = request.getRequestDispatcher("ErrorLogin.jsp");
 			dispatcher.forward(request, response);
 		}
-		if(userDB != null){
+		if (userDB != null) {
 			userDB.closeConnection();
 		}
 
@@ -54,30 +53,28 @@ public class LoginServlet extends HttpServlet{
 	/**
 	 * Handles the HTTP <code>GET</code> method.
 	 *
-	 * @param request  servlet request
+	 * @param request servlet request
 	 * @param response servlet response
 	 *
 	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException      if an I/O error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException{
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		processRequest(request, response);
 	}
 
 	/**
 	 * Handles the HTTP <code>POST</code> method.
 	 *
-	 * @param request  servlet request
+	 * @param request servlet request
 	 * @param response servlet response
 	 *
 	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException      if an I/O error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException{
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		processRequest(request, response);
 	}
 
@@ -87,7 +84,7 @@ public class LoginServlet extends HttpServlet{
 	 * @return a String containing servlet description
 	 */
 	@Override
-	public String getServletInfo(){
+	public String getServletInfo() {
 		return "Short description";
 	}// </editor-fold>
 

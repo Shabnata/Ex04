@@ -1,4 +1,3 @@
-
 package DB;
 
 import Model.*;
@@ -16,25 +15,25 @@ import java.util.logging.Logger;
  *
  * @author Kotya
  */
-public class ConditionDB{
+public class ConditionDB {
 
 	private Connection cn;
 
-	public ConditionDB(){
+	public ConditionDB() {
 		cn = DButil.getConnection();
 	}
 
-	public void closeConnection(){
-		if(this.cn != null){
+	public void closeConnection() {
+		if (this.cn != null) {
 			try {
 				this.cn.close();
-			} catch(SQLException e){
+			} catch (SQLException e) {
 				Logger.getLogger(ConditionDB.class.getName()).log(Level.SEVERE, null, e);
 			}
 		}
 	}
 
-	public BookCondition getCondition(int conKey){
+	public BookCondition getCondition(int conKey) {
 
 		BookCondition cd = null;
 		//PreparedStatement ps = null;
@@ -47,19 +46,18 @@ public class ConditionDB{
 			PreparedStatement pst = cn.prepareStatement("SELECT * FROM conditions WHERE con_key=?");
 			pst.setInt(1, conKey);
 			ResultSet rs = pst.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				cd = new BookCondition();
 				cd.setConKey(rs.getInt("con_key"));
 				cd.setConDesc(rs.getString("con_desc"));
 			}
-		} catch(SQLException e){
-			// TODO
-			// Write an error
+		} catch (SQLException e) {
+			Logger.getLogger(ConditionDB.class.getName()).log(Level.SEVERE, null, e);
 		}
 		return cd;
 	}
 
-	public ArrayList<BookCondition> getConditions(){
+	public ArrayList<BookCondition> getConditions() {
 
 		ArrayList<BookCondition> con = new ArrayList<BookCondition>();
 		Statement ps = null;
@@ -69,15 +67,14 @@ public class ConditionDB{
 
 			ResultSet rs = ps.executeQuery("select * from Conditions");
 
-			while(rs.next()){
+			while (rs.next()) {
 				BookCondition cd = new BookCondition();
 				cd.setConKey(rs.getInt(2));
 				cd.setConDesc(rs.getString(3));
 				con.add(cd);
 			}
-		} catch(SQLException e){
-			// TODO
-			// Write an error
+		} catch (SQLException e) {
+			Logger.getLogger(ConditionDB.class.getName()).log(Level.SEVERE, null, e);
 		}
 		return con;
 	}

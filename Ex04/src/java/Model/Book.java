@@ -1,10 +1,9 @@
-
 package Model;
 
 import java.io.Serializable;
 import java.time.Year;
 
-public class Book implements Serializable{
+public class Book implements Serializable {
 
 	private String ISBN;
 	private String title;
@@ -15,70 +14,70 @@ public class Book implements Serializable{
 	private Category category;
 	private int availableCopies;
 
-	public Book(){
+	public Book() {
 	}
 
-	public String getISBN(){
+	public String getISBN() {
 		return ISBN;
 	}
 
-	public void setISBN(String ISBN){
+	public void setISBN(String ISBN) {
 		this.ISBN = ISBN;
 	}
 
-	public String getTitle(){
+	public String getTitle() {
 		return title;
 	}
 
-	public void setTitle(String title){
+	public void setTitle(String title) {
 		this.title = title;
 	}
 
-	public String getAuthorName(){
+	public String getAuthorName() {
 		return authorName;
 	}
 
-	public void setAuthorName(String authorName){
+	public void setAuthorName(String authorName) {
 		this.authorName = authorName;
 	}
 
-	public Year getBookYear(){
+	public Year getBookYear() {
 		return bookYear;
 	}
 
-	public void setBookYear(Year bookYear){
+	public void setBookYear(Year bookYear) {
 		this.bookYear = bookYear;
 	}
 
-	public String getCoverPath(){
+	public String getCoverPath() {
 		return coverPath;
 	}
 
-	public void setCoverPath(String coverPath){
+	public void setCoverPath(String coverPath) {
 		this.coverPath = coverPath;
 	}
 
-	public int getCopyCounter(){
+	public int getCopyCounter() {
 		return copyCounter;
 	}
 
-	public void setCopyCounter(int copyCounter){
+	public void setCopyCounter(int copyCounter) {
 		this.copyCounter = copyCounter;
 	}
 
-	public Category getCategory(){
+	public Category getCategory() {
 		return category;
 	}
 
-	public void setCategory(Category category){
+	public void setCategory(Category category) {
 		this.category = category;
 	}
 
-	public int getAvailableCopies(){
+	public int getAvailableCopies() {
 		return availableCopies;
 	}
 
-	public void setAvailableCopies(int availableCopies){
+	public void setAvailableCopies(int availableCopies) {
 		this.availableCopies = availableCopies;
 	}
 

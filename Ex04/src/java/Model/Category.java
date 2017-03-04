@@ -9,27 +9,27 @@ package Model;
  *
  * @author Kotya
  */
-public class Category{
+public class Category {
 
 	private int catID;
 	private String catName;
 
-	public Category(){
+	public Category() {
 	}
 
-	public int getCatID(){
+	public int getCatID() {
 		return catID;
 	}
 
-	public void setCatID(int catID){
+	public void setCatID(int catID) {
 		this.catID = catID;
 	}
 
-	public String getCatName(){
+	public String getCatName() {
 		return catName;
 	}
 
-	public void setCatName(String catName){
+	public void setCatName(String catName) {
 		this.catName = catName;
 	}
 
